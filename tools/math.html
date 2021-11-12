@@ -3,16 +3,45 @@
 	<head>
 		<meta charset="utf-8">
 		<link href="../sakura-vader.css" rel="stylesheet">
+		<title>AsciiMath but with newlines</title>
 
-		<title></title>
+		<style>
+			body {
+				margin-top: 50px;
+			}
+
+			h1 {
+				margin: 0;
+			}
+
+			#links {
+				display: grid;
+				grid-gap: 20px;
+				grid-template-columns: auto auto 1fr;
+			}
+		</style>
 	</head>
 	<body>
+		<h1>AsciiMath but with newlines</h1>
+		<div id="links">
+			<a id="tools_index" href="../tools.html">Tools Index</a>
+			<a href="http://asciimath.org/">AsciiMath</a>
+		</div>
+
+		<hr style="margin-bottom: 35px;">
+
 		<p>`1 - 1/∞`</p>
 		<p>`= ∞/∞ + (-1/∞)`</p>
-		<p>`= ∞ ** (1/∞) + (-1) ** (1/∞)`</p>
+		<p>`= ∞ (1/∞) + (-1) (1/∞)`</p>
 		<p>`= (∞ + (-1)) (1/∞)`</p>
 		<p>`= (∞ - 1)(1/∞)`</p>
 		<p>`= (∞ - 1)/∞`</p>
+
+		<hr style="margin-top: 35px;">
+
+		<textarea placeholder="Type here"></textarea>
+		<input type="button" id="render" value="Render">
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
 	</body>
 </html>
