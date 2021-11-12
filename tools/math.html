@@ -19,6 +19,10 @@
 				grid-gap: 20px;
 				grid-template-columns: auto auto 1fr;
 			}
+
+			textarea {
+				margin-top: 5px;
+			}
 		</style>
 	</head>
 	<body>
@@ -30,18 +34,22 @@
 
 		<hr style="margin-bottom: 35px;">
 
-		<p>`1 - 1/∞`</p>
-		<p>`= ∞/∞ + (-1/∞)`</p>
-		<p>`= ∞ (1/∞) + (-1) (1/∞)`</p>
-		<p>`= (∞ + (-1)) (1/∞)`</p>
-		<p>`= (∞ - 1)(1/∞)`</p>
-		<p>`= (∞ - 1)/∞`</p>
+		<div id="math_output">
+			<p>`x=(-b +- sqrt(b^2 – 4ac))/(2a)`</p>
+		</div>
 
 		<hr style="margin-top: 35px;">
 
-		<textarea placeholder="Type here"></textarea>
+		<textarea id="math_input" placeholder="Type here"></textarea>
+		<br>
 		<input type="button" id="render" value="Render">
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+
+		<script>
+			document.getElementById("render").onclick = function() {
+				alert(document.getElementById("math_input").value)
+			}
+		</script>
 	</body>
 </html>
