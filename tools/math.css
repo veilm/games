@@ -1,0 +1,17 @@
+body {
+	margin-top: 50px;
+}
+
+h1 {
+	margin: 0;
+}
+
+#links {
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: auto auto 1fr;
+}
+
+textarea {
+	margin-top: 5px;
+}
