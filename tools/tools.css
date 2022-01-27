@@ -1,7 +1,3 @@
-p {
-	margin: 20px 0;
-}
-
 body {
 	margin-top: 50px;
 }
@@ -14,8 +10,4 @@ h1 {
 	display: grid;
 	grid-gap: 20px;
 	grid-template-columns: auto auto 1fr;
-}
-
-textarea {
-	height: 100px;
 }
