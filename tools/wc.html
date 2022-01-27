@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<link href="../sakura-vader.css" rel="stylesheet">
+		<link href="tools.css" rel="stylesheet">
+
+		<style>
+			textarea {
+				margin-top: 5px;
+			}
+
+			p {
+				margin-bottom: 10px;
+			}
+
+			label {
+				display: inline;
+				margin-left: 20px;
+			}
+		</style>
+
+		<title>Word Counter</title>
+	</head>
+	<body>
+		<h1>Word Counter</h1>
+		<div id="links">
+			<a id="tools_index" href="../tools.html">Tools Index</a>
+		</div>
+
+		<hr>
+
+		<p>Words: <span id="words">0</span>, Characters: <span id="characters">0</span></p>
+
+		<textarea id="input" placeholder="Paste your text here"></textarea>
+		<br>
+
+		<input type="button" id="convert" value="Count" disabled>
+
+		<label for="auto">Autoreload?</label>
+		<input type="checkbox" id="auto" checked>
+
+		<ul style="margin-top: 20px;">
+			<li>There's no regex that's used; words are split by spaces.</li>
+			<li>Every character, including spaces, is counted for "characters".</li>
+		</ul>
+
+		<script src="wc.js"></script>
+	</body>
+</html>
