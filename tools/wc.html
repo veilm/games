@@ -9,6 +9,7 @@
 		<style>
 			textarea {
 				margin-top: 5px;
+				height: 100px;
 			}
 
 			p {
@@ -42,8 +43,9 @@
 		<input type="checkbox" id="auto" checked>
 
 		<ul style="margin-top: 20px;">
-			<li>There's no regex that's used; words are split by spaces.</li>
-			<li>Every character, including spaces, is counted for "characters".</li>
+			<li>There's no regex that's used; words are split by spaces or linebreaks.</li>
+			<li>Multiple spaces or linebreaks will not create empty words.</li>
+			<li>All characters, including spaces and linebreaks, are counted for "characters".</li>
 		</ul>
 
 		<script src="wc.js"></script>
