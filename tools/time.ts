@@ -3,14 +3,7 @@ const invalid = "Invalid Date"
 // Is this syntax idiomatic? It looks weird
 const get_unix = (date) => Math.floor(date.getTime() / 1000).toString()
 
-/*
-"/>" fixes Kakoune's syntax highlighting
-It's ugly but there's no way I'll be able to fix the javascript.kak regex myself
-I'd guess it has to do with the jsx sections
-I'm too scared that it's my fault to ask about it on the IRC
-*/
-
-let time_input = <HTMLInputElement>document.getElementById("time_input") // />
+let time_input = <HTMLInputElement>document.getElementById("time_input")
 document.getElementById("current").innerHTML = get_unix(new Date())
 
 document.getElementById("convert").onclick = function() {

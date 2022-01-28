@@ -1,6 +1,6 @@
-const auto = <HTMLInputElement>document.getElementById("auto") // {
-const convert = <HTMLInputElement>document.getElementById("convert") // {
-const text = <HTMLInputElement>document.getElementById("input") // {
+const auto = <HTMLInputElement>document.getElementById("auto")
+const convert = <HTMLInputElement>document.getElementById("convert")
+const text = <HTMLInputElement>document.getElementById("input")
 
 const words_span = document.getElementById("words")
 const characters_span = document.getElementById("characters")
