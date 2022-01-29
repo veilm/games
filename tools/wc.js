@@ -1,6 +1,6 @@
-var auto = document.getElementById("auto"); // {
-var convert = document.getElementById("convert"); // {
-var text = document.getElementById("input"); // {
+var auto = document.getElementById("auto");
+var convert = document.getElementById("convert");
+var text = document.getElementById("input");
 var words_span = document.getElementById("words");
 var characters_span = document.getElementById("characters");
 // Update the word and character count
