@@ -3,7 +3,7 @@ const invalid = "Invalid Date"
 // Is this syntax idiomatic? It looks weird
 const get_unix = (date) => Math.floor(date.getTime() / 1000).toString()
 
-let time_input = <HTMLInputElement>document.getElementById("time_input")
+let time_input = document.getElementById("time_input") as HTMLInputElement
 document.getElementById("current").innerHTML = get_unix(new Date())
 
 document.getElementById("convert").onclick = function() {

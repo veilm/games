@@ -1,7 +1,7 @@
 declare var MathJax
 
 let output = document.getElementById("math_output")
-let input = <HTMLInputElement>document.getElementById("math_input")
+let input = document.getElementById("math_input") as HTMLInputElement
 
 document.getElementById("render").onclick = () => {
 	// Delete existing elements
