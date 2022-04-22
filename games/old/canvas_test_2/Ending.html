@@ -1,0 +1,320 @@
+
+
+
+
+<!DOCTYPE html>
+
+    <head>
+
+            <title> Esacpe - The Game </title>
+
+            <style>
+            
+                .center
+                {
+                    display: block;
+                    margin: auto;
+                }
+
+            </style>
+
+            <!-- Beginning of Extra Head Code-->
+
+
+
+            <!-- End of Extra Head Code-->
+
+    </head>
+
+    <body style="background-color: #000000;">
+
+        <br>
+        <br>
+
+        <!-- Beginning of Body Code -->
+        <!-- F Canv Code <canvas style="display: block; margin:auto;" id="myCanvas" height="500px" width="665px"></canvas> -->
+        <!-- Make xy elements pos abs -->
+        
+        <p style="text-align: center; font-size: 38px; color: #ffffff;"> The End </p> 
+
+        <p style="text-align: center; font-size: 28px; color: #fff;">
+            You finally get out. You bless your lucky stars that you didn't die in there, and you vow to never drink
+            alcohol again.
+        </p>
+
+        <input style="background-color: black; color: white; width: 100px; height: 30px;" class="center" type="button" onclick="start()" value="Back">
+
+        <!-- End of Body Code -->
+
+        <br>
+        <br>
+
+        <script>
+        
+            // S T A R T   O F   S C R I P T   ///////////////////////////////////////////
+            // Made by Michael Skyba
+            // SGM 7.9.0
+
+
+            // P R E - M A D E   L O A D I N G   ///////////////////////////////////////
+
+            var canvas;
+            var ctx;
+
+            var xs = [""];
+            var ys = [""];
+            var objects = [""];
+
+            //  L O A D   ///////////////////////////////////////////////
+            // F Canv Code setUpCanvas();
+            
+
+
+            // U P D A T E   ////////////////////////////////////// 
+            // use setInterval(function(), 10);
+
+
+
+            // F U N C T I O N S   /////////////////////////////////
+
+            function start()
+            {
+                reDir("Title Screen.html");  
+            }
+
+            function story()
+            {
+                reDir("https://jsfight.skyba.ca");  
+            }
+
+            // P R E - M A D E   F U N C T I O N S   ///////////////////////////
+
+            // supports:
+            // setting up canvas, changing xy, adding objects, rng, updating html elements xy
+            // key detection, playing sound, drawing shapes, getting quick id, setting xy
+            // writing text, redirecting
+            
+
+
+            function reDir(url)
+            {
+                window.location.replace(url);
+            }
+
+            
+
+            function write(objectName, string, pixels, hex)
+            {
+                ctx.font = pixels+"px Comic Sans MS";
+                ctx.fillStyle = "#"+hex;
+                ctx.textAlign = "center";
+                ctx.fillText(string, xs[id(objectName)], ys[id(objectName)]); 
+            }
+
+            function setObjectY(objectName, val) {
+
+                if (objects.indexOf(objectName) != -1) {
+
+                    ys[objects.indexOf(objectName)] = val;
+
+                } else console.log("OBJ ERR: OBJECT NOT FOUND");
+
+
+            }
+
+
+
+            function setObjectX(objectName, val) {
+
+                if (objects.indexOf(objectName) != -1) {
+
+                    xs[objects.indexOf(objectName)] = val;
+
+                } else console.log("OBJ ERR: OBJECT NOT FOUND");
+
+
+            }
+
+
+
+            function id (name)
+            {
+                return objects.indexOf(name);
+            }
+
+
+
+            function clearScreen ()
+            {
+
+                ctx.beginPath();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.closePath();
+
+            }
+            
+            
+
+            function drawCircle(objectName, hex, size)
+            {
+
+                var id = objects.indexOf(objectName);
+
+                if (id != -1)
+                {
+
+                    ctx.beginPath();
+                    ctx.arc(xs[id], ys[id], size, 0, Math.PI * 2); 
+                    ctx.fillStyle = ("#"+hex);
+                    ctx.fill();
+                    ctx.closePath();
+
+                }
+
+                else console.log("OBJ ERR: OBJECT NOT FOUND");
+
+            }
+
+
+
+            function drawSquare(objectName, width, height, hex) 
+            {
+
+                if (objects.indexOf(objectName) != -1)
+                {
+                    ctx.beginPath();
+                    ctx.rect(xs[objects.indexOf(objectName)], ys[objects.indexOf(objectName)], width, height); 
+                    ctx.fillStyle = ("#"+hex);
+                    ctx.fill();
+                    ctx.closePath();
+                }
+
+                else console.log("OBJ ERR: OBJECT NOT FOUND");
+
+            }
+
+
+
+            function playSound (source)
+            {
+                
+                var audio = new Audio(source);
+                audio.play();
+                
+            }
+                    
+            
+
+            document.onkeydown = function (e) 
+            {
+                        
+                e = e || window.event;
+
+                switch (e.keyCode)
+                {
+
+                    // add more cases for key detection
+
+                    default:
+
+                    console.log(e.keyCode);
+
+                }
+                    
+            }
+                                                
+
+
+            function updateHTML (objectName, id)
+            {
+                
+                var myEle = document.getElementById(id);
+                
+                if(myEle) 
+                {
+                    
+                    if (objects.indexOf(objectName) != -1)
+                    {
+                        console.log("ELE WAR: ERROR MAY SHOW IF POSITION IS NOT ABSOLUTE");
+                        myEle.style.left= xs[objects.indexOf(objectName)];
+                        myEle.style.top= ys[objects.indexOf(objectName)];
+                        
+                    }
+                    
+                    else console.log("OBJ ERR: OBJECT NOT FOUND");
+                    
+                }
+                
+                else console.log("ID ERR: ELEMENT ASSIGNED WITH SUGGESTED ID NOT FOUND");
+                
+            } 
+
+    
+
+            function editObjectX(objectName, val) {
+
+                if (objects.indexOf(objectName) != -1) {
+
+                    xs[objects.indexOf(objectName)] += val;
+
+                } else console.log("OBJ ERR: OBJECT NOT FOUND");
+
+        
+            }
+
+
+
+            function editObjectY(objectName, val) {
+
+                if (objects.indexOf(objectName) != -1) {
+
+                    ys[objects.indexOf(objectName)] += val;
+
+                } else console.log("OBJ ERR: OBJECT NOT FOUND");
+
+            }
+
+
+
+            function RNG(min, max) {
+
+                return (Math.floor(Math.random() * (max - min + 1)) + min);
+
+            }
+
+
+
+            function addObject(x, y, objectName) {
+
+                if (objects.indexOf(objectName) == -1) {
+
+                    objects.push(objectName);
+                    xs.push(x);
+                    ys.push(y);
+
+                } else console.log("OBJ ERR: OBJECT ALREADY DECLARED");
+
+            }
+
+
+
+            function setUpCanvas() {
+
+                canvas = document.getElementById("myCanvas");
+                ctx = canvas.getContext("2d");
+
+            }
+
+
+
+            // E N D   O F   S C R I P T
+            
+        </script>
+
+    </body>
+
+</html>
+
+
+
+
