@@ -103,7 +103,7 @@ var stellarSquare = {
                 "spiral",
                 "sizing",
                 "fire_trail",
-                "air",
+                "wind",
                 "burning",
                 "sticky_sniper"
               ]

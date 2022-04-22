@@ -50,7 +50,9 @@ var entityTypes = [
   "wind",
   "burning",
   "sticky_sniper",
-  "sticky_trail"
+  "sticky_trail",
+  "clown_trail",
+  "ice"
 ]
 function closestPointToRectangle(pos, rectpos, rectsize) {
   var xpos = pos.x;
@@ -208,4 +210,73 @@ function collides(enemy,enemy2){
   if (distance < enemy.radius + enemy2.radius) {
       return true;
   } else {return false}
+}
+
+function renderBackground(t,e){
+  if(null!==this.areaCanvas){
+    var i={x:e.left+e.width/2,y:e.top+e.height/2};
+    this.drawNearbyMinimap(i);
+    t.beginPath();
+    t.rect(this.left,this.top,this.minimapWidth,this.minimapHeight);
+    t.clip();
+    t.drawImage(this.areaCanvas,(e.left-this.x-this.areaCanvasOffset.x)*this.canvasScale,(e.top-this.y-this.areaCanvasOffset.y)*this.canvasScale,e.width*this.canvasScale,e.height*this.canvasScale,this.left,this.top,this.minimapWidth,this.minimapHeight),t.fillStyle="rgba(80, 80, 80, 0.6)",t.fillRect(this.left,this.top,this.minimapWidth,this.minimapHeight)}
+  }
+
+function drawNearbyMinimap(t,ctx,canvas,zones,areaPos){
+  t = {x:t.x*32,y:t.y*32}
+  var areaCanvasOffset = {x:10000,y:10000};
+  var nearbySize = 10000;
+  var canvasScale = scale;
+  var e=roundTo(t.x,nearbySize);
+  var i=roundTo(t.y,nearbySize);
+  var a=e-nearbySize;
+  var n=i-nearbySize;
+  var r=e+nearbySize;
+  var s=i+nearbySize;
+  if(null===areaCanvasOffset||areaCanvasOffset.x!==a||areaCanvasOffset.y!==n){
+    areaCanvasOffset={x:a,y:n};
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    var o={};
+    o[0]=[255,255,255,255];
+    o[1]=[195,195,195,255];
+    o[2]=[255,244,108,255];
+    o[3]=[106,208,222,255];
+    o[4]=[255,244,108,255];
+    o[5]=[255,249,186,255];
+    var l=!0,u=!1,f=void 0;
+    try{
+      for(var c in zones){
+        var y=zones[c];
+        if(!(y.pos.x>r||y.pos.x+y.width<a||y.pos.y>s||y.pos.y+y.height<n)){
+          console.log(y)
+          var m=[y.backgroundColor>>24&255,y.backgroundColor>>16&255,y.backgroundColor>>8&255,255&y.backgroundColor];
+          var p=mixColors(o[y.type],m);
+          ctx.fillStyle="rgba(".concat(p[0],", ").concat(p[1],", ").concat(p[2],", ").concat(p[3]);
+          var v=(y.pos.x-areaPos.x-areaCanvasOffset.x)*canvasScale;
+          var g=(y.pos.y-areaPos.y-areaCanvasOffset.y)*canvasScale;
+          ctx.fillRect(v,g,y.width*canvasScale,y.height*canvasScale)}
+        }
+      }catch(b){u=!0,f=b}
+      finally{try{l||null==d.return||d.return()}finally{if(u)throw f}
+    }
+  }
+}
+
+function mixColors(t,e){
+  var i=t[3]/255;
+  var a=e[3]/255;
+  var n=[];
+  var r=1-(1-a)*(1-i);
+  return n[0]=Math.round(e[0]*a/r+t[0]*i*(1-a)/r),n[1]=Math.round(e[1]*a/r+t[1]*i*(1-a)/r),n[2]=Math.round(e[2]*a/r+t[2]*i*(1-a)/r),n[3]=r,n
+}
+
+function roundTo(t,e){
+  return Math.round(t/e)*e
+}
+
+function createOffscreenCanvas (width,height){
+  const canvas = document.createElement("canvas");
+  canvas.width=width;
+  canvas.height=height;
+  return canvas;
 }

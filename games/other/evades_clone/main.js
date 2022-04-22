@@ -7,7 +7,8 @@ var fov = 32;
 var keys = [];
 var settings = {
   outline:true,
-  cooldown:true
+  cooldown:true,
+  sandbox:true
 }
 var mousePos = new Vector(0, 0);
 var mouse = false;
@@ -135,6 +136,10 @@ var distort = new Image();
 distort.src = "texture/distort.png";
 var energize = new Image();
 energize.src = "texture/energize.png";
+var heavy_ballon = new Image();
+heavy_ballon.src = "texture/heavy_ballon.png";
+var rejoicing = new Image();
+rejoicing.src = "texture/rejoicing.png";
 var backtrack = new Image();
 backtrack.src = "texture/backtrack.png";
 var rewind = new Image();
@@ -147,7 +152,7 @@ var reverse = new Image();
 reverse.src = "texture/reverse.png";
 var minimize = new Image();
 minimize.src = "texture/minimize.png";
-
+var fps=[],fpsS,averageFPS;
 var thing = 1;
 var world = new World(new Vector(0, 0), 0, missingMap);
 game.worlds[0] = world;
@@ -159,8 +164,12 @@ function animate(time) {
   //tim+=1000/30;
   //time = tim;
   updD++;//tset++;if(tset>FPSCUT){tset = 1;}
-  if(updD%2){
+  if(updD%2||settings.sandbox){
   var progress = time - lastRender;
+  fps.push(Date.now()-fpsS)
+  if(fps.length>10){fps.shift()}
+  fpsS = Date.now();
+  averageFPS = (fps.map(i=>x+=i, x=0).reverse()[0])/fps.length;
   //if(progress<33||progress>34)
   //if(tset%FPSCUT!=0){
   context.clearRect(0, 0, width, height);
@@ -178,6 +187,7 @@ function animate(time) {
     if (progress > 1000) {
       progress = 1000;
     }
+    var old = {area:game.players[0].area,world:game.players[0].world};
     game.update(progress * thing);
     //if(tset%FPSCUT!=0){
     var players = game.players;
@@ -188,7 +198,7 @@ function animate(time) {
     var strokeColor = "#425a6d";
     if(area.title_stroke_color){strokeColor=area.title_stroke_color}
     area = (wasVictory) ? "Victory!" : (game.worlds[game.players[0].world].areas[game.players[0].area].name)
-    renderArea(states, players, focus)
+    renderArea(states, players, focus, old)
     context.beginPath();
     context.textAlign = "center";
     context.lineWidth = 6;

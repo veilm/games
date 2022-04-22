@@ -1,4 +1,4 @@
-const Delay = 50;
+let Delay = 50;
 
 window.onresize = function() {
   var winw = window.innerWidth;
@@ -25,6 +25,17 @@ window.onload = function() {
   canvas.style.transform = "scale(" + scale + ")";
   canvas.style.left = (winw - width) / 2 + "px";
   canvas.style.top = (winh - height) / 2 + "px";
+  const sandbox = document.getElementById('sandbox')
+  sandbox.checked = settings.sandbox;
+  if(localStorage.sandbox == 'true'){
+    sandbox.checked = true;
+    settings.sandbox = true;
+    Delay = 0;
+  } else if(localStorage.sandbox == 'false'){
+    sandbox.checked = false;
+    settings.sandbox = false;
+    Delay = 50;
+  } else {sandbox.checked = true; Delay = 0;}
 }
 document.addEventListener("keydown", keydown, false);
 document.addEventListener("keyup", keyup, false);
@@ -38,7 +49,8 @@ function keydown(e) {
     if (game.players[0].area>=game.worlds[game.players[0].world].areas.length-1) {
       game.players[0].area=game.worlds[game.players[0].world].areas.length-1
     }
-    game.worlds[game.players[0].world].areas[game.players[0].area].load()
+    game.worlds[game.players[0].world].areas[game.players[0].area].load();
+    canv = null;
   }
   if (e.keyCode == 82) {
     game.players[0].hasCheated = true;
@@ -46,7 +58,8 @@ function keydown(e) {
     if (game.players[0].area>=game.worlds[game.players[0].world].areas.length-1) {
       game.players[0].area=game.worlds[game.players[0].world].areas.length-1
     }
-    game.worlds[game.players[0].world].areas[game.players[0].area].load()
+    game.worlds[game.players[0].world].areas[game.players[0].area].load();
+    canv = null;
   }
   if (e.keyCode == 69) {
     game.players[0].hasCheated = true;
@@ -54,7 +67,8 @@ function keydown(e) {
     if (game.players[0].area<0) {
       game.players[0].area=0;
     }
-    game.worlds[game.players[0].world].areas[game.players[0].area].load()
+    game.worlds[game.players[0].world].areas[game.players[0].area].load();
+    canv = null;
   }
   if (e.keyCode == 86) {
     game.players[0].hasCheated = true;
@@ -188,8 +202,13 @@ enterGame.onclick = function() {
     var player = new Polygon(new Vector(Math.random() * 7 + 2.5, Math.random() * 10 + 2.5),5);
     game.players.push(player)
   }
-
+  
   if (hero.selectedIndex == 15) {
+    var player = new Clown(new Vector(Math.random() * 7 + 2.5, Math.random() * 10 + 2.5),5);
+    game.players.push(player)
+  }
+
+  if (hero.selectedIndex == 16) {
     var player = new Poop(new Vector(Math.random() * 7 + 2.5, Math.random() * 10 + 2.5),5);
     game.players.push(player)
   }
@@ -228,4 +247,10 @@ function handleFiles() {
 }
 document.getElementById("checkbox").addEventListener("click",function(e){
   settings.outline=!settings.outline;
+})
+
+document.getElementById("sandbox").addEventListener("click",function(e){
+  settings.sandbox=!settings.sandbox;
+  if(settings.sandbox){Delay = 0;}else{Delay = 50;}
+  localStorage.sandbox = settings.sandbox;
 })

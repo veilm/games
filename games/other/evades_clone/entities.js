@@ -159,6 +159,7 @@ class Player {
     this.lastAng = 90;
     this.inputAng = 0;
     this.frozen = true;
+    this.wasFrozen = false;
     this.frozenTime = 0;
     this.poison = false;
     this.poisonTime = 0;
@@ -186,8 +187,8 @@ class Player {
     this.cent_max_distance = 10;
     this.cent_distance = 0;
     this.cent_input_ready = true;
-    this.cent_deceleration = 0.15*2;
-    this.cent_acceleration = 0.15*2;
+    this.cent_deceleration = (settings.sandbox)?0.25:0.50;
+    this.cent_acceleration = (settings.sandbox)?0.25:0.50;
     this.cent_accelerating = false;
     this.cent_is_moving = false;
     this.mortarTime = 0;
@@ -196,10 +197,16 @@ class Player {
     this.auraType = -1;
     this.collides = false;
     this.effectImmune = 1;
+    this.effectReplayer = 1;
     this.burningTimer = 0;
     this.stickness = 0;
     this.stickyTrailTimer = 0;
     this.sticky = false;
+    this.maxSpeed = 17;
+    this.maxUpgradableEnergy = 300;
+    this.maxRegen = 7;
+    this.clownBall = false;
+    this.clownBallSize = 1;
   }
   input(input) {
     if (input.keys) {
@@ -232,20 +239,20 @@ class Player {
           this.shift = 2;
         } else {this.shift = 1;}
         if(!this.reaperShade)if(input.keys[49]) {
-          if (this.speed < 17 && this.points > 0) {
+          if (this.speed < this.maxSpeed && this.points > 0) {
             this.speed += 0.5;
             this.points--;
-            if(this.speed > 17){this.speed = 17;}
+            if(this.speed > this.maxSpeed){this.speed = this.maxSpeed;}
           }
         }
         if (input.keys[50]) {
-          if (this.maxEnergy < 300 && this.points > 0) {
+          if (this.maxEnergy < this.maxUpgradableEnergy && this.points > 0) {
             this.maxEnergy += 5;
             this.points--;
           }
         }
         if (input.keys[51]) {
-          if (this.regen < 7 && this.points > 0) {
+          if (parseFloat(this.regen.toFixed(3)) < this.maxRegen && this.points > 0) {
             this.regen += 0.2;
             this.points--;
           }
@@ -269,13 +276,13 @@ class Player {
           this.speedMultiplier *= 3;
         }
         if (this.slowing) {
-          this.speedMultiplier *= 1-this.effectImmune*(1-0.7)
+          this.speedMultiplier *= (1-this.effectImmune*(1-0.7))*this.effectReplayer;
         }
         if (this.freezing) {
-          this.speedMultiplier *= 1-this.effectImmune*(1-0.2)
+          this.speedMultiplier *= (1-this.effectImmune*(1-0.2))*this.effectReplayer;
         }
         if(this.sticky || this.stickness>0){
-          this.speedMultiplier *= 1-this.effectImmune*(1-0.2)
+          this.speedMultiplier *= (1-this.effectImmune*(1-0.2))*this.effectReplayer;
         }
         this.distance_movement = (this.speed*this.speedMultiplier)+this.speedAdditioner;
         this.mouseActive = false;
@@ -311,14 +318,14 @@ class Player {
           this.moving = false;
           if(this.className == "Cent")if(input.keys[87] || input.keys[38]||input.keys[65] || input.keys[37]||input.keys[83] || input.keys[40]||input.keys[68] || input.keys[39]){this.cent_is_moving = true;}
           if(input.keys[87] || input.keys[38]||input.keys[65] || input.keys[37]||input.keys[83] || input.keys[40]||input.keys[68] || input.keys[39]){this.moving=true;}
+          if (input.keys[83] || input.keys[40]) {
+            this.dirY=1;//if(this.className!="Cent"){if(!this.magnet||this.magnet&&this.safeZone){if(this.vertSpeed==-1){this.d_y = this.speed;this.addY = this.speedAdditioner}else{this.d_y = this.vertSpeed}}}else{this.dirY=1}
+          }
           if (input.keys[87] || input.keys[38]) {
             this.dirY=-1;//if(this.className!="Cent"){if(!this.magnet||this.magnet&&this.safeZone){if(this.vertSpeed==-1){this.d_y = -this.speed;this.addY = -this.speedAdditioner}else{this.d_y= -this.vertSpeed}}}else{this.dirY=-1}
           }
           if (input.keys[65] || input.keys[37]) {
             this.dirX=-1;//if(this.className!="Cent"){this.d_x = -this.speed;this.addX = -this.speedAdditioner}else{this.dirX=-1}
-          }
-          if (input.keys[83] || input.keys[40]) {
-            this.dirY=1;//if(this.className!="Cent"){if(!this.magnet||this.magnet&&this.safeZone){if(this.vertSpeed==-1){this.d_y = this.speed;this.addY = this.speedAdditioner}else{this.d_y = this.vertSpeed}}}else{this.dirY=1}
           }
           if (input.keys[68] || input.keys[39]) {
             this.dirX=1;//if(this.className!="Cent"){this.d_x = this.speed;this.addX = this.speedAdditioner}else{this.dirX=1}
@@ -377,13 +384,13 @@ class Player {
         this.poison = false;
       }
       if (this.slowing) {
-        this.speedMultiplier *= 1-this.effectImmune*(1-0.7);
+        this.speedMultiplier *= (1-this.effectImmune*(1-0.7))*this.effectReplayer;
       }
       if (this.freezing) {
-        this.speedMultiplier *= 1-this.effectImmune*(1-0.2);
+        this.speedMultiplier *= (1-this.effectImmune*(1-0.2))*this.effectReplayer;
       }
       if(this.sticky || this.stickness>0){
-        this.speedMultiplier *= 1-this.effectImmune*(1-0.2)
+        this.speedMultiplier *= (1-this.effectImmune*(1-0.2))*this.effectReplayer;
       }
       if(this.className == "Brute"){
         if(this.energy == this.maxEnergy){
@@ -447,6 +454,7 @@ class Player {
     }
     if(this.radiusAdditioner!=0){this.radius=this.radiusAdditioner}
     this.radiusAdditioner = 0;
+    this.wasFrozen = this.frozen;
     if (this.frozen) {
       this.frozenTime -= time;
     }
@@ -464,13 +472,13 @@ class Player {
       }
     }
     if (this.draining) {
-      this.energy -= (16 * time / 1000)*this.effectImmune;
+      this.energy -= (16 * time / 1000)*this.effectImmune/this.effectReplayer;
       if (this.energy < 0) {
         this.energy = 0;
       }
     }
     if(this.burning) {
-      this.burningTimer+=time;
+      this.burningTimer+=time*this.effectImmune/this.effectReplayer;
       if(this.burningTimer>1000){
         death(this);
       }
@@ -567,13 +575,13 @@ class Player {
     if((this.magnet||this.vertSpeed != -1)&&!this.safeZone){vel = new Vector(this.vel.x, magneticSpeed);}
     else{vel = new Vector(this.vel.x, this.vel.y);}
     this.vertSpeed = -1;
-    if (!this.frozen) {
+    if (!this.wasFrozen) {
       this.pos.x += vel.x / 32 * timeFix;
       this.pos.y += vel.y / 32 * timeFix;
     }
     if(this.frozen&&this.magnet){this.pos.y += vel.y / 32 * timeFix;}
-    this.vel.x*=friction_factor;//(this.vel.x+this.vel.x*friction_factor)/2;
-    this.vel.y*=friction_factor//(this.vel.y+this.vel.y*friction_factor)/2;
+    //this.vel.x*=friction_factor;//(this.vel.x+this.vel.x*friction_factor)/2;
+    //this.vel.y*=friction_factor//(this.vel.y+this.vel.y*friction_factor)/2;
     this.speedMultiplier = 1;
     this.speedAdditioner = 0;
     this.regenAdditioner = 0;
@@ -1333,6 +1341,72 @@ class Candy extends Player {
     } else {this.aura = false; this.auraType = -1;}
   }
 }
+class Clown extends Player {
+  constructor(pos, speed) {
+    super(pos, 6, speed, "#ffb8c6", "Clown");
+    this.hasAB = true;
+    this.ab1 = heavy_ballon;
+    this.ab2 = rejoicing;
+    this.ab1L = 5;
+    this.ab2L = 1;
+    this.ab2ML = true;
+    this.firstTotalCooldown = 5000;
+    this.secondTotalCooldown = 0;
+    this.fixedRadius = 20/32
+    this.maxSpeed = 17;
+    this.maxUpgradableEnergy = 200;
+    this.maxRegen = 5;
+    this.effectReplayer = 0.5;
+    this.prevColor = 0;
+  }
+  abilities(time, area, offset) {
+    const colors = ["rgb(2, 135, 4, .8)","rgb(228, 122, 42, .8)","rgb(255, 219, 118, .8)","rgb(4, 70, 255, .8)", "rgb(216, 48, 162, .8)"]
+    if (this.firstAbility && this.firstAbilityCooldown == 0 && (this.energy >= 20 || this.clownBall)) {
+      const world = game.worlds[this.world];
+      if(this.clownBall){
+        const velocity = {x:0,y:0,angle:0}
+        if(this.mouseActive){
+          velocity.x = 12*Math.cos(this.mouse_angle)
+          velocity.y = 12*Math.sin(this.mouse_angle)
+        } else {
+          var directionX = 0;
+          var directionY = 0;
+          if(this.oldPos.x-this.pos.x<0){directionX = 1;}
+          else if(this.oldPos.x-this.pos.x>0){directionX = -1;}
+          if(this.oldPos.y-this.pos.y<0){directionY = 1;}
+          else if(this.oldPos.y-this.pos.y>0){directionY = -1;}
+          velocity.x = 12*directionX;
+          velocity.y = 12*directionY;
+        }
+        velocity.angle = Math.atan2(velocity.y, velocity.x);
+        const ball = new ClownTrail(new Vector(this.pos.x-world.pos.x-area.pos.x,this.pos.y-world.pos.y-area.pos.y),this.clownBallSize/32,velocity.angle,colors[this.prevColor]);
+        if(!area.entities["clown_trail"]){area.entities["clown_trail"] = []}
+        area.entities["clown_trail"].push(ball);
+        this.clownBall = false
+        this.clownBallSize = 20;
+        this.firstAbilityCooldown = 5000;
+      } else {
+        this.clownBall=true;
+        this.clownBallSize = 20;
+        this.energy-=20;
+        let color = this.prevColor;
+        while(color == this.prevColor){
+          color = Math.floor(Math.random()*5);
+        }
+        this.prevColor = color;
+      }
+    }
+    if(this.clownBall){
+      this.clownBallSize+=time/1000*30;
+      if(this.clownBallSize>92){
+        death(this);
+        this.clownBallSize = 20;
+        this.clownBall = false;
+      }
+    }
+
+  }
+}
 class Polygon extends Player {
   constructor(pos, speed) {
     super(pos, 7, speed, "#000000", "Polygon");
@@ -1565,7 +1639,8 @@ class Dasher extends Enemy {
     this.realVel = new Vector(this.vel.x, this.vel.y);
     this.dashed = false;
     this.clock = 0;
-    this.friction = 0.015*2;
+    this.friction = 0.030;
+    if(settings.sandbox){this.friction/=2}
   }
   behavior(time, area, offset, players) {
     this.clock += time;
@@ -1771,6 +1846,7 @@ class Switch extends Enemy {
     } else {
       this.Harmless = false;
     }
+    if(this.clownHarm){this.Harmless = true}
     this.clock = this.clock % 5000;
   }
 }
@@ -1979,6 +2055,19 @@ class IceSniper extends Enemy {
     }
   }
 }
+
+class Ice extends Enemy {
+  constructor(pos, radius, speed) {
+    super(pos, entityTypes.indexOf("immune") - 1, radius, speed, "#be89ff");
+    this.imune = true;
+    this.Harmless = true;
+  }
+  interact(player, worldPos) {
+    if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.radius && !player.god && !player.invicible) {
+        player.frozen = true;
+    }
+  }
+}
 class IceSniperBullet extends Entity {
   constructor(pos, angle, radius, speed) {
     super(pos, radius, "#8300ff");
@@ -1990,7 +2079,7 @@ class IceSniperBullet extends Entity {
   interact(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.radius && !player.god && !player.invicible) {
         player.frozen = true;
-        player.frozenTime = 1000*player.effectImmune;
+        player.frozenTime = 1000*player.effectImmune/player.effectReplayer;
     }
   }
 }
@@ -2032,7 +2121,7 @@ class PoisonSniperBullet extends Entity {
   interact(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.radius && !player.god&& !player.invicible) {
         player.poison = true;
-        player.poisonTime = 1000*player.effectImmune;
+        player.poisonTime = 1000*player.effectImmune/player.effectReplayer;
     }
   }
 }
@@ -2053,7 +2142,7 @@ class Toxic extends Enemy {
   }
   auraEffect(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.auraSize) {
-      const corrosive = 0.7*player.maxEnergy;
+      const corrosive = (0.7*player.effectReplayer)*player.maxEnergy;
       if(player.energy>corrosive){player.energy=corrosive}
     }
   }
@@ -2065,7 +2154,7 @@ class Enlarging extends Enemy {
   }
   auraEffect(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.auraSize) {
-      player.radiusAdditioner = 25/16/2;
+      player.radiusAdditioner = (15+10/player.effectReplayer)/32;
     }
   }
 }
@@ -2193,7 +2282,7 @@ class Gravity extends Enemy {
       var dy = player.pos.y - (this.pos.y + worldPos.y);
       var dist = distance(new Vector(0, 0), new Vector(dx, dy));
       var attractionAmplitude = Math.pow(2, -(dist / (100 / 32)));
-      var moveDist = this.gravity * attractionAmplitude*player.effectImmune;
+      var moveDist = (this.gravity * attractionAmplitude*player.effectImmune)/player.effectReplayer;
       var angleToPlayer = Math.atan2(dy, dx);
       player.pos.x -= (moveDist * Math.cos(angleToPlayer)) * (time / (1000 / 30))
       player.pos.y -= (moveDist * Math.sin(angleToPlayer)) * (time / (1000 / 30))
@@ -2211,7 +2300,7 @@ class Repelling extends Enemy {
       var dy = player.pos.y - (this.pos.y + worldPos.y);
       var dist = distance(new Vector(0, 0), new Vector(dx, dy));
       var attractionAmplitude = Math.pow(2, -(dist / (100 / 32)));
-      var moveDist = this.gravity * attractionAmplitude*player.effectImmune;
+      var moveDist = (this.gravity * attractionAmplitude*player.effectImmune)/player.effectReplayer;
       var angleToPlayer = Math.atan2(dy, dx);
       player.pos.x += (moveDist * Math.cos(angleToPlayer)) * (time / (1000 / 30))
       player.pos.y += (moveDist * Math.sin(angleToPlayer)) * (time / (1000 / 30))
@@ -2788,7 +2877,7 @@ class SpeedSniperBullet extends Entity {
   }
   interact(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.radius && !player.god && !player.invicible) {
-      if(player.speed>5){player.speed-=1*player.effectImmune; player.points+=2;}if(player.speed<5){player.speed = 5;}this.speed = 10000;
+      if(player.speed>5){player.speed-=(1*player.effectImmune)/player.effectReplayer; player.points+=2;}if(player.speed<5){player.speed = 5;}this.speed = 10000;
       this.vel.x = Math.cos(0) * this.speed;
       this.vel.y = Math.sin(0) * this.speed;
     }
@@ -2831,7 +2920,7 @@ class RegenSniperBullet extends Entity {
   }
   interact(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.radius && !player.god && !player.invicible) {
-      player.regen-=0.4*player.effectImmune; player.points+=2;this.speed = 10000;
+      player.regen-=(0.4*player.effectImmune)/player.effectReplayer; player.points+=2;this.speed = 10000;
       if(player.regen<1){player.regen = 1;}
       this.vel.x = Math.cos(0) * this.speed;
       this.vel.y = Math.sin(0) * this.speed;
@@ -2936,7 +3025,7 @@ class MagneticReduction extends Enemy {
   }
   auraEffect(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.auraSize) {
-      if(player.vertSpeed!=0){player.vertSpeed = 10-5*player.effectImmune;}
+      if(player.vertSpeed!=0){player.vertSpeed = (10-5*player.effectImmune)*player.effectReplayer;}
     }
   }
 }
@@ -3128,7 +3217,7 @@ class StickySniperBullet extends Entity {
   }
   interact(player, worldPos) {
     if (distance(player.pos, new Vector(this.pos.x + worldPos.x, this.pos.y + worldPos.y)) < player.radius + this.radius && !player.god && !player.invicible) {
-      player.stickness = 1000;
+      player.stickness = 1000/player.effectReplayer;
       this.toRemove = true;
     }
   }
@@ -3140,6 +3229,7 @@ class StickyTrail extends Enemy {
     this.clock = 0;
     this.alpha = 1;
     this.radius = 8/32;
+    this.imune = true;
   }
   behavior(time, area, offset, players) {
     this.radius = 5/32*Math.min(2500,this.clock)/250;
@@ -3157,4 +3247,39 @@ class StickyTrail extends Enemy {
       player.sticky = true;
     }
   }
+}
+
+class ClownTrail extends Enemy {
+  constructor(pos,radius,angle,color) {
+    super(pos, entityTypes.indexOf("clown_trail") - 1, radius, 12, color);
+    this.clock = 0;
+    this.alpha = 1;
+    this.radius = radius;
+    this.angle = angle;
+    this.speed = 12;
+    this.angleToVel();
+    this.no_collide = true;
+    this.clown = true;
+  }
+  behavior(time, area, offset, players) {
+    this.radius = this.radius - (this.clock/1000)/5;
+    this.clock += time;
+    this.alpha -= time/1500;
+    if(this.alpha<=0){this.alpha=0.001}
+    if(this.clock>=1500){
+      this.toRemove = true;
+    }
+    for(var i in area.entities){
+      const entities = area.entities[i];
+      for(var j in entities){
+        const entity = entities[j];
+        if (distance(this.pos, new Vector(entity.pos.x, entity.pos.y)) < this.radius + entity.radius && !entity.imune && !entity.Harmless && !entity.clown) {
+          entity.Harmless = true;
+          entity.clownHarm = true;
+          setTimeout(()=>{entity.Harmless = false;entity.clownHarm = false;},1500)
+        }
+      }
+    }
+  }
+  interact(){}
 }

@@ -3,13 +3,21 @@ const hexToRgb = hex =>
              ,(m, r, g, b) => '#' + r + r + g + g + b + b)
     .substring(1).match(/.{2}/g)
     .map(x => parseInt(x, 16))
-    
-function renderArea(area, players, focus) {
+
+let canv;
+
+function renderArea(area, players, focus, old) {
   var ligth = document.createElement('canvas');
   var context1 = ligth.getContext("2d");
   ligth.width = width,
-    ligth.height = height;
-  renderTiles(area, players, focus)
+  ligth.height = height;
+  var world = game.worlds[players[0].world];
+  if(old.area!=players[0].area||old.world!=players[0].world||!canv){
+    canv = renderTiles(area, players, focus);
+  }
+  if(canv){
+    context.drawImage(canv.can,(-focus.x)*fov+width/2+area.pos.x*fov,(-focus.y)*fov+height/2+area.pos.y*fov)//-focus.x*fov,-focus.y*fov)//(-focus.x+world.pos.x)*fov,(-focus.y+world.pos.y)*fov);
+  }
   renderFirstEntities(area, players, focus)
   renderAssets(area, players, focus)
   context.globalAlpha = 1;
@@ -144,6 +152,12 @@ function renderArea(area, players, focus) {
     context.fillRect(370, height - (width / 2 - 258 - 370), width / 2 - 258 - 370, width / 2 - 258 - 370);
     context.closePath();
   }
+  if (settings.sandbox) {
+    context.beginPath();
+    context.fillStyle = "black"
+    context.fillRect(370, height - ((width / 2 - 258 - 370) * 2), width / 2 - 258 - 370, width / 2 - 258 - 370);
+    context.closePath();
+  }
   context.beginPath();
   context.fillStyle = "black"
   //context.fillRect(370, height - ((width / 2 - 258 - 370) * 2), width / 2 - 258 - 370, width / 2 - 258 - 370);
@@ -151,6 +165,10 @@ function renderArea(area, players, focus) {
 }
 
 function renderTiles(area, players, focus) {
+  var boundary = area.boundary; let wid = boundary.w*32, heig = boundary.h*32, world = game.worlds[players[0].world];
+  const can = createOffscreenCanvas(wid,heig)
+  const ctx = can.getContext('2d');
+  ctx.translate(-Math.round(width / 2 + ((area.pos.x)) * fov),-Math.round(height / 2 + ((area.pos.y)) * fov))
   for (var i in area.zones) {
     var zone = area.zones[i];
     var areaXMinus = 0;
@@ -161,7 +179,7 @@ function renderTiles(area, players, focus) {
     if(area.pos.y!=Math.round(area.pos.y))areaYMinus = Math.round(area.pos.y) - area.pos.y
     for (var j = 0; j < zone.size.x; j++) {
       for (var k = 0; k < zone.size.y; k++) {
-        context.beginPath();
+        ctx.beginPath();
         var posX = ((area.pos.x + zone.pos.x + j) % 4);
         var posY = ((area.pos.y + zone.pos.y + k) % 4);
         if (posX < 0) {
@@ -173,33 +191,28 @@ function renderTiles(area, players, focus) {
         var sizeX = zone.size.x;
         posX-=areaXMinus;
         posY-=areaYMinus;
-        var player = players[0];
-        var fovMult = 1.3;
-        var rect1 = {x:player.pos.x-16*fovMult,y:player.pos.y-16/1.4,width:32*fovMult,height:32/1.4};
-        var rect2 = {x:area.pos.x + zone.pos.x + j,y:area.pos.y + zone.pos.y + k,width:1,height:1};
-        if (rect1.x < rect2.x + rect2.width &&
-          rect1.x + rect1.width > rect2.x &&
-          rect1.y < rect2.y + rect2.height &&
-          rect1.y + rect1.height > rect2.y) {
-          context.imageSmoothingEnabled = true;
-          context.drawImage(img2, Math.abs(posX) * 32 + zone.type * 128, Math.abs(posY) * 32 + area.texture * 128, 32, 32, Math.round(width / 2 + ((area.pos.x + zone.pos.x + j) - focus.x) * fov), Math.round(height / 2 + ((area.pos.y + zone.pos.y + k) - focus.y) * fov), fov, fov);
-          context.closePath();
-          context.beginPath();
-          context.fillStyle = area.background_color;
-          context.fillRect(Math.round(width / 2 + ((area.pos.x + zone.pos.x + j) - focus.x) * fov), Math.round(height / 2 + ((area.pos.y + zone.pos.y + k) - focus.y) * fov), fov, fov);
-          context.fill();
-          context.closePath();
+        //console.log(Math.round(width / 2 + ((area.pos.x + zone.pos.x + j)) * fov))
+        //console.log(Math.round(height / 2 + ((area.pos.y + zone.pos.y + k)) * fov))
+        //console.log(width,height)
+          ctx.imageSmoothingEnabled = true;
+          ctx.drawImage(img2, Math.abs(posX) * 32 + zone.type * 128, Math.abs(posY) * 32 + area.texture * 128, 32, 32, Math.round(width / 2 + ((area.pos.x + zone.pos.x + j)) * fov), Math.round(height / 2 + ((area.pos.y + zone.pos.y + k)) * fov), fov, fov);
+          ctx.closePath();
+          ctx.beginPath();
+          ctx.fillStyle = area.background_color;
+          ctx.fillRect(Math.round(width / 2 + ((area.pos.x + zone.pos.x + j)) * fov), Math.round(height / 2 + ((area.pos.y + zone.pos.y + k)) * fov), fov, fov);
+          ctx.fill();
+          ctx.closePath();
           if (zone.color) {
-            context.beginPath();
-            context.fillStyle = zone.background_color;
-            context.fillRect(Math.round(width / 2 + ((area.pos.x + zone.pos.x + j) - focus.x) * fov), Math.round(height / 2 + ((area.pos.y + zone.pos.y + k) - focus.y) * fov), fov, fov);
-            context.fill();
-            context.closePath();
+            ctx.beginPath();
+            ctx.fillStyle = zone.background_color;
+            ctx.fillRect(Math.round(width / 2 + ((area.pos.x + zone.pos.x + j)) * fov), Math.round(height / 2 + ((area.pos.y + zone.pos.y + k)) * fov), fov, fov);
+            ctx.fill();
+            ctx.closePath();
           }
-        }
       }
     }
   }
+  return {can:can,ctx:ctx};
 }
 
 function renderFirstEntities(area, players, focus) {
@@ -287,6 +300,18 @@ function renderPlayers(area, players, focus) {
         context.fill();
         context.closePath();
       }
+    }
+
+    if(player.clownBall){
+      const colors = ["rgb(2, 135, 4, .8)","rgb(228, 122, 42, .8)","rgb(255, 219, 118, .8)","rgb(4, 70, 255, .8)", "rgb(216, 48, 162, .8)"]
+      context.beginPath();
+      context.fillStyle = colors[player.prevColor]
+      context.strokeStyle = "black"
+      context.lineWidth = 2;
+      context.arc(width / 2 + (player.pos.x - focus.x) * fov, height / 2 + (player.pos.y - focus.y) * fov, player.clownBallSize/32 * fov, 0, Math.PI * 2, true);
+      context.fill();
+      if(settings.outline)context.stroke();
+      context.closePath();
     }
     context.beginPath();
     if (!player.die) {
@@ -466,6 +491,28 @@ function renderSecondEntities(area, players, focus) {
 }
 
 function renderMinimap(area, players, focus) {
+  /*this.minimapWidth=this.maxWidth,this.minimapHeight=this.maxHeight;
+  var e={};
+  e.centerX=this.self.entity.x;
+  e.centerY=this.self.entity.y;
+  e.width=this.minimapWidth/.1;
+  e.height=this.minimapHeight/.1;
+  e.left=this.self.entity.x-e.width/2;
+  e.top=this.self.entity.y-e.height/2;
+  this.renderBackground(t,e);
+  for(var i=0;i<this.entities.length;i++){
+    var a=this.entities[i];
+    n=.1*(a.x-e.centerX)+this.left+this.minimapWidth/2;
+    r=.1*(a.y-e.centerY)+this.top+this.minimapHeight/2;
+    if(a.wall){
+      var h=.1*a.width;
+      s=.1*a.height;
+      renderWall(t,a,n,r,h,s)}
+    else{
+      var o=.1*a.radius;
+      renderEntity(t,a,n,r,o);
+    }}*/
+  //drawNearbyMinimap(focus,context,canvas,area.zones,area.pos)
   var minimapSize = new Vector(370, 100)
   var bound = area.boundary;
   var xCoef = minimapSize.x / bound.w;
@@ -560,6 +607,7 @@ function renderUI(area, players, focus) {
       var abL = (a==1) ? players[0].ab1L : players[0].ab2L;
       var abC = (a==1) ? players[0].firstAbilityCooldown : players[0].secondAbilityCooldown;
       var abTC = (a==1) ? players[0].firstTotalCooldown : players[0].secondTotalCooldown;
+      var ab1ML = (a==1) ? players[0].ab1ML||false : players[0].ab2ML||false;
       if(!abL){text = text3;}
       var correct = (a==1) ? 0 : 82;
       context.fillStyle = "white";
@@ -577,7 +625,7 @@ function renderUI(area, players, focus) {
         (!abL)?context.strokeStyle="rgb(150, 150, 150)":context.strokeStyle="rgb(200, 200, 200)"
         context.beginPath();
         var h = width / 2 - 516 / 2 + 105 + 41 + 246 + correct - 24 + 5; var f = h + 40; var y = height - 85 - 3 + 17 + 44 - 17 - 24 + 45 - 48 - 6;
-        var b = b=h+(f-h)*(p/(5-1))
+        var b = (ab1ML)? (h+(f-h)*(2/(5-1))):h+(f-h)*(p/(5-1))
         context.arc(b,y,3,0,Math.PI * 2, true)
         context.stroke();
         context.closePath();
@@ -587,7 +635,7 @@ function renderUI(area, players, focus) {
       for(var p = 0; p<abL; p++){
         context.beginPath();
         var h = width / 2 - 516 / 2 + 105 + 41 + 246 + correct - 24 + 5; var f = h + 40; var y = height - 85 - 3 + 17 + 44 - 17 - 24 + 45 - 48 - 6;
-        var b = b=h+(f-h)*(p/(5-1))
+        var b = (ab1ML)? (h+(f-h)*(2/(5-1))):h+(f-h)*(p/(5-1))
         context.arc(b,y,3,0,Math.PI * 2, true)
         if(abL)context.fill();
         if(abL)context.stroke();

@@ -303,7 +303,7 @@ class World {
             type: values.types,
             radius: values.radius,
             speed: values.speed,//*1.25,
-            count: count,//Math.ceil(count*1.25),
+            count: count,//Math.ceil(count*1),
             x:values.x,
             y:values.y,
           }
@@ -782,6 +782,9 @@ class Area {
         }
         if (this.preset[i].type[rand] == "sticky_sniper") {
           enemy = new StickySniper(new Vector(posX, posY), this.preset[i].radius / 32, this.preset[i].speed)
+        }
+        if (this.preset[i].type[rand] == "ice") {
+          enemy = new Ice(new Vector(posX, posY), this.preset[i].radius / 32, this.preset[i].speed)
         }
         enemy.isSpawned = true;
         this.entities[this.preset[i].type].push(enemy)
