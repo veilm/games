@@ -2,185 +2,186 @@
 <html>
 
 <head>
-  <title>evades</title>
-  <style type="text/css">
-    canvas {
-      position: absolute;
-      display: block;
-      transform-origin: center center;
-      cursor: default;
-    }
+	<title>evades</title>
+	<style type="text/css">
+		canvas {
+			position: absolute;
+			display: block;
+			transform-origin: center center;
+			cursor: default;
+		}
 
-    html,
-    body {
-      background-color: #222;
-      margin: 0px;
-      overflow: hidden;
-      font-family: Verdana, Arial, Times, serif;
-    }
+		html,
+		body {
+			background-color: #222;
+			margin: 0px;
+			overflow: hidden;
+			font-family: Verdana, Arial, Times, serif;
+		}
 
-    p {
-      margin: 0px;
-      font-size: 20px;
-      color: #FFF
-    }
+		p {
+			margin: 0px;
+			font-size: 20px;
+			color: #FFF
+		}
 
-    #main {
-      position: fixed;
-      left: 0px;
-      top: 0px;
-      width: 100%;
-      height: 100%;
-      margin-top: 20px;
-    }
+		#main {
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			margin-top: 20px;
+		}
 
-    #play {
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
+		#play {
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
 
 
-    #connect {
-      position: relative;
-      width: 115px;
-      color: rgb(255,255,255);
-      font-weight: bold;
-      text-align: center;
-      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-      font-size: 15px;
-      cursor: pointer;
-      height: 47px;
-      line-height: 47px;
-      border-radius: 34px;
-      border-color: white;
-      display: inline-block;
-      background-color: #a3a3a3;
-      transition:.5s;
-    }
-    #connect:hover {
-      background-color: #63c458;
-    }
-    #interact {
-      background-color: #EEE;
-      padding: 4px;
-    }
-    #panel{
-      position: fixed;
-      left: 0px;
-      top: 0px;
-      z-index: 20;
-    }
-    #name{
-      position: fixed;
-      left: 10px;
-      top: 70px;
-      z-index: 20;
-    }
-    #world {
-      margin: 10px
-    }
+		#connect {
+			position: relative;
+			width: 115px;
+			color: rgb(255,255,255);
+			font-weight: bold;
+			text-align: center;
+			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+			font-size: 15px;
+			cursor: pointer;
+			height: 47px;
+			line-height: 47px;
+			border-radius: 34px;
+			border-color: white;
+			display: inline-block;
+			background-color: #a3a3a3;
+			transition:.5s;
+		}
+		#connect:hover {
+			background-color: #63c458;
+		}
+		#interact {
+			background-color: #EEE;
+			padding: 4px;
+		}
+		#panel{
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			z-index: 20;
+		}
+		#name{
+			position: fixed;
+			left: 10px;
+			top: 70px;
+			z-index: 20;
+		}
+		#world {
+			margin: 10px
+		}
 
-    #alert {
-      position: absolute;
-      bottom: 10px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
+		#alert {
+			position: absolute;
+			bottom: 10px;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
 
-    #settings {
-      position: absolute;
-      left: 0px;
-      top: 50%;
-      background-color: white;
-      padding: 5px;
-    }
-    .settingsElement {
-      margin: 5px;
-    }
-  </style>
-  <link rel="icon" href="texture/favicon.ico" />
+		#settings {
+			position: absolute;
+			left: 0px;
+			top: 50%;
+			background-color: white;
+			padding: 5px;
+		}
+		.settingsElement {
+			margin: 5px;
+		}
+	</style>
+	<link rel="icon" href="texture/favicon.ico" />
 </head>
 
 <body>
-  <div id="menu">
-    <div id="main">
-      <div id="play">
-        <button type="button" name="button" id="connect">Enter game</button><br>
-        <select id='hero'>
-          <option>Normal</option>
-          <option>Magmax</option>
-          <option>Rime</option>
-          <!-- <option>Morfe</option> -->
-          <option>Aurora</option>
-          <option>Brute</option>
-          <option>Shade</option>
-          <!-- <option>Chrono</option> -->
-          <option>Reaper</option>
-          <option>Rameses</option>
-          <option>Cent</option>
-          <option>Jötunn</option>
-          <option>Candy</option>
-          <option>Burst</option>
-          <option>Lantern</option>
-          <option>Pole</option>
-          <option>Polygon</option>
-          <option>Clown</option>
-          <option>Idk</option>
-        </select>
-      </div>
-    </div>
-    <div id='alert'></div>
-    <div id="panel">
-      <div id="interact">
-        <input type="file" id="load" accept="application/x-yaml" name="file">
-      </div>
-      <select id='world'>
-        <option>Original</option>
-        <option>Hard</option>
-        <option>Bruh</option>
-        <option>Custom</option>
-      </select>
-      <select id='diff'>
-        <option>Easy</option>
-        <option>Hard</option>
-      </select>
-      <select id='wreath'>
-        <option>Gold</option>
-        <option>Spring</option>
-        <option>Autumn</option>
-        <option>Winter</option>
-        <option>Summer</option>
-        <option>None</option>
-      </select>
-    </div>
-    <div id="name">
-      <input type="text" id="nick" value="Ravelfett">
-    </div>
-    <div id="settings">
-      <div>Settings:</div>
-      <div class="settingsElement">
-        <input type="checkbox" id="checkbox" checked>
-  <label>Enemy outline</label>
-  <br>
-  <br>
-        <input type="checkbox" id="sandbox">
-  <label>Sandbox(60FPS,less frictions)</label>
-      </div>
-    </div>
-  </div>
-  <div id="gamed" style="display:none;">
-    <canvas id="game" oncontextmenu="return false;" width="1280" height="720"></canvas>
-  </div>
-  <script src="evades_yaml.js"></script>
-  <script src="maps.js"></script>
-  <script src="listeners.js"></script>
-  <script src="vector.js"></script>
-  <script src="utils.js"></script>
-  <script src="entities.js"></script>
-  <script src="game.js"></script>
-  <script src="drawer.js"></script>
-  <script src="main.js"></script>
+	<div id="menu">
+		<div id="main">
+			<div id="play">
+				<button type="button" name="button" id="connect">Enter game</button><br>
+				<select id="hero">
+					<option>Normal</option>
+					<option>Magmax</option>
+					<option>Rime</option>
+					<!-- <option>Morfe</option> -->
+					<option>Aurora</option>
+					<option>Brute</option>
+					<option>Shade</option>
+					<!-- <option>Chrono</option> -->
+					<option>Reaper</option>
+					<option>Rameses</option>
+					<option>Cent</option>
+					<option>Jötunn</option>
+					<option>Candy</option>
+					<option>Burst</option>
+					<option>Lantern</option>
+					<option>Pole</option>
+					<option>Polygon</option>
+					<option>Clown</option>
+					<option>Idk</option>
+				</select>
+			</div>
+		</div>
+		<div id="alert"></div>
+		<div id="panel">
+			<div id="interact">
+				<input type="file" id="load" accept="application/x-yaml" name="file">
+			</div>
+			<select id="world">
+				<option>Original</option>
+				<option>Hard</option>
+				<option>Bruh</option>
+				<option>Custom</option>
+			</select>
+			<select id="diff">
+				<option>Easy</option>
+				<option>Hard</option>
+			</select>
+			<select id="wreath">
+				<option>Gold</option>
+				<option>Spring</option>
+				<option>Autumn</option>
+				<option>Winter</option>
+				<option>Summer</option>
+				<option>None</option>
+			</select>
+		</div>
+		<div id="name">
+			<input type="text" id="nick" value="Ravelfett">
+		</div>
+		<div id="settings">
+			<div>Settings:</div>
+			<div class="settingsElement">
+				<input type="checkbox" id="checkbox" checked>
+				<label>Enemy outline</label>
+				<br>
+				<br>
+				<input type="checkbox" id="sandbox">
+				<label>Sandbox(60FPS,less frictions)</label>
+			</div>
+		</div>
+	</div>
+	<div id="gamed" style="display:none;">
+		<canvas id="game" oncontextmenu="return false;" width="1280" height="720"></canvas>
+	</div>
+
+	<script src="evades_yaml.js"></script>
+	<script src="maps.js"></script>
+	<script src="listeners.js"></script>
+	<script src="vector.js"></script>
+	<script src="utils.js"></script>
+	<script src="entities.js"></script>
+	<script src="game.js"></script>
+	<script src="drawer.js"></script>
+	<script src="main.js"></script>
 </body>
 </html>
