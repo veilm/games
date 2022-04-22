@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link href="https://unpkg.com/sakura.css/css/sakura.css" rel="stylesheet">
+
+		<title>Something Something Syntax</title>
+	</head>
+	<body>
+		<h1>Syntax</h1>
+		<a href="index.html">Back</a>
+		<hr>
+
+		<p>Here is a formal definition of the syntax that I came up
+		with using
+		<a href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">EBNF</a>.
+		I didn't bother with a proper tutorial because you could already infer everything
+		from the provided default input.</p>
+
+		<pre>
+six-letters = "A" | "B" | "C" | "D" | "E" | "F"
+            | "a" | "b" | "c" | "d" | "e" | "f" ;
+hex-char = six-letters | "0" | "1" | "2" | "3"
+         | "4" | "5" | "6" ;
+
+hex-three  = 3 * hex-char ;
+hex-six    = 6 * hex-char ;
+hex-colour = "#", hex-three | hex-six ;
+
+newline = "\n" ;
+letter = six-letters 
+       | "H" | "I" | "J" | "K" | "L" | "M" | "N"
+       | "O" | "P" | "Q" | "R" | "S" | "T" | "U"
+       | "V" | "W" | "X" | "Y" | "Z" | "g" | "h"
+       | "i" | "j" | "k" | "l" | "m" | "n" | "o"
+       | "p" | "q" | "r" | "s" | "t" | "u" | "v"
+       | "w" | "x" | "y" | "z" ;
+word = letter, { letter }, newline ;
+
+colour-property = ( "fg" | "bg" ), ":", hex-colour ;
+opt-property    = "opt:", word ;
+property        = "+ ", ( colour-property | opt-property ), newline ;
+
+element = word, { property } ;
+input = element, { element } ;</pre>
+	</body>
+</html>
