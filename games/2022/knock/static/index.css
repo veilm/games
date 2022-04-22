@@ -1,0 +1,22 @@
+body {
+	margin-top: 5em;
+}
+
+hr {
+	margin: 25px;
+}
+
+p {
+	margin-bottom: 10px;
+	text-align: center;
+	font-size: 50px;
+}
+
+input[type="button"] {
+	display: block;
+	margin: auto;
+}
+
+.hidden {
+	display: none;
+}

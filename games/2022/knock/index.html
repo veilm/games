@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link href="/static/sakura.css" rel="stylesheet">
+		<link href="/static/index.css" rel="stylesheet">
+
+		<title>Knock Knock</title>
+	</head>
+	<body>
+		<hr>
+
+		<div id="part_1">
+			<p>Knock knock.</p>
+			<input id="button_1" type="button" value="Who's there?">
+		</div>
+
+		<div id="part_2" class="hidden">
+			<p id="joke_1">Setup</p>
+			<input id="button_2" type="button" value="Setup Who?">
+		</div>
+
+		<div id="part_3" class="hidden">
+			<p id="joke_2">Punchline</p>
+			<input id="button_3" type="button" value="Thank you, that was a very funny joke. Please give me another one.">
+		</div>
+
+		<hr>
+		<p style="font-size: 14px;">by Michael Skyba</p>
+
+		<script>
+			const joke_input = "{{.}}";
+		</script>
+		<script src="/static/jokes.js"></script>
+	</body>
+</html>
