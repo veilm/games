@@ -1,0 +1,704 @@
+
+
+
+<!DOCTYPE html>
+    <head> 
+        <title> Card Guesser </title>
+        <style>
+            .center
+                {
+                    display: block;
+                    margin: auto;
+                }
+
+            .img
+                {
+                    display: none;
+                }
+        </style>
+    </head>
+
+    <body>
+        <img src="smile.png" id="smile" class="img">
+        <img src="skull.png" id="skull" class="img">
+
+        <div></div> <!-- Don't get rid of this, it's for the Canvas -->
+
+        <script src="SGM.js"></script>
+
+        <script>
+            { //setUp and variables
+                var phase = "menu";
+                var cheating = "";
+                var clicked = [0, 0, 0, 0, 0, 0, 0, 0];
+                var colours = [rHex(), rHex(), rHex(), rHex(), rHex(), rHex(), rHex(), rHex()];
+                var stage = 0;
+                var upcomingPhase = "";
+                var card_states=["normal","normal","normal","normal","normal","normal","normal","normal"];
+                var opacity = 0;
+                var tokens = 50;
+                var tokens_gained=0;
+                var playX= 0;
+                var playY=0;
+                var fade = false;
+                var ifade = 1;
+
+                setUpCanvas(900, 600, false);
+                ctx.globalAlpha = 0.5;
+
+                canvas.addEventListener('mousedown', onDown, false); 
+            }
+
+            function onDown(event)
+            {
+                //alert(event.pageX+" "+event.pageY);
+
+                if (phase == "menu" && fade == false)
+                {
+                    if(event.pageX > 330 && event.pageY > 255 && event.pageX < 585 && event.pageY < 330)
+                    {
+                        fade=true;
+                        tokens-=10;
+                        ifade=1;
+                        upcomingPhase="play";
+                        tokens_gained = 0;
+                        clicked = [0, 0, 0, 0, 0, 0, 0, 0];
+                    }
+                    if(event.pageX > 330 && event.pageY > 355 && event.pageX < 585 && event.pageY < 430)
+                    {
+                        fade = true;
+                        ifade = 1;
+                        upcomingPhase="tutorial";
+                    }
+                }
+                else if (phase == "play")
+                {
+                    if (event.pageX > 605 && event.pageY > 545 && event.pageX < 795 && event.pageY < 595) cash();
+                    switch(stage)
+                    {
+                        case 1:
+                            for(i=0;i<4;i++)
+                            {
+                                if (event.pageX > 25 + 225*i && event.pageY > 90 && event.pageX < 215 + 225*i && event.pageY < 275  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 8) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=9;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            for(i=4;i<8;i++)
+                            {
+                                if (event.pageX > 25 + 225*(i-4) && event.pageY > 350 && event.pageX < 215 + 225*(i-4) && event.pageY < 540  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 8) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=9;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            break;
+                         
+                        case 2:
+                            for(i=0; i < 3; i++)
+                            {
+                                if (event.pageX > 70 + 300*i && event.pageY > 90 && event.pageX < 260 + 300*i && event.pageY < 275  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 7) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=11;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            for(i=3;i<7;i++)
+                            {
+                                if (event.pageX > 25 + 225*(i-3) && event.pageY > 350 && event.pageX < 215 + 225*(i-3) && event.pageY < 540  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 7) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=11;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            break;
+
+                        case 3:
+                            for(i=0; i < 3; i++)
+                            {
+                                if (event.pageX > 70 + 300*i && event.pageY > 90 && event.pageX < 260 + 300*i && event.pageY < 275  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 6) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=13;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            for(i=3; i < 6; i++)
+                            {
+                                if (event.pageX > 70 + 300*(i-3) && event.pageY > 350 && event.pageX < 260 + 300*(i-3) && event.pageY < 540  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 6) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=13;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            break;
+
+                        case 4: 
+                            if (event.pageX > 215 && event.pageY > 90 && event.pageX < 400 && event.pageY < 275  && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 5) == 2)
+                                    {
+                                        card_states[0]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[0]="smile";
+                                        winner();
+                                        tokens_gained=16;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 515 && event.pageY > 90 && event.pageX < 700 && event.pageY < 275  && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 5) == 2)
+                                    {
+                                        card_states[1]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[1]="smile";
+                                        winner();
+                                        tokens_gained=16;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            for(i=2; i < 5; i++)
+                            {
+                                if (event.pageX > 70 + 300*(i-2) && event.pageY > 350 && event.pageX < 260 + 300*(i-2) && event.pageY < 540  && clicked[stage] == 0)
+                                {
+                                    if (RNG(1, 5) == 2)
+                                    {
+                                        card_states[i]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[i]="smile";
+                                        winner();
+                                        tokens_gained=16;
+                                        clicked[stage] = 1;
+                                    }
+                                }
+                            }
+                            break;
+
+                        case 5: 
+                            if (event.pageX > 215 && event.pageY > 90 && event.pageX < 400 && event.pageY < 275 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 4) == 2)
+                                    {
+                                        card_states[0]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[0]="smile";
+                                        winner();
+                                        tokens_gained=21;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 515 && event.pageY > 90 && event.pageX < 700 && event.pageY < 275 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 4) == 2)
+                                    {
+                                        card_states[1]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[1]="smile";
+                                        winner();
+                                        tokens_gained=21;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 215 && event.pageY > 350 && event.pageX < 400 && event.pageY < 535 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 4) == 2)
+                                    {
+                                        card_states[2]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[2]="smile";
+                                        winner();
+                                        tokens_gained=21;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 515 && event.pageY > 350 && event.pageX < 700 && event.pageY < 535 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 4) == 2)
+                                    {
+                                        card_states[3]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[3]="smile";
+                                        winner();
+                                        tokens_gained=21;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            break;
+
+                        case 6:
+                            if (event.pageX > 360 && event.pageY > 90 && event.pageX < 550 && event.pageY < 275 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 3) == 2)
+                                    {
+                                        card_states[0]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[0]="smile";
+                                        winner();
+                                        tokens_gained=34;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 215 && event.pageY > 350 && event.pageX < 400 && event.pageY < 535 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 3) == 2)
+                                    {
+                                        card_states[1]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[1]="smile";
+                                        winner();
+                                        tokens_gained=34;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 515 && event.pageY > 350 && event.pageX < 700 && event.pageY < 535 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 3) == 2)
+                                    {
+                                        card_states[2]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[2]="smile";
+                                        winner();
+                                        tokens_gained=34;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            break;
+
+                        case 7: 
+                            if (event.pageX > 360 && event.pageY > 90 && event.pageX < 550 && event.pageY < 275 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 2) == 2)
+                                    {
+                                        card_states[0]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[0]="smile";
+                                        winner();
+                                        tokens_gained=70;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            if (event.pageX > 360 && event.pageY > 350 && event.pageX < 550 && event.pageY < 535 && clicked[stage] == 0)
+                            {
+                                if (RNG(1, 2) == 2)
+                                    {
+                                        card_states[1]="skull";
+                                        loser();
+                                        clicked[stage] = 1;
+                                    }
+                                    else
+                                    {
+                                        card_states[1]="smile";
+                                        winner();
+                                        tokens_gained=70;
+                                        clicked[stage] = 1;
+                                    }
+                            }
+                            break;
+                    }
+                }
+                else if (phase == "lose")
+                {
+                    if(event.pageX > 330 && event.pageY > 355 && event.pageX < 585 && event.pageY < 430)
+                    {
+                        fade = true;
+                        ifade = 1;
+                        upcomingPhase="menu";
+                    }
+                }
+                else if (phase == "win")
+                {
+                    if(event.pageX > 330 && event.pageY > 355 && event.pageX < 585 && event.pageY < 430) cash();
+                }
+                else if (phase == "tutorial")
+                {
+                    if (event.pageX> 725 && event.pageY > 520 && event.pageX < 895 && event.pageY < 595)
+                    {
+                        if (stage == 7)
+                        {
+                            fade=true;
+                            ifade=1;
+                            upcomingPhase="menu";
+                        }
+                        else
+                        {
+                            fade= true;
+                            ifade=1;
+                            upcomingPhase="tutorial";
+                        }
+                    }
+                }
+            }
+
+            document.onkeydown = function(e)
+            {
+                e = e || window.event;
+                switch(e.keyCode)
+                {
+                    case 32:
+                        tokens+=50;
+                        cheating = "* This player is cheating. *";
+                        break;
+                        
+                    case 69:
+                        winner();
+                        cheating = "* This player is cheating. *";
+                        break;
+                        
+                }
+            }
+
+            setInterval(update, 25)
+
+            function update()
+
+            {
+                drawSquare(0, 0, 900, 600, "fc3a20");
+                drawSquare(5, 5, 890, 590, "f2f2f2");
+                write(130, 30, "000", 20, "Tokens remaining: "+tokens);
+                write(130, 46, "fc3a20", 20, cheating);
+                write(450, 580, "000", 20, "Michael Skyba, 2019");
+
+                if (phase == "menu")
+                {
+                    write(450, 200, "000", 52, "Welcome to Card Guesser!");
+                    drawSquare(320, 245, 260, 80, "000");
+                    drawSquare(325, 250, 250, 70, "fc3a20");
+                    drawSquare(320, 345, 260, 80, "000");
+                    drawSquare(325, 350, 250, 70, "fc3a20");
+                    write(450, 295, "000", 40, "Play (-10)");
+                    write(450, 395, "000", 40, "Tutorial");
+                }
+                else if (phase=="tutorial")
+                {
+                    drawSquare(717, 510, 173, 80, "000");
+                    drawSquare(722, 515, 163, 70, "fc3a20");
+                    write(803.5, 560, "000", 42, "Next");
+                    
+                    switch(stage)
+                    {
+                        case 1:
+                            write(450, 75, "000", 52, "Tutorial");
+                            write(450, 150, "000", 40, "Card Guesser is all about");
+                            write(450, 200, "000", 40, "guessing cards and winning tokens.");
+                            write(600, 325, "000", 36, "Guess the right cards to")
+                            write(600, 375, "000", 36, "gain as many tokens")
+                            write(600, 425, "000", 36, "as you can!")
+                            drawCard(160, 280, "normal", "fc3a20");
+                            break;
+                            
+                        case 2:
+                            write(450, 100, "000", 40, "When the game starts, you will be");
+                            write(450, 150, "000", 40, "presented with a set of cards.");
+                            write(205, 215, "000", 28, "One of them will");
+                            write(205, 250, "000", 28, "be a skull card.");
+                            write(655, 250, "000", 28, "The rest will be smile cards.");
+                            drawCard(110, 280, "skull", "fc3a20");
+                            drawCard(560, 280, "smile", "fc3a20");
+                            break;
+                            
+                        case 3:
+                            drawCard(355, 280, "skull", "fc3a20");
+                            write(450, 100, "000", 40, "If you choose the skull card,");
+                            write(450, 150, "000", 40, "you will lose, and gain no tokens.");
+                            break;
+                            
+                        case 4:
+                            drawCard(355, 280, "smile", "fc3a20");
+                            write(450, 100, "000", 40, "If you choose the smile card,");
+                            write(450, 150, "000", 40, "you will advance, and your");
+                            write(450, 200, "000", 40, "'Tokens Gained' will increase.");
+                            break;
+                            
+                        case 5:
+                            write(450, 75, "000", 26, "Once you are ready, you can click the 'Cash Out' button");
+                            write(450, 125, "000", 26, "to leave the game and gain your tokens.");
+                            write(450, 225, "000", 26, "If you cash out too early, you won't gain more")
+                            write(450, 275, "000", 26, "than 10 tokens, and you won't profit.")
+                            write(450, 375, "000", 26, "If you wait too long to cash out, you might get a");
+                            write(450, 425, "000", 26, "skull card, and then you will gain no tokens at all!");
+                            write(450, 525, "000", 26, "Cash out wisely!");
+                            break;
+                            
+                        case 6:
+                            write(450, 150, "000", 40, "If you decide to not cash out at");
+                            write(450, 200, "000", 40, "all, you can try to win every stage");
+                            write(450, 250, "000", 40, "and get the grand prize: 70 tokens!");
+                            write(450, 350, "000", 40, "This is pretty rare, so you shouldn't");
+                            write(450, 400, "000", 40, "go for the grand prize too often.");
+                            break;
+                            
+                        case 7:
+                            write(450, 175, "000", 52, "That's it for the tutorial!");
+                            write(450, 300, "000", 26, "Now you know everything about Card Guesser!");
+                            write(450, 350, "000", 26, "Good luck Card Guessing!");
+                            break;
+                            
+                    }     
+                }
+                else if (phase=="play")
+                {
+                    write(770, 30, "000", 20, "Tokens gained: "+tokens_gained);
+                    write(450, 50, "000", 30, "Choose a card!");
+                    drawSquare(597.5, 535, 190, 55, "000");
+                    drawSquare(602.5, 540, 180, 45, "fc3a20");
+                    write(695, 570, "000", 30, "Cash Out");
+
+                    switch(stage)
+                    {
+                        case 1:
+                            drawCard(17.5, 80, card_states[0], colours[0]);
+                            drawCard(17.5, 340, card_states[4], colours[1]);
+                            drawCard(242.5, 80, card_states[1], colours[2]);
+                            drawCard(242.5, 340, card_states[5], colours[3]);
+                            drawCard(467.5, 80, card_states[2], colours[4]);
+                            drawCard(467.5, 340, card_states[6], colours[5]);
+                            drawCard(692.5, 80, card_states[3], colours[6]);
+                            drawCard(692.5, 340, card_states[7], colours[7]);
+                            break;
+                        case 2:
+                            drawCard(60, 80, card_states[0], colours[0]);
+                            drawCard(360, 80, card_states[1], colours[1]);
+                            drawCard(660, 80, card_states[2], colours[2]);
+                            drawCard(17.5, 340, card_states[3], colours[3]);
+                            drawCard(242.5, 340, card_states[4], colours[4]);
+                            drawCard(467.5, 340, card_states[5], colours[5]);
+                            drawCard(692.5, 340, card_states[6], colours[6]);
+                            break;
+                        case 3:
+                            drawCard(60, 80, card_states[0], colours[0]);
+                            drawCard(360, 80, card_states[1], colours[1]);
+                            drawCard(660, 80, card_states[2], colours[2]);
+                            drawCard(60, 340, card_states[3], colours[3]);
+                            drawCard(360, 340, card_states[4], colours[4]);
+                            drawCard(660, 340, card_states[5], colours[5]);
+                            break;
+                        case 4:
+                            drawCard(205, 80, card_states[0], colours[0]);
+                            drawCard(505, 80, card_states[1], colours[1]);
+                            drawCard(60, 340, card_states[2], colours[2]);
+                            drawCard(360, 340, card_states[3], colours[3]);
+                            drawCard(660, 340, card_states[4], colours[4]);
+                            break;
+                        case 5:
+                            drawCard(205, 80, card_states[0], colours[5]);
+                            drawCard(505, 80, card_states[1], colours[6]);
+                            drawCard(205, 340, card_states[2], colours[7]);
+                            drawCard(505, 340, card_states[3], colours[8]);
+                            break;
+                        case 6:
+                            drawCard(355, 80, card_states[0], colours[0]);
+                            drawCard(205, 340, card_states[1], colours[1]);
+                            drawCard(505, 340, card_states[2], colours[2]);
+                            break;
+                        case 7:
+                            drawCard(355, 80, card_states[0], colours[0]);
+                            drawCard(355, 340, card_states[1], colours[1]);
+                            break;
+                    }
+                    
+                }
+                else if (phase=="lose")
+                {
+                    write(450, 125, "000", 52, "You lost!");
+                    write(450, 200, "000", 26, "You gained no tokens. Better luck next time.")
+                    drawSquare(320, 345, 260, 80, "000");
+                    drawSquare(325, 350, 250, 70, "fc3a20");
+                    write(450, 395, "000", 40, "Main Menu");
+                }
+                else if (phase=="win")
+                {
+                    write(450, 125, "000", 52, "Congratulations!");
+                    write(450, 200, "000", 26, "You completed every stage!")
+                    drawSquare(320, 345, 260, 80, "000");
+                    drawSquare(325, 350, 250, 70, "fc3a20");
+                    write(450, 395, "000", 40, "Main Menu");
+                }
+
+                drawTransparentSquare(0, 0, 900, 600, "000", opacity);
+
+                if(fade == true)
+                {
+                    if (ifade==1) opacity+=0.02;
+                    if (opacity > 0.99) 
+                    {
+                        ifade=0;
+                        phase=upcomingPhase;
+                        if(upcomingPhase=="play") 
+                        {
+                            colours = [rHex(), rHex(), rHex(), rHex(), rHex(), rHex(), rHex(), rHex()];
+                            stage+=1;
+                            for(i=0; i<8; i++)
+                            {
+                                card_states[i]="normal";
+                            }
+                        }
+                        if (upcomingPhase=="tutorial")stage+=1;
+                        if(upcomingPhase=="menu")stage=0;
+                    }
+
+                    if (ifade==0) opacity-=0.02;
+                    if (opacity < 0){ fade = false; opacity=0;}
+
+                }
+            }
+            
+            
+            function drawCard(x, y, special, hex_code)
+            {
+                if (special == "normal")
+                {
+                    drawSquare(x, y, 190, 190, "000");
+                    drawSquare(x+5, y+5, 180, 180, hex_code);
+                    drawSquare(x+10, y+10, 85, 85, "fff");
+                    drawSquare(x+95, y+95, 85, 85, "fff");
+                }
+                else if (special == "smile")
+                {
+                    drawSquare(x, y, 190, 190, "000");
+                    drawSquare(x+5, y+5, 180, 180, hex_code);
+                    drawImg(x+17.5, y+17.5, "smile");
+                }
+                else if (special == "skull")
+                {
+                    drawSquare(x, y, 190, 190, "000");
+                    drawSquare(x+5, y+5, 180, 180, hex_code);
+                    drawImg(x+5, y+2.5, "skull");
+                }
+            }
+
+            function loser()
+            {
+                  fade=true;
+                  ifade=1;
+                  upcomingPhase="lose";
+            }
+            function winner()
+            {
+                  fade=true;
+                  ifade=1;
+                  if (stage != 7) upcomingPhase="play";
+                  else upcomingPhase ="win";
+            }
+            function cash()
+            {
+                tokens+=tokens_gained;
+                tokens_gained=0;
+                fade=true;
+                ifade=1;
+                upcomingPhase="menu";
+            }
+            
+        </script>
+    </body>
+</html>
