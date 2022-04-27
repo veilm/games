@@ -1,6 +1,22 @@
 <script lang="ts">
 	import MainMenu from "./MainMenu.svelte"
 
+	let unlockedScreens = {
+		"Addition": true,
+		"Subtraction": false,
+		"Multiplication": false,
+		"Division": true,
+		"Exponents": false,
+		"Roots": false,
+		"Factoring": true,
+		"Shop": true
+	}
+
+	let unlockedFeatures = {
+		"difficulty": false,
+		"redirection": false
+	}
+
 	let screen = "Main menu"
 </script>
 
@@ -9,7 +25,7 @@
 <hr>
 
 {#if screen == "Main menu"}
-	<MainMenu />
+	<MainMenu {unlockedScreens} bind:screen={screen} />
 {:else}
 	<p>Not Main menu</p>
 {/if}
