@@ -22,6 +22,10 @@
 
 	const submit = () => {
 		if (parseInt(input) == pair.answer) points[screen]++
+		else {
+			points[screen]--
+			if (points[screen] < 0) points[screen] = 0
+		}
 	}
 
 	document.onkeydown = e => {
