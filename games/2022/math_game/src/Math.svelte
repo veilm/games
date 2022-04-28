@@ -5,7 +5,7 @@
 	export let RNG
 
 	let difficulty = 1
-	let input = ""
+	let input
 
 	function questionValues(diff: int) {
 		if (screen == "Exponents")
@@ -17,8 +17,15 @@
 		else return [RNG(1, 15*difficulty), RNG(1, 15*difficulty)]
 	}
 
-	let values = questionValues(difficulty)
-	let pair = questions[screen](values[0], values[1])
+	let values
+	let pair
+
+	const newQuestion = () => {
+		values = questionValues(difficulty)
+		pair = questions[screen](values[0], values[1])
+		input = ""
+	}
+	newQuestion()
 
 	const submit = () => {
 		if (parseInt(input) == pair.answer) points[screen]++
@@ -26,15 +33,18 @@
 			points[screen]--
 			if (points[screen] < 0) points[screen] = 0
 		}
+
+		newQuestion()
 	}
 
 	document.onkeydown = e => {
 		if (e.keyCode == 13) submit()
 	}
+
 </script>
 
 <h3>{pair.question}</h3>
 <input type="number" placeholder="Answer" bind:value={input}>
 <input type="button" value="Submit" on:click={submit}>
 
-<p>{points[screen]}</p>
+<p>{screen} points: {points[screen]}</p>
