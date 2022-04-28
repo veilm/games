@@ -1,12 +1,19 @@
 <script lang="ts">
 	export let questions
 	export let screen
+	export let RNG
 
 	let difficulty = 1
 	let input = ""
 
 	function questionValues(diff: int) {
-		return [5, 10]
+		if (screen == "Exponents")
+			return [RNG(1, 2*difficulty), RNG(1, 3*difficulty)]
+
+		if (screen == "Multiplication" || screen == "Division")
+			return [RNG(1, 6*difficulty), RNG(1, 6*difficulty)]
+
+		else return [RNG(1, 15*difficulty), RNG(1, 15*difficulty)]
 	}
 
 	let values = questionValues(difficulty)

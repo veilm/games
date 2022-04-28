@@ -8,7 +8,7 @@
 		"Multiplication": true,
 		"Division": true,
 		"Exponents": true,
-		"Factoring": true,
+		"Factoring": false,
 		"Shop": true
 	}
 
@@ -66,7 +66,7 @@
 {:else if screen == "Shop"}
 	<!-- <Shop /> -->
 {:else}
-	<MathComponent {questions} {screen} />
+	<MathComponent {questions} {RNG} {screen} />
 {/if}
 
 <hr>
