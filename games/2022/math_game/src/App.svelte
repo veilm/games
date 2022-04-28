@@ -12,6 +12,15 @@
 		"Shop": true
 	}
 
+	let points = {
+		"Addition": 0,
+		"Subtraction": 0,
+		"Multiplication": 0,
+		"Division": 0,
+		"Exponents": 0,
+		"Factoring": 0
+	}
+
 	const RNG = (min, max) => {
 		return Math.round(Math.random() * (max - min)) + min
 	}
@@ -66,7 +75,7 @@
 {:else if screen == "Shop"}
 	<!-- <Shop /> -->
 {:else}
-	<MathComponent {questions} {RNG} {screen} />
+	<MathComponent {questions} {RNG} {screen} bind:points={points} />
 {/if}
 
 <hr>

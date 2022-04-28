@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let questions
 	export let screen
+	export let points
 	export let RNG
 
 	let difficulty = 1
@@ -20,7 +21,7 @@
 	let pair = questions[screen](values[0], values[1])
 
 	const submit = () => {
-		if (parseInt(input) == pair.answer) console.log("correct")
+		if (parseInt(input) == pair.answer) points[screen]++
 	}
 
 	document.onkeydown = e => {
@@ -31,3 +32,5 @@
 <h3>{pair.question}</h3>
 <input type="number" placeholder="Answer" bind:value={input}>
 <input type="button" value="Submit" on:click={submit}>
+
+<p>{points[screen]}</p>
