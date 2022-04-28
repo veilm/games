@@ -8,7 +8,6 @@
 		"Multiplication",
 		"Division",
 		"Exponents",
-		"Roots",
 		"Factoring",
 		"Shop"
 	]

@@ -1,15 +1,14 @@
 <script lang="ts">
 	import MainMenu from "./MainMenu.svelte"
-	import Math from "./Math.svelte"
+	import MathComponent from "./Math.svelte"
 
 	let unlockedScreens = {
 		"Addition": true,
-		"Subtraction": false,
-		"Multiplication": false,
-		"Division": false,
-		"Exponents": false,
-		"Roots": false,
-		"Factoring": false,
+		"Subtraction": true,
+		"Multiplication": true,
+		"Division": true,
+		"Exponents": true,
+		"Factoring": true,
 		"Shop": true
 	}
 
@@ -23,7 +22,31 @@
 				"question": `${a} + ${b} = _`,
 				"answer": a + b
 			}
-		}
+		},
+		"Subtraction": (a, b) => {
+			return {
+				"question": `${a + b} - ${b} = _`,
+				"answer": a
+			}
+		},
+		"Multiplication": (a, b) => {
+			return {
+				"question": `${a} × ${b} = _`,
+				"answer": a * b
+			}
+		},
+		"Division": (a, b) => {
+			return {
+				"question": `${a * b} ÷ ${b} = _`,
+				"answer": a
+			}
+		},
+		"Exponents": (a, b) => {
+			return {
+				"question": `${a}^${b} = _`,
+				"answer": Math.pow(a, b)
+			}
+		},
 	}
 
 	let unlockedFeatures = {
@@ -43,7 +66,7 @@
 {:else if screen == "Shop"}
 	<!-- <Shop /> -->
 {:else}
-	<Math {questions} />
+	<MathComponent {questions} {screen} />
 {/if}
 
 <hr>
