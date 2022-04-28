@@ -1,15 +1,29 @@
 <script lang="ts">
 	import MainMenu from "./MainMenu.svelte"
+	import Math from "./Math.svelte"
 
 	let unlockedScreens = {
 		"Addition": true,
 		"Subtraction": false,
 		"Multiplication": false,
-		"Division": true,
+		"Division": false,
 		"Exponents": false,
 		"Roots": false,
-		"Factoring": true,
+		"Factoring": false,
 		"Shop": true
+	}
+
+	const RNG = (min, max) => {
+		return Math.round(Math.random() * (max - min)) + min
+	}
+
+	const questions = {
+		"Addition": (a, b) => {
+			return {
+				"question": `${a} + ${b} = _`,
+				"answer": a + b
+			}
+		}
 	}
 
 	let unlockedFeatures = {
@@ -26,8 +40,10 @@
 
 {#if screen == "Main menu"}
 	<MainMenu {unlockedScreens} bind:screen={screen} />
+{:else if screen == "Shop"}
+	<!-- <Shop /> -->
 {:else}
-	<p>Not Main menu</p>
+	<Math {questions} />
 {/if}
 
 <hr>
