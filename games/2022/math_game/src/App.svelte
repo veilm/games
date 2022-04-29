@@ -1,6 +1,11 @@
 <script lang="ts">
 	import MainMenu from "./MainMenu.svelte"
 	import MathComponent from "./Math.svelte"
+	import Shop from "./Shop.svelte"
+
+	// "progress" increases with each Shop upgrade. progress = 0 means you only
+	// have addition unlocked, progress = 4 means difficulty was unlocked, etc.
+	let progress = 0
 
 	let unlockedScreens = {
 		"Addition": true,
@@ -13,12 +18,17 @@
 	}
 
 	let points = {
-		"Addition": 0,
+		"Addition": 5,
 		"Subtraction": 0,
 		"Multiplication": 0,
 		"Division": 0,
-		"Exponents": 0,
+		"Exponents": 10,
 		"Factoring": 0
+	}
+
+	let unlockedFeatures = {
+		"difficulty": false,
+		"redirection": false
 	}
 
 	const RNG = (min, max) => {
@@ -58,11 +68,6 @@
 		},
 	}
 
-	let unlockedFeatures = {
-		"difficulty": false,
-		"redirection": false
-	}
-
 	let screen = "Main menu"
 </script>
 
@@ -73,7 +78,7 @@
 {#if screen == "Main menu"}
 	<MainMenu {unlockedScreens} bind:screen={screen} />
 {:else if screen == "Shop"}
-	<!-- <Shop /> -->
+	<Shop bind:progress={progress} {points} bind:screen={screen} />
 {:else}
 	<MathComponent {questions} {RNG} {screen} bind:points={points} />
 {/if}
