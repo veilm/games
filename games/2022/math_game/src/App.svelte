@@ -18,7 +18,7 @@
 	}
 
 	let points = {
-		"Addition": 5,
+		"Addition": 25,
 		"Subtraction": 0,
 		"Multiplication": 0,
 		"Division": 0,
