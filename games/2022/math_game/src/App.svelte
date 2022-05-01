@@ -3,6 +3,9 @@
 	import MathComponent from "./Math.svelte"
 	import Shop from "./Shop.svelte"
 
+	let startTime = new Date().getTime()
+	let endTime = 0
+
 	// "progress" increases with each Shop upgrade. progress = 0 means you only
 	// have addition unlocked, progress = 4 means difficulty was unlocked, etc.
 	let progress = 0
@@ -121,6 +124,7 @@
 			case 7:
 				points["Subtraction"] -= 150
 				points["Factoring"] -= 300
+				endTime = new Date().getTime()
 				break
 		}
 
@@ -143,6 +147,8 @@
 		redirUnlocked={unlockedFeatures["Redirection"]}
 		{buy}
 		{points}
+		{startTime}
+		{endTime}
 	/>
 
 {:else}

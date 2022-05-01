@@ -1,4 +1,5 @@
 <script lang="ts">
+	import YouWin from "./YouWin.svelte"
 	import Purchase from "./Purchase.svelte"
 	import Redirection from "./Redirection.svelte"
 	export let redirUnlocked
@@ -6,6 +7,9 @@
 	export let buy
 	export let points
 	export let progress
+
+	export let startTime
+	export let endTime
 
 	let types = [
 		"Addition",
@@ -17,11 +21,15 @@
 	]
 </script>
 
-<Purchase
-	{buy}
-	{points}
-	{progress}
-/>
+{#if progress <= 7}
+	<Purchase
+		{buy}
+		{points}
+		{progress}
+	/>
+{:else}
+	<YouWin {startTime} {endTime} />
+{/if}
 
 {#if redirUnlocked}
 	<Redirection
