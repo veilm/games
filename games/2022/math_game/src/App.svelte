@@ -5,24 +5,24 @@
 
 	// "progress" increases with each Shop upgrade. progress = 0 means you only
 	// have addition unlocked, progress = 4 means difficulty was unlocked, etc.
-	let progress = 0
+	let progress = 3
 
 	let unlockedScreens = {
 		"Addition": true,
-		"Subtraction": true,
-		"Multiplication": true,
-		"Division": true,
-		"Exponents": true,
+		"Subtraction": false,
+		"Multiplication": false,
+		"Division": false,
+		"Exponents": false,
 		"Factoring": false,
 		"Shop": true
 	}
 
 	let points = {
-		"Addition": 25,
-		"Subtraction": 40,
-		"Multiplication": 0,
-		"Division": 0,
-		"Exponents": 10,
+		"Addition": 5,
+		"Subtraction": 5,
+		"Multiplication": 15,
+		"Division": 20,
+		"Exponents": 0,
 		"Factoring": 0
 	}
 
@@ -149,6 +149,7 @@
 		{questions}
 		{RNG}
 		{screen}
+		difficultyUnlocked={unlockedFeatures["Difficulty"]}
 		bind:points={points}
 	/>
 

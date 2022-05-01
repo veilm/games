@@ -3,6 +3,7 @@
 	export let screen
 	export let points
 	export let RNG
+	export let difficultyUnlocked
 
 	let difficulty = 1
 	let input
@@ -48,3 +49,14 @@
 <input type="button" value="Submit" on:click={submit}>
 
 <p>{screen} points: {points[screen]}</p>
+
+{#if difficultyUnlocked}
+	<label for="difficulty">Difficulty</label>
+	<input id="difficulty" type="range" min="1" max="3" value="1">
+{/if}
+
+<style>
+	p {
+		margin-top: 20px;
+	}
+</style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	// export let screen
 	export let progress
 	export let points
 	export let buy
