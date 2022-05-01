@@ -55,10 +55,11 @@
 
 <hr>
 
+<label>Earned points:</label>
 <ul>
 {#each types as type}
 	{#if points[type] > 0}
-		<li>{type} points: {points[type]}</li>
+		<li>{points[type]} {type}</li>
 	{/if}
 {/each}
 </ul>
