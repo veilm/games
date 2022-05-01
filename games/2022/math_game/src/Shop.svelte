@@ -45,8 +45,8 @@
 	}
 </script>
 
-<label>Requirements:</label>
-<ul>
+<label for="required_points">Requirements:</label>
+<ul id="required_points">
 	{#each requirements[progress] as requirement}
 		<li>{requirement}</li>
 	{/each}
@@ -55,8 +55,8 @@
 
 <hr>
 
-<label>Earned points:</label>
-<ul>
+<label for="earned_points">Earned points:</label>
+<ul id="earned_points">
 {#each types as type}
 	{#if points[type] > 0}
 		<li>{points[type]} {type}</li>
