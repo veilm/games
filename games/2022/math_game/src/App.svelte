@@ -136,16 +136,32 @@
 
 {#if screen == "Main menu"}
 	<MainMenu {unlockedScreens} bind:screen={screen} />
+
 {:else if screen == "Shop"}
 	<Shop
 		bind:progress={progress}
 		{buy}
 		{points}
-		bind:screen={screen}
 	/>
+
 {:else}
-	<MathComponent {questions} {RNG} {screen} bind:points={points} />
+	<MathComponent
+		{questions}
+		{RNG}
+		{screen}
+		bind:points={points}
+	/>
+
 {/if}
 
 <hr>
+
+{#if screen != "Main menu"}
+	<input
+		type="button"
+		value="Main menu"
+		on:click={() => screen = "Main menu"}
+	>
+{/if}
+
 <p>by Michael Skyba</p>
