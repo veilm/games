@@ -1,0 +1,51 @@
+Initial: let p = progress = 0
+
+p = 0
+	Unlocked screens: Addition, Shop
+	Purchase: Subtraction (screen)
+		Cost: 15 addition
+p = 1
+	Unlocked screens: Addition, Subtraction, Shop
+	Purchase: Multiplication (screen)
+		Cost: 10 addition, 20 subtraction
+
+p = 2
+	Unlocked screens: Add, Sub, Mul, Shop
+	Purchase: Division (screen)
+		Cost: 15 add, 15 sub, 20 mul
+
+p = 3
+	Unlocked screens: Add, Sub, Mul, Div, Shop
+	Purchase: Difficulty (feature)
+		Cost: 5 add, 5 sub, 15 mul, 20 div
+
+p = 4
+	Unlocked screens: Add, Sub, Mul, Div, Shop
+	Unlocked features: Difficulty
+		Now you can change the difficulty of each level
+		Dif 1: Easy (1 point)
+		Dif 2: Medium (3 points)
+		Dif 3: Hard (5 points)
+	Purchase: Exponents (screen)
+		Cost: 35 add, 45 sub, 55 mul, 60 div
+
+p = 5
+	Unlocked screens: Add, Sub, Mul, Div, Exp, Shop
+	Unlocked features: Difficulty
+	Purchase: Factoring (screen)
+		Cost: 50 mul, 50 div, 100 exp
+
+p = 6
+	Unlocked screens: Add, Sub, Mul, Div, Exp, Fac, Shop
+	Unlocked features: Difficulty
+	Purchase: Redirection (feature)
+		Cost: 50 mul, 50 exp, 75 fac
+
+p = 7
+	Unlocked screens: Add, Sub, Mul, Div, Exp, Fac, Shop
+	Unlocked features: Difficulty, Redirection
+		With redirection, you can exchange 1 point of five types (5 points
+		total) for 5 points of the remaining type. e.g. (1 add, 1 sub, 1 mul, 1
+		div, 1 exp --> 5 fac)
+	Purchase: Win
+		Cost: 150 sub, 300 fac
