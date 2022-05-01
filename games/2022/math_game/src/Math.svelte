@@ -29,9 +29,11 @@
 	newQuestion()
 
 	const submit = () => {
-		if (parseInt(input) == pair.answer) points[screen]++
+		var change = 2*difficulty - 1
+
+		if (parseInt(input) == pair.answer) points[screen] += change
 		else {
-			points[screen]--
+			points[screen] -= change
 			if (points[screen] < 0) points[screen] = 0
 		}
 
@@ -52,7 +54,14 @@
 
 {#if difficultyUnlocked}
 	<label for="difficulty">Difficulty</label>
-	<input id="difficulty" type="range" min="1" max="3" value="1">
+	<input
+		id="difficulty"
+		type="range"
+		min="1"
+		max="3"
+		bind:value={difficulty}
+		on:change={newQuestion}
+	>
 {/if}
 
 <style>
