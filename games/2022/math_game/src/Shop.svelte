@@ -3,6 +3,9 @@
 	export let points
 	export let buy
 
+	export let redirUnlocked
+	let redirTarget = "Addition"
+
 	let types = [
 		"Addition",
 		"Subtraction",
@@ -43,6 +46,15 @@
 			sub >= 150 && fac >= 300
 		][progress]
 	}
+
+	const redirAvailable = target => {
+		if (target == "Subtraction") return false
+		else return true
+	}
+
+	const redirect = target => {
+		console.log(target)
+	}
 </script>
 
 <label for="required_points">Requirements:</label>
@@ -58,6 +70,31 @@
 	on:click={buy}
 >
 
+{#if redirUnlocked}
+	<hr>
+
+	<h3>Redirection</h3>
+
+	<span>Towards</span>
+	<select bind:value={redirTarget}>
+		<option value="Addition">Addition</option>
+		<option value="Subtraction">Subtraction</option>
+		<option value="Multiplication">Multiplication</option>
+		<option value="Division">Division</option>
+		<option value="Exponents">Exponents</option>
+		<option value="Factoring">Factoring</option>
+	</select>
+
+	<br>
+
+	<input
+		type="button"
+		value="Redirect"
+		on:click={redirect(redirTarget)}
+		disabled={!redirAvailable(redirTarget)}
+	>
+{/if}
+
 <hr>
 
 <label for="earned_points">Earned points:</label>
@@ -68,3 +105,9 @@
 	{/if}
 {/each}
 </ul>
+
+<style>
+	select {
+		margin-left: 10px;
+	}
+</style>

@@ -5,7 +5,7 @@
 
 	// "progress" increases with each Shop upgrade. progress = 0 means you only
 	// have addition unlocked, progress = 4 means difficulty was unlocked, etc.
-	let progress = 3
+	let progress = 0
 
 	let unlockedScreens = {
 		"Addition": true,
@@ -18,17 +18,17 @@
 	}
 
 	let points = {
-		"Addition": 5,
-		"Subtraction": 5,
-		"Multiplication": 15,
-		"Division": 20,
-		"Exponents": 0,
-		"Factoring": 0
+		"Addition": 999,
+		"Subtraction": 999,
+		"Multiplication": 999,
+		"Division": 999,
+		"Exponents": 999,
+		"Factoring": 999
 	}
 
 	let unlockedFeatures = {
 		"Difficulty": false,
-		"Redirection": false
+		"Redirection": true
 	}
 
 	const RNG = (min, max) => {
@@ -140,6 +140,7 @@
 {:else if screen == "Shop"}
 	<Shop
 		bind:progress={progress}
+		redirUnlocked={unlockedFeatures["Redirection"]}
 		{buy}
 		{points}
 	/>
