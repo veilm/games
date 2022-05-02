@@ -13,21 +13,16 @@
 	let player = {
 		"name": `Player: ${navigator.platform}`,
 		"shape": ["circle", "square", "triangle"][RNG(0, 2)],
-		"level": 1,
-		"hp": 3,
-		"power": 1000
+		"level": 0,
 	}
 
 	if (player.shape == "triangle") player.power = 1350
 	if (player.shape == "square") player.hp = 4
 
-	let computerNames = ["", "", "Arch", "OpenBSD"]
+	let computerNames = ["Ubuntu", "Arch", "OpenBSD"]
 	let computer = {
-		"name": "Computer: Ubuntu",
 		"shape": "computer",
-		"level": 1,
-		"hp": 5,
-		"power": 2000
+		"level": 0,
 	}
 
 	let expended
@@ -49,7 +44,7 @@
 		let outcome = []
 		if (p > p2) {
 			let c = 1
-			if (player.shape == "circle") c = 1.1
+			if (player.shape == "circle") c = 1 + (0.1 * level)
 
 			outcome = [
 				`Computer loses ${c} HP`,
@@ -63,7 +58,7 @@
 
 		else if (p2 > p) {
 			let c = 1
-			if (player.shape == "circle") c = 0.9
+			if (player.shape == "circle") c = 1 - (0.1 * level)
 
 			outcome = [
 				`Player loses ${c} HP`,
@@ -91,6 +86,24 @@
 			...log
 		]
 	}
+
+	const nextLevel = () => {
+		player.level++
+		player.power = 1000
+		player.hp = 3
+
+		if (player.shape == "triangle") player.power += 350 * player.level
+		if (player.shape == "square") player.hp += player.level
+
+		computer.level++
+		computer.power = 1000 + 1000 * computer.level
+		computer.hp = 3 + computer.level * 2
+
+		computer.name = "Computer: " + computerNames[computer.level-1]
+
+		expended = null
+	}
+	nextLevel()
 </script>
 
 <h1>Turn Battle</h1>
@@ -103,8 +116,8 @@
 {#if computer.hp > 0 && player.hp > 0}
 	<input type="number" placeholder="Power" bind:value={expended}>
 	<input type="button" value="Expend" on:click={expend}>
-{:else if computer.hp < 0}
-	<input type="button" value="Continue to next level">
+{:else if computer.hp <= 0 && player.level < 3}
+	<input type="button" value="Continue to next level" on:click={nextLevel}>
 {/if}
 
 <Log {log} />
