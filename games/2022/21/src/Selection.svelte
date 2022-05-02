@@ -1,5 +1,6 @@
 <script>
 	export let players
+	export let screen
 
 	let input = ""
 	let error = ""
@@ -19,7 +20,8 @@
 			}
 		}
 
-		console.log(players)
+		// Everything was successful, so we can leave the Selection screen.
+		screen = "Play"
 	}
 </script>
 

@@ -9,10 +9,10 @@
 <h1>21: {screen}</h1>
 <hr>
 
-{#if screen = "Selection"}
-	<Selection bind:players={players} />
+{#if screen == "Selection"}
+	<Selection bind:players={players} bind:screen={screen} />
 {:else}
-	<Game />
+	<Game {players} />
 {/if}
 
 <hr>
