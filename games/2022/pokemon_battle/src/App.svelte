@@ -2,25 +2,29 @@
 	import Player from "./Player.svelte"
 	import Log from "./Log.svelte"
 
+	const RNG = (min, max) => {
+		return Math.round(Math.random() * (max - min)) + min
+	}
+
 	let log = [
 		"Game start"
 	]
 
 	let player = {
 		"name": `Player: ${navigator.platform}`,
-		"shape": "circle1",
+		"shape": ["circle", "square", "triangle"][RNG(0, 2)],
+		"level": 1,
 		"hp": 3,
 		"power": 1000
 	}
+
+	let computerNames = ["", "", "Arch", "OpenBSD"]
 	let computer = {
-		"name": "Computer: OpenBSD riscv64",
+		"name": "Computer: Ubuntu",
 		"shape": "computer",
+		"level": 1,
 		"hp": 5,
 		"power": 2000
-	}
-
-	const RNG = (min, max) => {
-		return Math.round(Math.random() * (max - min)) + min
 	}
 
 	let expended
@@ -64,6 +68,9 @@
 
 		else outcome = ["Tied exchange"]
 
+		if (player.hp == 0) outcome = ["Player loses", ...outcome]
+		if (computer.hp == 0) outcome = ["Computer loses", ...outcome]
+
 		log = [
 			...outcome,
 			`Player bets ${p}`,
@@ -80,8 +87,12 @@
 <hr>
 <Player player={player} />
 
-<input type="number" placeholder="Power" bind:value={expended}>
-<input type="button" value="Expend" on:click={expend}>
+{#if computer.hp > 0 && player.hp > 0}
+	<input type="number" placeholder="Power" bind:value={expended}>
+	<input type="button" value="Expend" on:click={expend}>
+{:else if computer.hp == 0}
+	<input type="button" value="Continue to next level">
+{/if}
 
 <Log {log} />
 

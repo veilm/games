@@ -1,8 +1,8 @@
 <script>
 	export let player
 
-	const image = player => `shapes/${player.shape}.png`
-	const alt = player => `Shape: ${player.shape}`
+	const image = player => `shapes/${player.shape}${player.level}.png`
+	const alt = player => `Shape: ${player.shape}-${player.level}`
 </script>
 
 <h3>{player.name}</h3>
