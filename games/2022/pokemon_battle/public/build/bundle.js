@@ -24,6 +24,14 @@ var app = (function () {
     function safe_not_equal(a, b) {
         return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
     }
+    let src_url_equal_anchor;
+    function src_url_equal(element_src, url) {
+        if (!src_url_equal_anchor) {
+            src_url_equal_anchor = document.createElement('a');
+        }
+        src_url_equal_anchor.href = url;
+        return element_src === src_url_equal_anchor.href;
+    }
     function is_empty(obj) {
         return Object.keys(obj).length === 0;
     }
@@ -41,6 +49,12 @@ var app = (function () {
     }
     function space() {
         return text(' ');
+    }
+    function attr(node, attribute, value) {
+        if (value == null)
+            node.removeAttribute(attribute);
+        else if (node.getAttribute(attribute) !== value)
+            node.setAttribute(attribute, value);
     }
     function children(element) {
         return Array.from(element.childNodes);
@@ -281,6 +295,13 @@ var app = (function () {
         dispatch_dev('SvelteDOMRemove', { node });
         detach(node);
     }
+    function attr_dev(node, attribute, value) {
+        attr(node, attribute, value);
+        if (value == null)
+            dispatch_dev('SvelteDOMRemoveAttribute', { node, attribute });
+        else
+            dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
+    }
     function validate_slots(name, slot, keys) {
         for (const slot_key of Object.keys(slot)) {
             if (!~keys.indexOf(slot_key)) {
@@ -319,29 +340,92 @@ var app = (function () {
     	let t2;
     	let p0;
     	let t4;
-    	let hr1;
+    	let img0;
+    	let img0_src_value;
     	let t5;
+    	let img1;
+    	let img1_src_value;
+    	let t6;
+    	let img2;
+    	let img2_src_value;
+    	let t7;
+    	let img3;
+    	let img3_src_value;
+    	let t8;
+    	let img4;
+    	let img4_src_value;
+    	let t9;
+    	let img5;
+    	let img5_src_value;
+    	let t10;
+    	let img6;
+    	let img6_src_value;
+    	let t11;
+    	let img7;
+    	let img7_src_value;
+    	let t12;
+    	let img8;
+    	let img8_src_value;
+    	let t13;
+    	let hr1;
+    	let t14;
     	let p1;
 
     	const block = {
     		c: function create() {
     			h1 = element("h1");
-    			h1.textContent = "App";
+    			h1.textContent = "Turn Battle";
     			t1 = space();
     			hr0 = element("hr");
     			t2 = space();
     			p0 = element("p");
     			p0.textContent = "Body";
     			t4 = space();
-    			hr1 = element("hr");
+    			img0 = element("img");
     			t5 = space();
+    			img1 = element("img");
+    			t6 = space();
+    			img2 = element("img");
+    			t7 = space();
+    			img3 = element("img");
+    			t8 = space();
+    			img4 = element("img");
+    			t9 = space();
+    			img5 = element("img");
+    			t10 = space();
+    			img6 = element("img");
+    			t11 = space();
+    			img7 = element("img");
+    			t12 = space();
+    			img8 = element("img");
+    			t13 = space();
+    			hr1 = element("hr");
+    			t14 = space();
     			p1 = element("p");
     			p1.textContent = "by Michael Skyba";
     			add_location(h1, file, 3, 0, 20);
-    			add_location(hr0, file, 4, 0, 33);
-    			add_location(p0, file, 6, 0, 39);
-    			add_location(hr1, file, 8, 0, 52);
-    			add_location(p1, file, 9, 0, 57);
+    			add_location(hr0, file, 4, 0, 41);
+    			add_location(p0, file, 6, 0, 47);
+    			if (!src_url_equal(img0.src, img0_src_value = "shapes/square1.png")) attr_dev(img0, "src", img0_src_value);
+    			add_location(img0, file, 8, 0, 60);
+    			if (!src_url_equal(img1.src, img1_src_value = "shapes/square2.png")) attr_dev(img1, "src", img1_src_value);
+    			add_location(img1, file, 9, 0, 91);
+    			if (!src_url_equal(img2.src, img2_src_value = "shapes/square3.png")) attr_dev(img2, "src", img2_src_value);
+    			add_location(img2, file, 10, 0, 122);
+    			if (!src_url_equal(img3.src, img3_src_value = "shapes/triangle1.png")) attr_dev(img3, "src", img3_src_value);
+    			add_location(img3, file, 12, 0, 154);
+    			if (!src_url_equal(img4.src, img4_src_value = "shapes/triangle2.png")) attr_dev(img4, "src", img4_src_value);
+    			add_location(img4, file, 13, 0, 187);
+    			if (!src_url_equal(img5.src, img5_src_value = "shapes/triangle3.png")) attr_dev(img5, "src", img5_src_value);
+    			add_location(img5, file, 14, 0, 220);
+    			if (!src_url_equal(img6.src, img6_src_value = "shapes/circle1.png")) attr_dev(img6, "src", img6_src_value);
+    			add_location(img6, file, 16, 0, 254);
+    			if (!src_url_equal(img7.src, img7_src_value = "shapes/circle2.png")) attr_dev(img7, "src", img7_src_value);
+    			add_location(img7, file, 17, 0, 285);
+    			if (!src_url_equal(img8.src, img8_src_value = "shapes/circle3.png")) attr_dev(img8, "src", img8_src_value);
+    			add_location(img8, file, 18, 0, 316);
+    			add_location(hr1, file, 20, 0, 348);
+    			add_location(p1, file, 21, 0, 353);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -353,8 +437,26 @@ var app = (function () {
     			insert_dev(target, t2, anchor);
     			insert_dev(target, p0, anchor);
     			insert_dev(target, t4, anchor);
-    			insert_dev(target, hr1, anchor);
+    			insert_dev(target, img0, anchor);
     			insert_dev(target, t5, anchor);
+    			insert_dev(target, img1, anchor);
+    			insert_dev(target, t6, anchor);
+    			insert_dev(target, img2, anchor);
+    			insert_dev(target, t7, anchor);
+    			insert_dev(target, img3, anchor);
+    			insert_dev(target, t8, anchor);
+    			insert_dev(target, img4, anchor);
+    			insert_dev(target, t9, anchor);
+    			insert_dev(target, img5, anchor);
+    			insert_dev(target, t10, anchor);
+    			insert_dev(target, img6, anchor);
+    			insert_dev(target, t11, anchor);
+    			insert_dev(target, img7, anchor);
+    			insert_dev(target, t12, anchor);
+    			insert_dev(target, img8, anchor);
+    			insert_dev(target, t13, anchor);
+    			insert_dev(target, hr1, anchor);
+    			insert_dev(target, t14, anchor);
     			insert_dev(target, p1, anchor);
     		},
     		p: noop,
@@ -367,8 +469,26 @@ var app = (function () {
     			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(p0);
     			if (detaching) detach_dev(t4);
-    			if (detaching) detach_dev(hr1);
+    			if (detaching) detach_dev(img0);
     			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(img1);
+    			if (detaching) detach_dev(t6);
+    			if (detaching) detach_dev(img2);
+    			if (detaching) detach_dev(t7);
+    			if (detaching) detach_dev(img3);
+    			if (detaching) detach_dev(t8);
+    			if (detaching) detach_dev(img4);
+    			if (detaching) detach_dev(t9);
+    			if (detaching) detach_dev(img5);
+    			if (detaching) detach_dev(t10);
+    			if (detaching) detach_dev(img6);
+    			if (detaching) detach_dev(t11);
+    			if (detaching) detach_dev(img7);
+    			if (detaching) detach_dev(t12);
+    			if (detaching) detach_dev(img8);
+    			if (detaching) detach_dev(t13);
+    			if (detaching) detach_dev(hr1);
+    			if (detaching) detach_dev(t14);
     			if (detaching) detach_dev(p1);
     		}
     	};
