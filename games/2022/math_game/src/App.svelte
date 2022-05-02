@@ -16,7 +16,7 @@
 		"Multiplication": false,
 		"Division": false,
 		"Exponents": false,
-		"Roots": false,
+		"Roots": true,
 		"Shop": true
 	}
 
@@ -30,7 +30,7 @@
 	}
 
 	let unlockedFeatures = {
-		"Difficulty": false,
+		"Difficulty": true,
 		"Redirection": true
 	}
 
@@ -69,6 +69,12 @@
 				"answer": Math.pow(a, b)
 			}
 		},
+		"Roots": (a, b) => {
+			return {
+				"question": `${b}th root of ${Math.pow(a, b)} = _`,
+				"answer": a
+			}
+		}
 	}
 
 	const buy = () => {
