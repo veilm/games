@@ -1,10 +1,15 @@
 <script>
+	let screen = "Selection"
 </script>
 
-<h1>App</h1>
+<h1>21: {screen}</h1>
 <hr>
 
-<p>Body</p>
+{#if screen = "Selection"}
+	<Selection bind:players={players} />
+{:else}
+	<Game />
+{/if}
 
 <hr>
 <p>by Michael Skyba</p>
