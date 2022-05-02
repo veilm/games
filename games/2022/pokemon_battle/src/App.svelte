@@ -90,8 +90,7 @@
 
 	const nextLevel = () => {
 		player.level++
-		// player.power = 1000
-		player.power = 1000000
+		player.power = 1000
 		player.hp = 3
 
 		if (player.shape == "triangle") player.power += 350 * player.level
