@@ -6,15 +6,16 @@
 		return Math.round(Math.random() * (max - min)) + min
 	}
 
-	let log = [
-		"Game start"
-	]
-
 	let player = {
 		"name": `Player: ${navigator.platform}`,
 		"shape": ["circle", "square", "triangle"][RNG(0, 2)],
 		"level": 0,
 	}
+
+	let log = [
+		"Assigned shape: " + player.shape,
+		"Game start"
+	]
 
 	if (player.shape == "triangle") player.power = 1350
 	if (player.shape == "square") player.hp = 4
@@ -89,7 +90,8 @@
 
 	const nextLevel = () => {
 		player.level++
-		player.power = 1000
+		// player.power = 1000
+		player.power = 1000000
 		player.hp = 3
 
 		if (player.shape == "triangle") player.power += 350 * player.level
@@ -118,6 +120,14 @@
 	<input type="button" value="Expend" on:click={expend}>
 {:else if computer.hp <= 0 && player.level < 3}
 	<input type="button" value="Continue to next level" on:click={nextLevel}>
+{:else if computer.hp <= 0 && player.level == 3}
+	<h3>You win!</h3>
+	<p>You have killed all three operating systems. Does this mean that you are
+	a good player? Or did you simply push through until luck spared you? If you
+	are truly skilled, you should be able to win with each of the three shapes
+	back to back.</p>
+	<p>If you admit not to be truly skilled, there is no blame to pass. The
+	other operating system does have an inherent advantage, after all.</p>
 {/if}
 
 <Log {log} />
