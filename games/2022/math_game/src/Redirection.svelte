@@ -4,10 +4,15 @@
 
 	let redirTarget = "Addition"
 
+	let enabled
+	$: {
+		enabled = redirAvailable(redirTarget)
+	}
+
 	const redirAvailable = target => {
 		for (const type of types) {
 			if (type == target) continue
-			if (points[type] == 0) return false
+			if (points[type] < 1) return false
 		}
 		return true
 	}
@@ -19,6 +24,7 @@
 		}
 
 		points[target] += 5
+		enabled = redirAvailable(redirTarget)
 	}
 </script>
 
@@ -39,7 +45,7 @@
 	type="button"
 	value="Redirect"
 	on:click={redirect(redirTarget)}
-	disabled={!redirAvailable(redirTarget)}
+	disabled={!enabled}
 >
 
 <style>
