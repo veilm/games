@@ -8,14 +8,14 @@
 	let difficulty = 1
 	let input
 
-	function questionValues(diff: int) {
+	function questionValues(diff) {
 		if (screen == "Exponents" || screen == "Roots")
-			return [RNG(1, 2*difficulty), RNG(1, 3*difficulty)]
+			return [RNG(1, 2*diff), RNG(1, 3*diff)]
 
 		if (screen == "Multiplication" || screen == "Division")
-			return [RNG(1, 6*difficulty), RNG(1, 6*difficulty)]
+			return [RNG(1, 6*diff), RNG(1, 6*diff)]
 
-		else return [RNG(1, 15*difficulty), RNG(1, 15*difficulty)]
+		else return [RNG(1, 15*diff), RNG(1, 15*diff)]
 	}
 
 	let values
