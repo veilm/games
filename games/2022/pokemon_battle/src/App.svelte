@@ -14,9 +14,9 @@
 	}
 	let computer = {
 		"name": "Computer: OpenBSD riscv64",
-		"shape": "triangle2",
-		"hp": 3,
-		"power": 1000
+		"shape": "computer",
+		"hp": 5,
+		"power": 2000
 	}
 
 	const RNG = (min, max) => {
@@ -34,7 +34,7 @@
 
 		// We could cheat and have p2 = p + 1 but that would be unfair.
 
-		let p2 = RNG(0, computer.power)
+		let p2 = RNG(0, Math.min(player.power, computer.power))
 
 		player.power -= p
 		computer.power -= p2
