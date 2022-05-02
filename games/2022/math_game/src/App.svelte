@@ -22,7 +22,7 @@
 
 	let points = {
 		"Addition": 999,
-		"Subtraction": 999,
+		"Subtraction": 0,
 		"Multiplication": 999,
 		"Division": 999,
 		"Exponents": 999,

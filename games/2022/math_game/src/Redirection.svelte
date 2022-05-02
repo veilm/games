@@ -1,11 +1,15 @@
 <script lang="ts">
 	export let types
+	export let points
 
 	let redirTarget = "Addition"
 
 	const redirAvailable = target => {
-		if (target == "Subtraction") return false
-		else return true
+		for (const type of types) {
+			if (type == target) continue
+			if (points[type] == 0) return false
+		}
+		return true
 	}
 
 	const redirect = target => {
