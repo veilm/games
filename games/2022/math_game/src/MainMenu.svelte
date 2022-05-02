@@ -1,6 +1,6 @@
-<script lang="ts">
-	export let unlockedScreens: object
-	export let screen: string
+<script>
+	export let unlockedScreens
+	export let screen
 
 	let screenNames = [
 		"Addition",

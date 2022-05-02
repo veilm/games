@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import MainMenu from "./MainMenu.svelte"
 	import MathComponent from "./Math.svelte"
 	import Shop from "./Shop.svelte"

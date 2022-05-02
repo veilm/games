@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	export let questions
 	export let screen
 	export let points

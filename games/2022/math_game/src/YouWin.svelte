@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	export let startTime
 	export let endTime
 	let endStage = 0

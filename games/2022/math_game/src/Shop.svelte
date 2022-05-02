@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import YouWin from "./YouWin.svelte"
 	import Purchase from "./Purchase.svelte"
 	import Redirection from "./Redirection.svelte"
