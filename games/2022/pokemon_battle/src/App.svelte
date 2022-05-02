@@ -1,5 +1,10 @@
 <script>
 	import Player from "./Player.svelte"
+	import Log from "./Log.svelte"
+
+	let log = [
+		"Game start"
+	]
 
 	let player = {
 		"name": `Player: ${navigator.platform}`,
@@ -24,6 +29,8 @@
 
 <input type="number" placeholder="Power">
 <input type="button" value="Expend">
+
+<Log {log} />
 
 <hr>
 <p>by Michael Skyba</p>
