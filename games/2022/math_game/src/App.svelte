@@ -16,22 +16,22 @@
 		"Multiplication": false,
 		"Division": false,
 		"Exponents": false,
-		"Roots": true,
+		"Roots": false,
 		"Shop": true
 	}
 
 	let points = {
-		"Addition": 999,
+		"Addition": 0,
 		"Subtraction": 0,
-		"Multiplication": 999,
-		"Division": 999,
-		"Exponents": 999,
-		"Roots": 999
+		"Multiplication": 0,
+		"Division": 0,
+		"Exponents": 0,
+		"Roots": 0
 	}
 
 	let unlockedFeatures = {
-		"Difficulty": true,
-		"Redirection": true
+		"Difficulty": false,
+		"Redirection": false
 	}
 
 	const RNG = (min, max) => {
