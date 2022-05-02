@@ -18,6 +18,9 @@
 		"power": 1000
 	}
 
+	if (player.shape == "triangle") player.power = 1350
+	if (player.shape == "square") player.hp = 4
+
 	let computerNames = ["", "", "Arch", "OpenBSD"]
 	let computer = {
 		"name": "Computer: Ubuntu",
@@ -45,31 +48,41 @@
 
 		let outcome = []
 		if (p > p2) {
+			let c = 1
+			if (player.shape == "circle") c = 1.1
+
 			outcome = [
-				"Computer loses 1 HP",
-				"Player gains 1 HP",
+				`Computer loses ${c} HP`,
+				`Player gains ${c} HP`,
 				"Player wins exchange"
 			]
 
-			computer.hp--
-			player.hp++
+			computer.hp -= c
+			player.hp += c
 		}
 
 		else if (p2 > p) {
+			let c = 1
+			if (player.shape == "circle") c = 0.9
+
 			outcome = [
-				"Player loses 1 HP",
-				"Computer gains 1 HP",
+				`Player loses ${c} HP`,
+				`Computer gains ${c} HP`,
 				"Computer wins exchange"
 			]
 
-			player.hp--
-			computer.hp++
+			player.hp -= c
+			computer.hp += c
 		}
 
 		else outcome = ["Tied exchange"]
 
-		if (player.hp == 0) outcome = ["Player loses", ...outcome]
-		if (computer.hp == 0) outcome = ["Computer loses", ...outcome]
+		if (player.hp < 0) outcome = ["Player loses", ...outcome]
+		if (computer.hp < 0) outcome = ["Computer loses", ...outcome]
+
+		// Fix "Life: 1.2000000000000002"
+		player.hp = Math.round(player.hp * 100)/100
+		computer.hp = Math.round(computer.hp * 100)/100
 
 		log = [
 			...outcome,
@@ -90,7 +103,7 @@
 {#if computer.hp > 0 && player.hp > 0}
 	<input type="number" placeholder="Power" bind:value={expended}>
 	<input type="button" value="Expend" on:click={expend}>
-{:else if computer.hp == 0}
+{:else if computer.hp < 0}
 	<input type="button" value="Continue to next level">
 {/if}
 
