@@ -13,7 +13,12 @@
 	}
 
 	const redirect = target => {
-		console.log(target)
+		for (const type of types) {
+			if (type == target) continue
+			points[type]--
+		}
+
+		points[target] += 5
 	}
 </script>
 
