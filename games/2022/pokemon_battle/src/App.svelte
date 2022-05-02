@@ -1,22 +1,35 @@
 <script>
+	let player = {
+		"shape": "circle1",
+		"power": 1000
+	}
+	let computer = {
+		"shape": "triangle2",
+		"power": 1000
+	}
+
+	const image = player => `shapes/${player.shape}.png`
+	const alt = player => `Shape: ${player.shape}`
 </script>
 
 <h1>Turn Battle</h1>
 <hr>
 
-<p>Body</p>
+<h3>Computer: OpenBSD riscv64</h3>
+<img src={image(computer)} alt={alt(computer)}>
+<p>Power: {computer.power}</p>
 
-<img src="shapes/square1.png">
-<img src="shapes/square2.png">
-<img src="shapes/square3.png">
+<hr>
 
-<img src="shapes/triangle1.png">
-<img src="shapes/triangle2.png">
-<img src="shapes/triangle3.png">
-
-<img src="shapes/circle1.png">
-<img src="shapes/circle2.png">
-<img src="shapes/circle3.png">
+<h3>Player: {navigator.platform}</h3>
+<img src={image(player)} alt={alt(player)}>
+<p>Power: {player.power}</p>
 
 <hr>
 <p>by Michael Skyba</p>
+
+<style>
+	img {
+		max-width: 100px;
+	}
+</style>
