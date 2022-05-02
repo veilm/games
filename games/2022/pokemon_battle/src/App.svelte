@@ -94,7 +94,7 @@
 		player.hp = 3
 
 		if (player.shape == "triangle") player.power += 350 * player.level
-		if (player.shape == "square") player.hp += player.level
+		if (player.shape == "square") player.hp += player.level * 2
 
 		computer.level++
 		computer.power = 1000 + 1000 * computer.level
