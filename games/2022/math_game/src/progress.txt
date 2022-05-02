@@ -32,20 +32,20 @@ p = 4
 p = 5
 	Unlocked screens: Add, Sub, Mul, Div, Exp, Shop
 	Unlocked features: Difficulty
-	Purchase: Factoring (screen)
+	Purchase: Roots (screen)
 		Cost: 50 mul, 50 div, 100 exp
 
 p = 6
-	Unlocked screens: Add, Sub, Mul, Div, Exp, Fac, Shop
+	Unlocked screens: Add, Sub, Mul, Div, Exp, Roo, Shop
 	Unlocked features: Difficulty
 	Purchase: Redirection (feature)
-		Cost: 50 mul, 50 exp, 75 fac
+		Cost: 50 mul, 50 exp, 75 roo
 
 p = 7
-	Unlocked screens: Add, Sub, Mul, Div, Exp, Fac, Shop
+	Unlocked screens: Add, Sub, Mul, Div, Exp, Roo, Shop
 	Unlocked features: Difficulty, Redirection
 		With redirection, you can exchange 1 point of five types (5 points
 		total) for 5 points of the remaining type. e.g. (1 add, 1 sub, 1 mul, 1
-		div, 1 exp --> 5 fac)
+		div, 1 exp --> 5 roo)
 	Purchase: Win
-		Cost: 150 sub, 300 fac
+		Cost: 150 sub, 300 roo

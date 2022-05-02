@@ -10,8 +10,8 @@
 		["5 Addition", "5 Subtraction", "15 Multiplication", "20 Division"],
 		["35 Addition", "45 Subtraction", "55 Multiplication", "60 Division"],
 		["50 Multiplication", "50 Division", "100 Exponents"],
-		["50 Multiplication", "50 Exponents", "75 Factoring"],
-		["150 Subtraction", "300 Factoring"]
+		["50 Multiplication", "50 Exponents", "75 Roots"],
+		["150 Subtraction", "300 Roots"]
 	]
 
 	const isBuyable = (progress, points) => {
@@ -20,7 +20,7 @@
 		let mul = points["Multiplication"]
 		let div = points["Division"]
 		let exp = points["Exponents"]
-		let fac = points["Factoring"]
+		let roo = points["Roots"]
 
 		return [
 			add >= 15,
@@ -29,9 +29,9 @@
 			add >=  5 && sub >= 5  && mul >= 15 && div >= 20,
 			add >= 35 && sub >= 45 && mul >= 55 && div >= 60,
 			mul >= 50 && div >= 50 && exp >= 100,
-			mul >= 50 && exp >= 50 && fac >= 75,
+			mul >= 50 && exp >= 50 && roo >= 75,
 
-			sub >= 150 && fac >= 300
+			sub >= 150 && roo >= 300
 		][progress]
 	}
 </script>

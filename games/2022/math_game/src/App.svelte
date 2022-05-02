@@ -16,7 +16,7 @@
 		"Multiplication": false,
 		"Division": false,
 		"Exponents": false,
-		"Factoring": false,
+		"Roots": false,
 		"Shop": true
 	}
 
@@ -26,7 +26,7 @@
 		"Multiplication": 999,
 		"Division": 999,
 		"Exponents": 999,
-		"Factoring": 999
+		"Roots": 999
 	}
 
 	let unlockedFeatures = {
@@ -111,19 +111,19 @@
 				points["Multiplication"] -= 50
 				points["Division"] -= 50
 				points["Exponents"] -= 100
-				unlockedScreens["Factoring"] = true
+				unlockedScreens["Roots"] = true
 				break
 
 			case 6:
 				points["Multiplication"] -= 50
 				points["Exponents"] -= 50
-				points["Factoring"] -= 75
+				points["Roots"] -= 75
 				unlockedFeatures["Redirection"] = true
 				break
 
 			case 7:
 				points["Subtraction"] -= 150
-				points["Factoring"] -= 300
+				points["Roots"] -= 300
 				endTime = new Date().getTime()
 				break
 		}

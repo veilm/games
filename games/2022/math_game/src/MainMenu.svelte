@@ -8,7 +8,7 @@
 		"Multiplication",
 		"Division",
 		"Exponents",
-		"Factoring",
+		"Roots",
 		"Shop"
 	]
 </script>

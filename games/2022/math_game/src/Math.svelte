@@ -9,7 +9,7 @@
 	let input
 
 	function questionValues(diff: int) {
-		if (screen == "Exponents")
+		if (screen == "Exponents" || screen == "Roots")
 			return [RNG(1, 2*difficulty), RNG(1, 3*difficulty)]
 
 		if (screen == "Multiplication" || screen == "Division")

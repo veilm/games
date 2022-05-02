@@ -17,7 +17,7 @@
 		"Multiplication",
 		"Division",
 		"Exponents",
-		"Factoring"
+		"Roots"
 	]
 </script>
 
