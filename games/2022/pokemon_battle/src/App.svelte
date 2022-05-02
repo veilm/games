@@ -45,7 +45,7 @@
 		let outcome = []
 		if (p > p2) {
 			let c = 1
-			if (player.shape == "circle") c = 1 + (0.1 * level)
+			if (player.shape == "circle") c = 1 + (0.1 * player.level)
 
 			outcome = [
 				`Computer loses ${c} HP`,
@@ -59,7 +59,7 @@
 
 		else if (p2 > p) {
 			let c = 1
-			if (player.shape == "circle") c = 1 - (0.1 * level)
+			if (player.shape == "circle") c = 1 - (0.1 * player.level)
 
 			outcome = [
 				`Player loses ${c} HP`,
@@ -106,6 +106,10 @@
 		expended = null
 	}
 	nextLevel()
+
+	document.onkeydown = e => {
+		if (e.code == "Enter" && computer.hp > 0 && player.hp > 0) expend()
+	}
 </script>
 
 <h1>Turn Battle</h1>
