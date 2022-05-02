@@ -7,7 +7,11 @@
 
 <h3>{player.name}</h3>
 <img src={image(player)} alt={alt(player)}>
-<p>Power: {player.power}</p>
+<p>
+	Power: {player.power}
+	<br>
+	Life: {player.hp}
+</p>
 
 <style>
 	img {
