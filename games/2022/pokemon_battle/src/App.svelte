@@ -128,9 +128,8 @@
 	<p>You have killed all three operating systems. Does this mean that you are
 	a good player? Or did you simply push through until luck spared you? If you
 	are truly skilled, you should be able to win with each of the three shapes
-	back to back.</p>
-	<p>If you admit not to be truly skilled, there is no blame to pass. The
-	other operating system does have an inherent advantage, after all.</p>
+	back to back. The game is somewhat luck-based but not so luck-based that
+	this is impossible if you figure out the optimal strategy.</p>
 {/if}
 
 <Log {log} />
