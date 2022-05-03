@@ -12,3 +12,7 @@ Deployment
 	JavaScript .js files, which are used by your html files. To send someone your
 	app, send them the html and the js, not the ts, unless you want them to compile
 	it themselves for some reason.
+
+Problems
+	The sudoku problem .txt files came from https://norvig.com/easy50.txt.
+	I made a shell script called gen_problems for creating them.
