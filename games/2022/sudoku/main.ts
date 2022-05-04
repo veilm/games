@@ -1,5 +1,6 @@
 const table = document.getElementById("grid")
 const submit = document.getElementById("submit")
+const gameStatus = document.getElementById("status")
 
 let grid = []
 
@@ -71,5 +72,44 @@ r.onload = function() {
 r.send()
 
 submit.onclick = () => {
-	console.log(grid)
+	let invalid = ""
+
+	// I know that this is not combinatorically optimal but this assignment is
+	// formative
+
+	// Check rows and columns
+	for (let dir = 0; dir < 2; dir++) {
+		for (let i = 0; i < 9; i++) {
+			let used = {}
+
+			for (let j = 0; j < 9; j++) {
+
+				// Look at rows the first time through and then columns the
+				// second time through.
+				let cell = dir == 0 ? grid[i][j] : grid[j][i]
+
+				let isAlreadyUsed = used[cell]
+				let notFilled = cell == "0"
+
+				if (isAlreadyUsed || notFilled) {
+					invalid = dir == 0 ? `R${i} C${j}` : `R${j} C${i}`
+					console.log(invalid)
+					break
+				}
+
+				used[cell] = true
+			}
+
+			if (invalid != "") break
+		}
+
+		if (invalid != "") break
+	}
+
+	if (invalid != "") {
+		gameStatus.innerHTML = `Invalid cell (${invalid})`
+		return
+	}
+
+	gameStatus.innerHTML = "All cells valid (win)"
 }
