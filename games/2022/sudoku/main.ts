@@ -23,6 +23,14 @@ r.onload = function() {
 			td.innerHTML = cell
 			tr.appendChild(td)
 
+			if (cell == "0") {
+				td.className = "edit"
+				td.onclick = () => {
+					console.log(cell, row)
+				}
+			}
+			else td.className = "keep"
+
 			grid[rowIdx].push(cell)
 		}
 
