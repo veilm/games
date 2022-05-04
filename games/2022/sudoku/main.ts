@@ -28,7 +28,6 @@ r.onload = function() {
 		for (const cell of row) {
 			let td = document.createElement("td")
 			td.innerHTML = parseCell(cell)
-			tr.appendChild(td)
 
 			if (cell == "0") {
 				td.className = "edit"
@@ -49,6 +48,14 @@ r.onload = function() {
 				}
 			}
 			else td.className = "keep"
+
+			// Borders around 3x3 groups
+			if (rowIdx == 0 || rowIdx == 6) td.className += " top"
+			if (colIdx == 0 || colIdx == 6) td.className += " left"
+			if (rowIdx == 2 || rowIdx == 8) td.className += " bottom"
+			if (colIdx == 2 || colIdx == 8) td.className += " right"
+
+			tr.appendChild(td)
 
 			grid[rowIdx].push(cell)
 			colIdx++
