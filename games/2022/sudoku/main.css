@@ -28,3 +28,7 @@ td {
 .right {
 	border-right: 3px solid #4a4a4a;
 }
+
+#submit {
+	margin-top: 10px;
+}

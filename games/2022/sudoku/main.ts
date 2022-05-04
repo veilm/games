@@ -1,4 +1,6 @@
 const table = document.getElementById("grid")
+const submit = document.getElementById("submit")
+
 let grid = []
 
 let digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -64,8 +66,10 @@ r.onload = function() {
 		table.appendChild(tr)
 		rowIdx++
 	}
-
-	console.log(grid)
 }
 
 r.send()
+
+submit.onclick = () => {
+	console.log(grid)
+}
