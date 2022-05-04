@@ -44,7 +44,7 @@ r.onload = function() {
 
 					let newValue = digits[newIdx]
 					grid[tempRow][tempCol] = newValue
-					this.innerHTML = parseCell(newValue)
+					td.innerHTML = parseCell(newValue)
 				}
 			}
 			else td.className = "keep"
