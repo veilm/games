@@ -139,11 +139,10 @@ submit.onclick = () => {
 	}
 
 	// Win
-
 	for (const tr of table.children) {
 		for (const td of tr.children) {
 			td.className = "edit"
-			td.onclick = null
+			if (td instanceof HTMLElement) td.onclick = null
 		}
 	}
 	submit.style.display = "none"
