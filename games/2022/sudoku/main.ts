@@ -3,6 +3,9 @@ let grid = []
 
 let digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
+// It looks cleaner to have empty cells instead of cells with "0"
+const parseCell = cell => cell == "0" ? "" : cell
+
 // Gets problems/1.txt to problems/50.txt
 let problemFile = `problems/${Math.round(Math.random() * 49) + 1}.txt`
 let r = new XMLHttpRequest()
@@ -24,7 +27,7 @@ r.onload = function() {
 
 		for (const cell of row) {
 			let td = document.createElement("td")
-			td.innerHTML = cell
+			td.innerHTML = parseCell(cell)
 			tr.appendChild(td)
 
 			if (cell == "0") {
@@ -42,7 +45,7 @@ r.onload = function() {
 
 					let newValue = digits[newIdx]
 					grid[tempRow][tempCol] = newValue
-					this.innerHTML = newValue
+					this.innerHTML = parseCell(newValue)
 				}
 			}
 			else td.className = "keep"
