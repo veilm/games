@@ -71,11 +71,27 @@ r.onload = function() {
 
 r.send()
 
+function validInner(row: number, col: number): boolean {
+	return true
+}
+
 submit.onclick = () => {
 	let invalid = ""
 
 	// I know that this is not combinatorically optimal but this assignment is
 	// formative
+
+	// Check all 9 inner 3x3 squares
+	for (let row = 0; row < 7; row += 3) {
+		for (let col = 0; col < 7; col += 3) {
+			if (!validInner(row, col)) {
+				invalid = `Inner 3x3 square at R${row} C${col}`
+				break
+			}
+		}
+
+		if (invalid != "") break
+	}
 
 	// Check rows and columns
 	for (let dir = 0; dir < 2; dir++) {
@@ -92,8 +108,7 @@ submit.onclick = () => {
 				let notFilled = cell == "0"
 
 				if (isAlreadyUsed || notFilled) {
-					invalid = dir == 0 ? `R${i} C${j}` : `R${j} C${i}`
-					console.log(invalid)
+					invalid = `${dir == 0 ? "Row" : "Column"} ${i}`
 					break
 				}
 
@@ -107,7 +122,7 @@ submit.onclick = () => {
 	}
 
 	if (invalid != "") {
-		gameStatus.innerHTML = `Invalid cell (${invalid})`
+		gameStatus.innerHTML = `Invalid (${invalid})`
 		return
 	}
 
