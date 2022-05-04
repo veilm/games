@@ -94,21 +94,13 @@ submit.onclick = () => {
 	// I know that this is not combinatorically optimal but this assignment is
 	// formative
 
-	// Check all 9 inner 3x3 squares
-	for (let row = 0; row < 7; row += 3) {
-		for (let col = 0; col < 7; col += 3) {
-			if (!validInner(row, col)) {
-				invalid = `Inner 3x3 square at R${row} C${col}`
-				break
-			}
-		}
-
-		if (invalid != "") break
-	}
-
 	// Check rows and columns
 	for (let dir = 0; dir < 2; dir++) {
+		if (invalid != "") break
+
 		for (let i = 0; i < 9; i++) {
+			if (invalid != "") break
+
 			let used = {}
 
 			for (let j = 0; j < 9; j++) {
@@ -124,11 +116,20 @@ submit.onclick = () => {
 
 				used[cell] = true
 			}
-
-			if (invalid != "") break
 		}
+	}
 
+
+	// Check all 9 inner 3x3 squares
+	for (let row = 0; row < 7; row += 3) {
 		if (invalid != "") break
+
+		for (let col = 0; col < 7; col += 3) {
+			if (!validInner(row, col)) {
+				invalid = `Inner 3x3 square at R${row} C${col}`
+				break
+			}
+		}
 	}
 
 	if (invalid != "") {
