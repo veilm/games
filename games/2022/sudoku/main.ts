@@ -71,7 +71,20 @@ r.onload = function() {
 
 r.send()
 
+// Takes the position of the top-left cell in the 3x3
+// e.g. (0, 0) for ((0, 0) ... (2, 2))
 function validInner(row: number, col: number): boolean {
+	let used = {}
+
+	for (let changeRow = 0; changeRow < 3; changeRow++) {
+		for (let changeCol = 0; changeCol < 3; changeCol++) {
+			let cell = grid[row + changeRow][col + changeCol]
+
+			if (used[cell] || cell == "0") return false
+			used[cell] = true
+		}
+	}
+
 	return true
 }
 
@@ -104,10 +117,7 @@ submit.onclick = () => {
 				// second time through.
 				let cell = dir == 0 ? grid[i][j] : grid[j][i]
 
-				let isAlreadyUsed = used[cell]
-				let notFilled = cell == "0"
-
-				if (isAlreadyUsed || notFilled) {
+				if (used[cell] || cell == "0") {
 					invalid = `${dir == 0 ? "Row" : "Column"} ${i}`
 					break
 				}
