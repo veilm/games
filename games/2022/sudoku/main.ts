@@ -3,6 +3,7 @@ const submit = document.getElementById("submit")
 const gameStatus = document.getElementById("status")
 
 let grid = []
+let startTime = new Date().getTime()
 
 let digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
@@ -146,5 +147,8 @@ submit.onclick = () => {
 		}
 	}
 	submit.style.display = "none"
-	gameStatus.innerHTML = "All cells valid (win)"
+
+	let endTime = new Date().getTime()
+	let timeUsed = Math.round((endTime - startTime) / 1000)
+	gameStatus.innerHTML = `All cells valid (${timeUsed} sec)`
 }
