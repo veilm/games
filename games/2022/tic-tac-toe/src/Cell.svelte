@@ -10,4 +10,12 @@
 	}
 </script>
 
-<td on:click={click}>{ri} {ci} {grid[ri][ci]}</td>
+<td on:click={click}>{grid[ri][ci]}</td>
+
+<style>
+	td {
+		text-align: center;
+		border: 1px solid #4a4a4a;
+		user-select: none;
+	}
+</style>
