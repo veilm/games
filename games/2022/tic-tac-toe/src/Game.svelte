@@ -9,9 +9,22 @@
 		[" ", " ", " "],
 		[" ", " ", " "]
 	]
+
+	let win = {
+		"exists": false,
+		"coords": [
+			[false, false, false],
+			[false, false, false],
+			[false, false, false]
+		]
+	}
 </script>
 
-<p>Current turn: {players[turn]}</p>
+{#if win.exists}
+	<p>Winner: {players[turn == 1 ? 0 : 1]}</p>
+{:else}
+	<p>Current turn: {players[turn]}</p>
+{/if}
 
 <table>
 	{#each grid as row, ri}
@@ -21,6 +34,7 @@
 			{ri} {ci} {players}
 			bind:grid={grid}
 			bind:turn={turn}
+			bind:win={win}
 		/>
 		{/each}
 	</tr>
