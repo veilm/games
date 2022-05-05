@@ -13,28 +13,42 @@
 		grid[ri][ci] = players[turn]
 		turn = turn == 1 ? 0 : 1
 
-		// Check if any row has three of a kind
-		for (let i = 0; i < 3; i++) {
-			let winner = "none"
+		// Check if any row or column has three of a kind
+		for (let dir = 0; dir < 2; dir++) {
+			for (let i = 0; i < 3; i++) {
+				let winner = "none"
 
-			for (let j = 0; j < 3; j++) {
-				if (grid[i][j] == " ") {
-					winner = "none"
-					break
+				for (let j = 0; j < 3; j++) {
+
+					// First time? Look at rows. Second time? Look at columns.
+					let cell = dir == 0 ? grid[i][j] : grid[j][i]
+
+					if (cell == " ") {
+						winner = "none"
+						break
+					}
+
+					if (j == 0) winner = cell
+					if (cell != winner) {
+						winner = "none"
+						break
+					}
 				}
 
-				if (j == 0) winner = grid[i][j]
-				if (grid[i][j] != winner) {
-					winner = "none"
-					break
-				}
-			}
+				if (winner != "none") {
+					win.exists = true
 
-			if (winner != "none") {
-				win.exists = true
-				win.coords[i][0] = true
-				win.coords[i][1] = true
-				win.coords[i][2] = true
+					if (dir == 0) {
+						win.coords[i][0] = true
+						win.coords[i][1] = true
+						win.coords[i][2] = true
+					}
+					else {
+						win.coords[0][i] = true
+						win.coords[1][i] = true
+						win.coords[2][i] = true
+					}
+				}
 			}
 		}
 	}
