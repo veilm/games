@@ -11,6 +11,28 @@
 
 		grid[ri][ci] = players[turn]
 		turn = turn == 1 ? 0 : 1
+
+		for (let i = 0; i < 3; i++) {
+			let winner = "none"
+
+			for (let j = 0; j < 3; j++) {
+				if (grid[i][j] == " ") {
+					winner = "none"
+					break
+				}
+
+				if (j == 0) winner = grid[i][j]
+				if (grid[i][j] != winner) {
+					winner = "none"
+					break
+				}
+			}
+
+			if (winner != "none") {
+				alert(winner)
+				break
+			}
+		}
 	}
 </script>
 
