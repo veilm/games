@@ -13,11 +13,11 @@
 </script>
 
 {#if style == "Red"}
-<img src="/r{side+1}.png" alt="Red die showing {side+1}">
+<img src="r{side+1}.png" alt="Red die showing {side+1}">
 {/if}
 
 {#if style == "Black"}
-<img src="/b{side+1}.png" alt="Black die showing {side+1}">
+<img src="b{side+1}.png" alt="Black die showing {side+1}">
 {/if}
 
 {#if style == "Numbers"}
