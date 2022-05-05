@@ -18,7 +18,8 @@
 	<tr>
 		{#each row as cell, ci}
 		<Cell
-			{ri} {ci} {grid}
+			{ri} {ci} {players}
+			bind:grid={grid}
 			bind:turn={turn}
 		/>
 		{/each}

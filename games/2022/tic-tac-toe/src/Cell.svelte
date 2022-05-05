@@ -2,10 +2,14 @@
 	export let ri
 	export let ci
 	export let grid
+	export let players
 
 	export let turn
 
 	const click = () => {
+		if (grid[ri][ci] != " ") return
+
+		grid[ri][ci] = players[turn]
 		turn = turn == 1 ? 0 : 1
 	}
 </script>
