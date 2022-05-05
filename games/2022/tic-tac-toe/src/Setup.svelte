@@ -1,17 +1,16 @@
 <script>
-	let player1 = "X"
-	let player2 = "O"
+	export let players
 
 	const swap = () => {
-		player1 += player2
-		player2 = player1[0]
-		player1 = player1[1]
+		players[0] += players[1]
+		players[1] = players[0][0]
+		players[0] = players[0][1]
 	}
 </script>
 
 <ul>
-	<li>Player 1: {player1}</li>
-	<li>Player 2: {player2}</li>
+	<li>Player 1: {players[0]}</li>
+	<li>Player 2: {players[1]}</li>
 </ul>
 
 <input type="button" value="Swap" on:click={swap}>
