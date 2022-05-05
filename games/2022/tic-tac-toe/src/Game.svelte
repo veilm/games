@@ -27,11 +27,11 @@
 </script>
 
 {#if win.exists}
-	<p>Winner: {players[turn == 1 ? 0 : 1]}</p>
+	<p>Winner: {players[1 - turn % 2]}</p>
 
 	<input type="button" value="Rematch" on:click={newMatch}>
 {:else}
-	<p>Current turn: {players[turn]}</p>
+	<p>Current turn: {players[turn % 2]}</p>
 {/if}
 
 <table>

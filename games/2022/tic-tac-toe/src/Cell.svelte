@@ -10,8 +10,8 @@
 	const click = () => {
 		if (grid[ri][ci] != " " || win.exists) return
 
-		grid[ri][ci] = players[turn]
-		turn = turn == 1 ? 0 : 1
+		grid[ri][ci] = players[turn % 2]
+		turn++
 
 		// Check if any row or column has three of a kind
 		for (let dir = 0; dir < 2; dir++) {
