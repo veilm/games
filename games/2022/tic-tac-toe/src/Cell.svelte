@@ -51,6 +51,44 @@
 				}
 			}
 		}
+
+		// Check if a diagonal has three of a kind
+		for (let dir = 0; dir < 2; dir++)
+		{
+			let winner = "none"
+
+			for (let i = 0; i < 3; i++) {
+				// First time? Look at top-left --> bottom-right diagonal.
+				// Second time? Look at bottom-left --> top-right diagonal.
+				let cell = dir == 0 ? grid[i][i] : grid[2-i][i]
+
+				if (cell == " ") {
+					winner = "none"
+					break
+				}
+
+				if (i == 0) winner = cell
+				if (cell != winner) {
+					winner = "none"
+					break
+				}
+			}
+
+			if (winner != "none") {
+				win.exists = true
+
+				if (dir == 0) {
+					win.coords[0][0] = true
+					win.coords[1][1] = true
+					win.coords[2][2] = true
+				}
+				else {
+					win.coords[2][0] = true
+					win.coords[1][1] = true
+					win.coords[0][2] = true
+				}
+			}
+		}
 	}
 </script>
 
