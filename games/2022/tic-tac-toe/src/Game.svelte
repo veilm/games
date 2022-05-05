@@ -2,12 +2,14 @@
 	import Cell from "./Cell.svelte"
 
 	export let players
-	let turn = 0
 
+	let turn
 	let grid
 	let win
 
 	const newMatch = () => {
+		turn = 0
+
 		grid = [
 			[" ", " ", " "],
 			[" ", " ", " "],
@@ -28,7 +30,9 @@
 
 {#if win.exists}
 	<p>Winner: {players[1 - turn % 2]}</p>
-
+	<input type="button" value="Rematch" on:click={newMatch}>
+{:else if turn > 8}
+	<p>Tie - no more moves</p>
 	<input type="button" value="Rematch" on:click={newMatch}>
 {:else}
 	<p>Current turn: {players[turn % 2]}</p>
