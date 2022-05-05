@@ -2,22 +2,26 @@
 	import Cell from "./Cell.svelte"
 
 	export let players
+	let turn = 0
 
 	let grid = [
-		["E", "E", "E"],
-		["E", "E", "E"],
-		["E", "E", "E"]
+		["", "", ""],
+		["", "", ""],
+		["", "", ""]
 	]
 </script>
+
+<p>Current turn: {players[turn]}</p>
 
 <table>
 	{#each grid as row, ri}
 	<tr>
 		{#each row as cell, ci}
-		<Cell {ri} {ci} {grid} />
+		<Cell
+			{ri} {ci} {grid}
+			bind:turn={turn}
+		/>
 		{/each}
 	</tr>
 	{/each}
 </table>
-
-<p>{players}</p>
