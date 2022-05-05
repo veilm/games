@@ -1,10 +1,13 @@
 <script>
+	import Setup from "./Setup.svelte"
+
+	let screen = Setup
 </script>
 
-<h1>App</h1>
+<h1>Tic-Tac-Toe</h1>
 <hr>
 
-<p>Body</p>
+<svelte:component this={screen} />
 
 <hr>
 <p>by Michael Skyba</p>
