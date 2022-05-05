@@ -1,5 +1,6 @@
 <script>
 	import Setup from "./Setup.svelte"
+	import Game from "./Game.svelte"
 
 	let screen = "Setup"
 	let players = ["X", "O"]
@@ -13,6 +14,8 @@
 		bind:screen={screen}
 		bind:players={players}
 	/>
+{:else}
+	<Game bind:players={players} />
 {/if}
 
 <hr>

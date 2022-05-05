@@ -1,5 +1,6 @@
 <script>
 	export let players
+	export let screen
 
 	const swap = () => {
 		players[0] += players[1]
@@ -14,4 +15,4 @@
 </ul>
 
 <input type="button" value="Swap" on:click={swap}>
-<input type="button" value="Confirm">
+<input type="button" value="Confirm" on:click={() => screen = "Game"}>
