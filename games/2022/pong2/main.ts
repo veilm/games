@@ -1,59 +1,66 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
-const gameWidth = canvas.width
-const gameHeight = canvas.height
-
-let background = {
+let backgroundImg = {
 	"img": document.getElementById("background") as HTMLImageElement,
-	draw: () => {ctx.drawImage(background.img, 0, 0)}
+	draw: function() {
+		ctx.drawImage(this.img, 0, 0)
+	}
+}
+
+let ballImg = {
+	"img": document.getElementById("ball") as HTMLImageElement,
+	draw: function() {
+		ctx.drawImage(this.img, ball.x, ball.y)
+	}
 }
 
 let ball = {
-	"x": canvas.width / 2 - 25,
+	"x": canvas.width / 2 - ballImg.img.width,
 	"y": 10,
-
-	"img": document.getElementById("ball") as HTMLImageElement,
 
 	"dirX": 1,
 	"dirY": 1,
 	"speed": 1.10,
 
-	collision: () => {
-		if (ball.x > gameWidth - 50) {
-			ball.x = gameWidth - 50
-			ball.dirX *= -1
+	collision: function() {
+		if (this.x > canvas.width - 50) {
+			this.x = canvas.width - 50
+			this.dirX *= -1
 		}
 
-		if (ball.x < 0) {
-			ball.x = 0
-			ball.dirX *= -1
+		if (this.x < 0) {
+			this.x = 0
+			this.dirX *= -1
 		}
 	},
 
-	move: () => {
-		ball.x += ball.dirX * ball.speed
-		ball.y += ball.dirY * ball.speed
+	move: function() {
+		this.x += this.dirX * this.speed
+		this.y += this.dirY * this.speed
 
-		ball.collision()
+		this.collision()
 	},
 
-	draw: () => {ctx.drawImage(ball.img, ball.x, ball.y)}
+}
+
+let paddleImg = {
+	"img": document.getElementById("paddle") as HTMLImageElement,
+	draw: function() {
+		ctx.drawImage(this.img, paddle.x, paddle.y)
+	}
 }
 
 let paddle = {
-	"x": canvas.width / 2 - 50,
-	"y": 330,
-	"img": document.getElementById("paddle") as HTMLImageElement,
-
-	draw: () => {ctx.drawImage(paddle.img, paddle.x, paddle.y)}
+	"x": canvas.width / 2 - paddleImg.img.width / 2,
+	"y": canvas.height - paddleImg.img.height - 10,
 }
 
 setInterval(() => {
-	background.draw()
+	backgroundImg.draw()
 
 	ball.move()
-	ball.draw()
+	ballImg.draw()
 
-	paddle.draw()
+	paddleImg.draw()
 }, 10)
