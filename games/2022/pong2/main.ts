@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
+let marginY = 10
+
 let pressed = {
 	left: false,
 	right: false
@@ -22,15 +24,17 @@ let ballImg = {
 
 let ball = {
 	"x": canvas.width / 2 - ballImg.img.width,
-	"y": 10,
+	"y": marginY,
 
 	"dirX": 1,
 	"dirY": 1,
 	"speed": 1.10,
 
 	collision: function() {
-		if (this.x > canvas.width - 50) {
-			this.x = canvas.width - 50
+		let max = canvas.width - ballImg.img.width
+
+		if (this.x > max) {
+			this.x = max
 			this.dirX *= -1
 		}
 
@@ -45,8 +49,7 @@ let ball = {
 		this.y += this.dirY * this.speed
 
 		this.collision()
-	},
-
+	}
 }
 
 let paddleImg = {
@@ -58,7 +61,7 @@ let paddleImg = {
 
 let paddle = {
 	"x": canvas.width / 2 - paddleImg.img.width / 2,
-	"y": canvas.height - paddleImg.img.height - 10,
+	"y": canvas.height - paddleImg.img.height - marginY,
 
 	constraints: function() {
 		let max = canvas.width - paddleImg.img.width
