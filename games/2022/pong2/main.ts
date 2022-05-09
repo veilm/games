@@ -7,6 +7,14 @@ let pressed = {
 	left: false,
 	right: false
 }
+document.onkeydown = e => {
+	if (e.code == "ArrowRight") pressed.right = true
+	if (e.code == "ArrowLeft") pressed.left = true
+}
+document.onkeyup = e => {
+	if (e.code == "ArrowRight") pressed.right = false
+	if (e.code == "ArrowLeft") pressed.left = false
+}
 
 let backgroundImg = {
 	"img": document.getElementById("background") as HTMLImageElement,
@@ -84,5 +92,6 @@ setInterval(() => {
 	ball.move()
 	ballImg.draw()
 
+	paddle.move()
 	paddleImg.draw()
 }, 10)
