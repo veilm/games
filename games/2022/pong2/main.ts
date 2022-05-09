@@ -12,8 +12,31 @@ let background = {
 let ball = {
 	"x": canvas.width / 2 - 25,
 	"y": 10,
+
 	"img": document.getElementById("ball") as HTMLImageElement,
+
+	"dirX": 1,
+	"dirY": 1,
 	"speed": 1.10,
+
+	collision: () => {
+		if (ball.x > gameWidth - 50) {
+			ball.x = gameWidth - 50
+			ball.dirX *= -1
+		}
+
+		if (ball.x < 0) {
+			ball.x = 0
+			ball.dirX *= -1
+		}
+	},
+
+	move: () => {
+		ball.x += ball.dirX * ball.speed
+		ball.y += ball.dirY * ball.speed
+
+		ball.collision()
+	},
 
 	draw: () => {ctx.drawImage(ball.img, ball.x, ball.y)}
 }
@@ -29,6 +52,8 @@ let paddle = {
 setInterval(() => {
 	background.draw()
 
+	ball.move()
 	ball.draw()
+
 	paddle.draw()
 }, 10)
