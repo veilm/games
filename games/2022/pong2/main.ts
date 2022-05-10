@@ -1,7 +1,12 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
-let marginY = 10
+let game = {
+	"marginY": 10,
+	"status": "on",
+	"width": canvas.width,
+	"height": canvas.height
+}
 
 let pressed = {
 	left: false,
@@ -31,15 +36,15 @@ let ballImg = {
 }
 
 let ball = {
-	"x": canvas.width / 2 - ballImg.img.width,
-	"y": marginY,
+	"x": game.width / 2 - ballImg.img.width,
+	"y": game.marginY,
 
 	"dirX": 1,
 	"dirY": 1,
 	"speed": 1.10,
 
 	collision: function() {
-		let max = canvas.width - ballImg.img.width
+		let max = game.width - ballImg.img.width
 
 		if (this.x > max) {
 			this.x = max
@@ -54,8 +59,14 @@ let ball = {
 		// Drops to paddle level
 		if (this.y > paddle.y - ballImg.img.height) {
 
+			if (this.y > game.height - ballImg.img.height) game.status = "off"
+
 			// Touches paddle
-			if (this.x > paddle.x - ballImg.img.width && this.x < paddle.x + ballImg.img.width) this.dirY = -1
+			if (this.x > paddle.x - ballImg.img.width
+				&& this.x < paddle.x + ballImg.img.width
+				&& game.status != "dying") this.dirY = -1
+
+			else game.status = "dying"
 		}
 	},
 
@@ -75,11 +86,11 @@ let paddleImg = {
 }
 
 let paddle = {
-	"x": canvas.width / 2 - paddleImg.img.width / 2,
-	"y": canvas.height - paddleImg.img.height - marginY,
+	"x": game.width / 2 - paddleImg.img.width / 2,
+	"y": game.height - paddleImg.img.height - game.marginY,
 
 	constraints: function() {
-		let max = canvas.width - paddleImg.img.width
+		let max = game.width - paddleImg.img.width
 
 		if (this.x > max) this.x = max
 		if (this.x < 0) this.x = 0
@@ -94,11 +105,13 @@ let paddle = {
 }
 
 setInterval(() => {
+	if (game.status == "off") return
+
 	backgroundImg.draw()
 
 	ball.move()
 	ballImg.draw()
 
 	paddle.move()
-	paddleImg.draw()
+	if (game.status == "on") paddleImg.draw()
 }, 10)
