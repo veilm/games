@@ -56,17 +56,21 @@ let ball = {
 			this.dirX = 1
 		}
 
+		if (this.y > game.height - ballImg.img.height) {
+			game.status = "off"
+			return
+		}
+
 		// Drops to paddle level
 		if (this.y > paddle.y - ballImg.img.height) {
 
-			if (this.y > game.height - ballImg.img.height) game.status = "off"
-
 			// Touches paddle
-			if (this.x > paddle.x - ballImg.img.width
-				&& this.x < paddle.x + ballImg.img.width
-				&& game.status != "dying") this.dirY = -1
+			if (this.x > paddle.x - ballImg.img.width &&
+				this.x < paddle.x + ballImg.img.width) {
 
-			else game.status = "dying"
+				this.dirY = -1
+				this.y = paddle.y - ballImg.img.height
+			}
 		}
 	},
 
@@ -113,5 +117,5 @@ setInterval(() => {
 	ballImg.draw()
 
 	paddle.move()
-	if (game.status == "on") paddleImg.draw()
+	paddleImg.draw()
 }, 10)
