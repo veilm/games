@@ -4,9 +4,22 @@ const ctx = canvas.getContext("2d")
 let game = {
 	"marginY": 10,
 	"status": "on",
+
 	"width": canvas.width,
 	"height": canvas.height
+
+	"score": 0,
+	"highScore": 0,
+	"speed": 1.0,
+
+	"updateText": function() {
+		let elements = ["score", "highScore", "speed"]
+		for (const element of elements) {
+			document.getElementById(element).innerHTML = this[element]
+		}
+	}
 }
+game.updateText()
 
 let pressed = {
 	left: false,
@@ -41,7 +54,6 @@ let ball = {
 
 	"dirX": 1,
 	"dirY": 1,
-	"speed": 1.10,
 
 	collision: function() {
 		let max = game.width - ballImg.img.width
@@ -77,8 +89,8 @@ let ball = {
 	},
 
 	move: function() {
-		this.x += this.dirX * this.speed
-		this.y += this.dirY * this.speed
+		this.x += this.dirX * game.speed
+		this.y += this.dirY * game.speed
 
 		this.collision()
 	}
