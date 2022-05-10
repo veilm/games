@@ -6,7 +6,7 @@ let game = {
 	"status": "on",
 
 	"width": canvas.width,
-	"height": canvas.height
+	"height": canvas.height,
 
 	"score": 0,
 	"highScore": 0,
