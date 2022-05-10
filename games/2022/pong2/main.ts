@@ -43,12 +43,19 @@ let ball = {
 
 		if (this.x > max) {
 			this.x = max
-			this.dirX *= -1
+			this.dirX = -1
 		}
 
 		if (this.x < 0) {
 			this.x = 0
-			this.dirX *= -1
+			this.dirX = 1
+		}
+
+		// Drops to paddle level
+		if (this.y > paddle.y - ballImg.img.height) {
+
+			// Touches paddle
+			if (this.x > paddle.x - ballImg.img.width && this.x < paddle.x + ballImg.img.width) this.dirY = -1
 		}
 	},
 
