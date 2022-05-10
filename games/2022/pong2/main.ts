@@ -27,6 +27,22 @@ let game = {
 		this.speed = Math.round(this.speed * 100) / 100
 
 		this.updateText()
+	},
+
+	"newRound": function(speed: number) {
+		// This is an ugly DRY violation but I'm not sure how to fix it while
+		// keeping TypeScript happy
+
+		this.status = "on"
+		this.score = (speed - 1) / 0.05
+		this.speed = speed
+
+		ball.x = this.width / 2 - ballImg.img.width
+		ball.y = this.marginY
+		ball.dirX = 1
+		ball.dirY = 1
+
+		this.updateText()
 	}
 }
 game.updateText()
