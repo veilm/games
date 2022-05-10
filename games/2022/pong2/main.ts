@@ -21,7 +21,8 @@ let game = {
 
 	"increment": function() {
 		this.score++
-		if (this.score > this.highScore) this.highScore = this.score
+		if (this.score > this.highScore && game.status != "speedPractice")
+			this.highScore = this.score
 
 		this.speed += 0.05
 		this.speed = Math.round(this.speed * 100) / 100
@@ -33,7 +34,8 @@ let game = {
 		// This is an ugly DRY violation but I'm not sure how to fix it while
 		// keeping TypeScript happy
 
-		this.status = "on"
+		this.status = speed == 1 ? "on" : "speedPractice"
+
 		this.score = (speed - 1) / 0.05
 		this.speed = speed
 
@@ -148,6 +150,19 @@ let paddle = {
 
 		this.constraints()
 	}
+}
+
+document.getElementById("newRound").onclick = () => {
+	game.newRound(1)
+}
+
+document.getElementById("speedSubmit").onclick = () => {
+	const speedInput = document.getElementById("speedInput") as HTMLInputElement
+	let speed = parseInt(speedInput.value)
+
+	if (isNaN(speed)) return
+
+	game.newRound(speed)
 }
 
 setInterval(() => {
