@@ -61,16 +61,13 @@ let ball = {
 			return
 		}
 
-		// Drops to paddle level
-		if (this.y > paddle.y - ballImg.img.height) {
+		// Touches paddle
+		if (this.y > paddle.y - ballImg.img.height &&
+			this.x > paddle.x - ballImg.img.width &&
+			this.x < paddle.x + paddleImg.img.width) {
 
-			// Touches paddle
-			if (this.x > paddle.x - ballImg.img.width &&
-				this.x < paddle.x + ballImg.img.width) {
-
-				this.dirY = -1
-				this.y = paddle.y - ballImg.img.height
-			}
+			this.dirY = -1
+			this.y = paddle.y - ballImg.img.height
 		}
 	},
 
