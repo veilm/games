@@ -17,6 +17,15 @@ let game = {
 		for (const element of elements) {
 			document.getElementById(element).innerHTML = this[element]
 		}
+	},
+
+	"increment": function() {
+		this.score++
+		if (this.score > this.highScore) this.highScore = this.score
+
+		this.speed += 0.05
+
+		this.updateText()
 	}
 }
 game.updateText()
@@ -85,6 +94,8 @@ let ball = {
 
 			this.dirY = -1
 			this.y = paddle.y - ballImg.img.height
+
+			game.increment()
 		}
 	},
 
