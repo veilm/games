@@ -24,6 +24,7 @@ let game = {
 		if (this.score > this.highScore) this.highScore = this.score
 
 		this.speed += 0.05
+		this.speed = Math.round(this.speed * 100) / 100
 
 		this.updateText()
 	}
