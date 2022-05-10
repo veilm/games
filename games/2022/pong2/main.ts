@@ -56,6 +56,11 @@ let ball = {
 			this.dirX = 1
 		}
 
+		if (this.y < 0) {
+			this.y = 0
+			this.dirY = 1
+		}
+
 		if (this.y > game.height - ballImg.img.height) {
 			game.status = "off"
 			return
