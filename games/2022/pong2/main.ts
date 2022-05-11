@@ -2,18 +2,18 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
 let game = {
-	"marginY": 10,
-	"status": "on",
+	marginY: 10,
+	status: "on",
 
-	"width": canvas.width,
-	"height": canvas.height,
+	width: canvas.width,
+	height: canvas.height,
 
-	"score": 0,
-	"highScore": 0,
-	"speed": 1.0,
+	score: 0,
+	highScore: 0,
+	speed: 1.0,
 
 	// Update HTML text elements to display values
-	"updateText": function() {
+	updateText: function() {
 		let elements = ["score", "highScore", "speed"]
 		for (const element of elements) {
 			document.getElementById(element).innerHTML = this[element]
@@ -21,7 +21,7 @@ let game = {
 	},
 
 	// The player hit the ball, so the progress increases
-	"increment": function() {
+	increment: function() {
 		this.score++
 		if (this.score > this.highScore && game.status != "speedPractice")
 			this.highScore = this.score
@@ -32,7 +32,7 @@ let game = {
 		this.updateText()
 	},
 
-	"newRound": function(speed: number) {
+	newRound: function(speed: number) {
 		// This is an ugly DRY violation but I'm not sure how to fix it while
 		// keeping TypeScript happy
 
@@ -65,25 +65,25 @@ document.onkeyup = e => {
 }
 
 let backgroundImg = {
-	"img": document.getElementById("background") as HTMLImageElement,
+	img: document.getElementById("background") as HTMLImageElement,
 	draw: function() {
 		ctx.drawImage(this.img, 0, 0)
 	}
 }
 
 let ballImg = {
-	"img": document.getElementById("ball") as HTMLImageElement,
+	img: document.getElementById("ball") as HTMLImageElement,
 	draw: function() {
 		ctx.drawImage(this.img, ball.x, ball.y)
 	}
 }
 
 let ball = {
-	"x": game.width / 2 - ballImg.img.width,
-	"y": game.marginY,
+	x: game.width / 2 - ballImg.img.width,
+	y: game.marginY,
 
-	"dirX": 1,
-	"dirY": 1,
+	dirX: 1,
+	dirY: 1,
 
 	// Check for collision with the borders or the paddle
 	collision: function() {
@@ -130,15 +130,15 @@ let ball = {
 }
 
 let paddleImg = {
-	"img": document.getElementById("paddle") as HTMLImageElement,
+	img: document.getElementById("paddle") as HTMLImageElement,
 	draw: function() {
 		ctx.drawImage(this.img, paddle.x, paddle.y)
 	}
 }
 
 let paddle = {
-	"x": game.width / 2 - paddleImg.img.width / 2,
-	"y": game.height - paddleImg.img.height - game.marginY,
+	x: game.width / 2 - paddleImg.img.width / 2,
+	y: game.height - paddleImg.img.height - game.marginY,
 
 	// Keep the paddle from going outside of the borders
 	constraints: function() {
