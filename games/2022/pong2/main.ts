@@ -12,6 +12,7 @@ let game = {
 	"highScore": 0,
 	"speed": 1.0,
 
+	// Update HTML text elements to display values
 	"updateText": function() {
 		let elements = ["score", "highScore", "speed"]
 		for (const element of elements) {
@@ -19,6 +20,7 @@ let game = {
 		}
 	},
 
+	// The player hit the ball, so the progress increases
 	"increment": function() {
 		this.score++
 		if (this.score > this.highScore && game.status != "speedPractice")
@@ -83,6 +85,7 @@ let ball = {
 	"dirX": 1,
 	"dirY": 1,
 
+	// Check for collision with the borders or the paddle
 	collision: function() {
 		let max = game.width - ballImg.img.width
 
@@ -137,6 +140,7 @@ let paddle = {
 	"x": game.width / 2 - paddleImg.img.width / 2,
 	"y": game.height - paddleImg.img.height - game.marginY,
 
+	// Keep the paddle from going outside of the borders
 	constraints: function() {
 		let max = game.width - paddleImg.img.width
 
@@ -156,6 +160,7 @@ document.getElementById("newRound").onclick = () => {
 	game.newRound(1)
 }
 
+// The user presses the practice button to start a session
 document.getElementById("speedSubmit").onclick = () => {
 	const speedInput = document.getElementById("speedInput") as HTMLInputElement
 	let speed = parseInt(speedInput.value)
