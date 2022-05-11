@@ -13,7 +13,7 @@ let game = {
 	speed: 1.0,
 
 	// Update HTML text elements to display values
-	updateText: function() {
+	updateText() {
 		let elements = ["score", "highScore", "speed"]
 		for (const element of elements) {
 			document.getElementById(element).innerHTML = this[element]
@@ -21,7 +21,7 @@ let game = {
 	},
 
 	// The player hit the ball, so the progress increases
-	increment: function() {
+	increment() {
 		this.score++
 		if (this.score > this.highScore && game.status != "speedPractice")
 			this.highScore = this.score
@@ -32,7 +32,7 @@ let game = {
 		this.updateText()
 	},
 
-	newRound: function(speed: number) {
+	newRound(speed: number) {
 		// This is an ugly DRY violation but I'm not sure how to fix it while
 		// keeping TypeScript happy
 
@@ -66,14 +66,14 @@ document.onkeyup = e => {
 
 let backgroundImg = {
 	img: document.getElementById("background") as HTMLImageElement,
-	draw: function() {
+	draw() {
 		ctx.drawImage(this.img, 0, 0)
 	}
 }
 
 let ballImg = {
 	img: document.getElementById("ball") as HTMLImageElement,
-	draw: function() {
+	draw() {
 		ctx.drawImage(this.img, ball.x, ball.y)
 	}
 }
@@ -86,7 +86,7 @@ let ball = {
 	dirY: 1,
 
 	// Check for collision with the borders or the paddle
-	collision: function() {
+	collision() {
 		let max = game.width - ballImg.img.width
 
 		if (this.x > max) {
@@ -121,7 +121,7 @@ let ball = {
 		}
 	},
 
-	move: function() {
+	move() {
 		this.x += this.dirX * game.speed
 		this.y += this.dirY * game.speed
 
@@ -131,7 +131,7 @@ let ball = {
 
 let paddleImg = {
 	img: document.getElementById("paddle") as HTMLImageElement,
-	draw: function() {
+	draw() {
 		ctx.drawImage(this.img, paddle.x, paddle.y)
 	}
 }
@@ -141,14 +141,14 @@ let paddle = {
 	y: game.height - paddleImg.img.height - game.marginY,
 
 	// Keep the paddle from going outside of the borders
-	constraints: function() {
+	constraints() {
 		let max = game.width - paddleImg.img.width
 
 		if (this.x > max) this.x = max
 		if (this.x < 0) this.x = 0
 	},
 
-	move: function() {
+	move() {
 		if (pressed.right) this.x += 10
 		if (pressed.left) this.x -= 10
 
