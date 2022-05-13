@@ -103,6 +103,7 @@ enterGame.onclick = function() {
   }
   window.localStorage.hat = document.getElementById("wreath").value;
   menu.style.display = "none";
+  credit.style.display = "none";
   gamed.style.display = "inline-block";
   inMenu = false;
   var world = document.getElementById("world");
