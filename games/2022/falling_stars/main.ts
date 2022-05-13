@@ -49,31 +49,38 @@ class Drawing {
 }
 
 class Falling extends Drawing {
-	vel: number
-	velChange: number
+	cy : number
+	ccy: number
+	cx : number
 
-	constructor(id: string, vel: number, velChange: number) {
-		super(id, RNG(0, background.img.width - squareLength), -1 * squareLength)
+	constructor(id: string, cy: number, ccy: number, cx: number) {
+		let x = RNG(0, background.img.width - squareLength)
 
-		this.vel = vel
-		this.velChange = velChange
+		super(id, x, -1 * squareLength)
+
+		this.cy = cy
+		this.ccy = ccy
+
+		this.cx = cx * (x > player.x ? -1 : 1)
 	}
 
 	move() {
-		this.y += this.vel
-		this.vel += this.velChange
+		this.y += this.cy
+		this.cy += this.ccy
+
+		this.x += this.cx
 	}
 }
 
 class Star extends Falling {
 	constructor() {
-		super("star", 1, RNG(1, 5) / 100)
+		super("star", 1, RNG(1, 5) / 100, 0)
 	}
 }
 
 class Enemy extends Falling {
 	constructor() {
-		super("enemy", RNG(50, 500) / 100, 0)
+		super("enemy", RNG(50, 500) / 100, RNG(0, 3) / 100, RNG(0, 75) / 100)
 	}
 }
 
