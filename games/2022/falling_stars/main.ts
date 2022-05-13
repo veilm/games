@@ -63,10 +63,11 @@ class Game {
 		player.draw()
 		star.draw()
 		enemy.draw()
-	}
 
+		window.requestAnimationFrame(game.draw)
+	}
 }
 
 let game = new Game()
 
-setInterval(game.draw, 1)
+window.requestAnimationFrame(game.draw)
