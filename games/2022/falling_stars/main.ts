@@ -1,6 +1,12 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
+const squareLength = 50
+
+const RNG = (min, max) => {
+	return Math.round(Math.random() * (max - min)) + min
+}
+
 let pressed = {
 	left: false,
 	right: false,
@@ -43,9 +49,19 @@ class Drawing {
 	}
 }
 
+class Star extends Drawing {
+	constructor() {
+		super("star", RNG(0, background.img.width - squareLength), -1 * squareLength)
+	}
+
+	move() {
+		this.y += 1
+	}
+}
+
 class Player extends Drawing {
-	constructor(id: string, x: number, y: number) {
-		super(id, x, y)
+	constructor() {
+		super("player", 375, 200)
 	}
 
 	move() {
@@ -58,8 +74,8 @@ class Player extends Drawing {
 	}
 
 	walls() {
-		let xMax = background.img.width - this.img.width
-		let yMax = background.img.height - this.img.height
+		let xMax = background.img.width - squareLength
+		let yMax = background.img.height - squareLength
 
 		if (this.x > xMax) this.x = xMax
 		if (this.x < 0) this.x = 0
@@ -70,14 +86,17 @@ class Player extends Drawing {
 }
 
 const background = new Drawing("background", 0, 0)
-const player = new Player("player", 50, 50)
-const star = new Drawing("star", 200, 200)
+
+const player = new Player()
+const star = new Star()
 const enemy = new Drawing("enemy", 300, 300)
 
 class Game {
 	draw() {
 		player.move()
 		player.walls()
+
+		star.move()
 
 		background.draw()
 		player.draw()
