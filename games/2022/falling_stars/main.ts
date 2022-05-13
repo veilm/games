@@ -166,6 +166,7 @@ class Game {
 		player.walls()
 
 		star.move()
+		if (star.y > background.img.height) star = new Star()
 
 		// Move enemies but delete them if they leave the screen If we don't
 		// delete them, trying to render / move them will continue to take
@@ -185,6 +186,7 @@ class Game {
 			tick = cur
 
 			values.enemySpawn -= 1
+			if (values.enemySpawn < 0) values.enemySpawn = 0
 		}
 
 		background.draw()
