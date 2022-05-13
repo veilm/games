@@ -49,17 +49,20 @@ class Drawing {
 	}
 }
 
-class Star extends Drawing {
+class Falling extends Drawing {
 	vel: number
+	velChange: number
 
-	constructor() {
-		super("star", RNG(0, background.img.width - squareLength), -1 * squareLength)
-		this.vel = 1
+	constructor(id: string, vel: number, velChange: number) {
+		super(id, RNG(0, background.img.width - squareLength), -1 * squareLength)
+
+		this.vel = vel
+		this.velChange = velChange
 	}
 
 	move() {
 		this.y += this.vel
-		this.vel += 0.03
+		this.vel += this.velChange
 	}
 }
 
@@ -94,8 +97,9 @@ class Player extends Drawing {
 const background = new Drawing("background", 0, 0)
 
 let player = new Player()
-const star = new Star()
-const enemy = new Drawing("enemy", 300, 300)
+
+const star = new Falling("star", 1, 0.03)
+const enemy = new Falling("enemy", RNG(50, 500) / 100, 0)
 
 class Game {
 	draw() {
@@ -103,13 +107,12 @@ class Game {
 		player.walls()
 
 		star.move()
+		enemy.move()
 
 		background.draw()
 		player.draw()
 		star.draw()
 		enemy.draw()
-
-		if (player.y == 0) player = new Player()
 
 		window.requestAnimationFrame(game.draw)
 	}
