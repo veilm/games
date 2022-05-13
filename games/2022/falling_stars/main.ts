@@ -56,6 +56,17 @@ class Player extends Drawing {
 		if (pressed.up) this.y -= speed
 		if (pressed.down) this.y += speed
 	}
+
+	walls() {
+		let xMax = background.img.width - this.img.width
+		let yMax = background.img.height - this.img.height
+
+		if (this.x > xMax) this.x = xMax
+		if (this.x < 0) this.x = 0
+
+		if (this.y > yMax) this.y = yMax
+		if (this.y < 0) this.y = 0
+	}
 }
 
 const background = new Drawing("background", 0, 0)
@@ -66,6 +77,7 @@ const enemy = new Drawing("enemy", 300, 300)
 class Game {
 	draw() {
 		player.move()
+		player.walls()
 
 		background.draw()
 		player.draw()
