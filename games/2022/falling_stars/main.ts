@@ -10,28 +10,25 @@ const RNG = (min, max) => {
 }
 
 let pressed = {
-	left: false,
+	left : false,
 	right: false,
-	down: false,
-	up: false,
-
+	down : false,
+	up   : false,
 	shift: false
 }
 document.onkeydown = e => {
 	if (e.code == "ArrowRight") pressed.right = true
-	if (e.code == "ArrowLeft") pressed.left = true
-	if (e.code == "ArrowUp") pressed.up = true
-	if (e.code == "ArrowDown") pressed.down = true
-
-	if (e.code == "ShiftLeft") pressed.shift = true
+	if (e.code == "ArrowLeft" ) pressed.left = true
+	if (e.code == "ArrowUp"   ) pressed.up = true
+	if (e.code == "ArrowDown" ) pressed.down = true
+	if (e.code == "ShiftLeft" ) pressed.shift = true
 }
 document.onkeyup = e => {
 	if (e.code == "ArrowRight") pressed.right = false
-	if (e.code == "ArrowLeft") pressed.left = false
-	if (e.code == "ArrowUp") pressed.up = false
-	if (e.code == "ArrowDown") pressed.down = false
-
-	if (e.code == "ShiftLeft") pressed.shift = false
+	if (e.code == "ArrowLeft" ) pressed.left = false
+	if (e.code == "ArrowUp"   ) pressed.up = false
+	if (e.code == "ArrowDown" ) pressed.down = false
+	if (e.code == "ShiftLeft" ) pressed.shift = false
 }
 
 class Drawing {
@@ -99,12 +96,13 @@ class Player extends Drawing {
 	move() {
 		let speed = pressed.shift ? 3 : 6
 
-		if (pressed.left) this.x -= speed
+		if (pressed.left ) this.x -= speed
 		if (pressed.right) this.x += speed
-		if (pressed.up) this.y -= speed
-		if (pressed.down) this.y += speed
+		if (pressed.up   ) this.y -= speed
+		if (pressed.down ) this.y += speed
 	}
 
+	// Stop player from moving past walls
 	walls() {
 		let xMax = background.img.width - squareLength
 		let yMax = background.img.height - squareLength
@@ -118,6 +116,10 @@ class Player extends Drawing {
 
 	collision() {
 		if (this.overlaps(star)) star = new Star()
+
+		for (let i = 0; i < enemies.length; i++) {
+			if (this.overlaps(enemies[i])) enemies.splice(i, 1)
+		}
 	}
 }
 
@@ -135,6 +137,9 @@ class Game {
 
 		star.move()
 
+		// Move enemies but delete them if they leave the screen If we don't
+		// delete them, trying to render / move them will continue to take
+		// resources.
 		for (let i = 0; i < enemies.length; i++) {
 			enemies[i].move()
 
@@ -143,6 +148,7 @@ class Game {
 
 		player.collision()
 
+		// Periodically spawn a new enemy
 		let cur = new Date().getTime()
 		if (cur - tick > 750) {
 			enemies.push(new Enemy())
