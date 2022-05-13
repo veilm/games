@@ -130,6 +130,18 @@ let player = new Player()
 let star = new Star()
 let enemies = []
 
+const drawText = (x: number, text: string) => {
+	ctx.fillText(text, x, background.img.height - 20)
+}
+ctx.font = "20px monospace"
+ctx.fillStyle = "white"
+
+let values = {
+	lives: 5,
+	score: 1,
+	enemySpawn: 750
+}
+
 class Game {
 	draw() {
 		player.move()
@@ -150,9 +162,11 @@ class Game {
 
 		// Periodically spawn a new enemy
 		let cur = new Date().getTime()
-		if (cur - tick > 750) {
+		if (cur - tick > values.enemySpawn) {
 			enemies.push(new Enemy())
 			tick = cur
+
+			values.enemySpawn -= 1
 		}
 
 		background.draw()
@@ -162,6 +176,9 @@ class Game {
 		for (const enemy of enemies) {
 			enemy.draw()
 		}
+
+		values.score++
+		drawText(50, `Score ${values.score} | Lives ${values.lives} | Spawn Interval ${values.enemySpawn}`)
 
 		window.requestAnimationFrame(game.draw)
 	}
