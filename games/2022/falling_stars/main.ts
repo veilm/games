@@ -135,8 +135,10 @@ class Game {
 
 		star.move()
 
-		for (const enemy of enemies) {
-			enemy.move()
+		for (let i = 0; i < enemies.length; i++) {
+			enemies[i].move()
+
+			if (enemies[i].y > background.img.height) enemies.splice(i, 1)
 		}
 
 		player.collision()
