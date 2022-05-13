@@ -1,25 +1,34 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
-class Img {
+class Drawing {
 	img: HTMLImageElement
+	x: number
+	y: number
 
-	constructor(id: string) {
+	constructor(id: string, x: number, y: number) {
+		this.x = x
+		this.y = y
+
 		this.img = document.getElementById(id) as HTMLImageElement
+	}
+
+	draw() {
+		ctx.drawImage(this.img, this.x, this.y)
 	}
 }
 
-const backgroundImg = new Img("background")
-const playerImg = new Img("player")
-const starImg = new Img("star")
-const enemyImg = new Img("enemy")
+const background = new Drawing("background", 0, 0)
+const player = new Drawing("player", 50, 50)
+const star = new Drawing("star", 200, 200)
+const enemy = new Drawing("enemy", 300, 300)
 
 class Game {
 	draw() {
-		ctx.drawImage(backgroundImg.img, 0, 0)
-		ctx.drawImage(playerImg.img, 50, 50)
-		ctx.drawImage(starImg.img, 200, 200)
-		ctx.drawImage(enemyImg.img, 300, 300)
+		background.draw()
+		player.draw()
+		star.draw()
+		enemy.draw()
 	}
 }
 
