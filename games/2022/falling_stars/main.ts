@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
+let tick = new Date().getTime()
+
 const squareLength = 50
 
 const RNG = (min, max) => {
@@ -123,8 +125,8 @@ const background = new Drawing("background", 0, 0)
 
 let player = new Player()
 
-const star = new Star()
-const enemy = new Enemy()
+let star = new Star()
+let enemies = []
 
 class Game {
 	draw() {
@@ -132,13 +134,26 @@ class Game {
 		player.walls()
 
 		star.move()
-		enemy.move()
+
+		for (const enemy of enemies) {
+			enemy.move()
+		}
+
 		player.collision()
+
+		let cur = new Date().getTime()
+		if (cur - tick > 750) {
+			enemies.push(new Enemy())
+			tick = cur
+		}
 
 		background.draw()
 		player.draw()
 		star.draw()
-		enemy.draw()
+
+		for (const enemy of enemies) {
+			enemy.draw()
+		}
 
 		window.requestAnimationFrame(game.draw)
 	}
