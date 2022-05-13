@@ -115,10 +115,20 @@ class Player extends Drawing {
 	}
 
 	collision() {
-		if (this.overlaps(star)) star = new Star()
+		if (this.overlaps(star)) {
+			star = new Star()
+
+			values.score += 200
+			values.lives++
+		}
 
 		for (let i = 0; i < enemies.length; i++) {
-			if (this.overlaps(enemies[i])) enemies.splice(i, 1)
+			if (this.overlaps(enemies[i])) {
+				enemies.splice(i, 1)
+				values.lives--
+
+				if (values.lives < 1) values.status = "off"
+			}
 		}
 	}
 }
@@ -139,7 +149,8 @@ ctx.fillStyle = "white"
 let values = {
 	lives: 5,
 	score: 1,
-	enemySpawn: 750
+	enemySpawn: 750,
+	status: "on"
 }
 
 class Game {
@@ -180,7 +191,7 @@ class Game {
 		values.score++
 		drawText(50, `Score ${values.score} | Lives ${values.lives} | Spawn Interval ${values.enemySpawn}`)
 
-		window.requestAnimationFrame(game.draw)
+		if (values.status == "on") window.requestAnimationFrame(game.draw)
 	}
 }
 
