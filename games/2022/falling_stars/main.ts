@@ -66,11 +66,32 @@ class Falling extends Drawing {
 	}
 }
 
+class Star extends Falling {
+	constructor() {
+		super("star", 1, RNG(1, 5) / 100)
+	}
+}
+
+class Enemy extends Falling {
+	constructor() {
+		super("enemy", RNG(50, 500) / 100, 0)
+	}
+}
+
 class Player extends Drawing {
 	constructor() {
 		super("player",
 			background.img.width / 2 - squareLength / 2,
 			background.img.height - squareLength * 2)
+	}
+
+	overlaps(entity: Falling) {
+		return (
+			this.x > entity.x - squareLength &&
+			this.x < entity.x + squareLength &&
+			this.y > entity.y - squareLength &&
+			this.y < entity.y + squareLength
+		)
 	}
 
 	move() {
@@ -92,14 +113,18 @@ class Player extends Drawing {
 		if (this.y > yMax) this.y = yMax
 		if (this.y < 0) this.y = 0
 	}
+
+	collision() {
+		if (this.overlaps(star)) star = new Star()
+	}
 }
 
 const background = new Drawing("background", 0, 0)
 
 let player = new Player()
 
-const star = new Falling("star", 1, 0.03)
-const enemy = new Falling("enemy", RNG(50, 500) / 100, 0)
+const star = new Star()
+const enemy = new Enemy()
 
 class Game {
 	draw() {
@@ -108,6 +133,7 @@ class Game {
 
 		star.move()
 		enemy.move()
+		player.collision()
 
 		background.draw()
 		player.draw()
