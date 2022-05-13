@@ -5,19 +5,25 @@ let pressed = {
 	left: false,
 	right: false,
 	down: false,
-	up: false
+	up: false,
+
+	shift: false
 }
 document.onkeydown = e => {
 	if (e.code == "ArrowRight") pressed.right = true
 	if (e.code == "ArrowLeft") pressed.left = true
 	if (e.code == "ArrowUp") pressed.up = true
 	if (e.code == "ArrowDown") pressed.down = true
+
+	if (e.code == "ShiftLeft") pressed.shift = true
 }
 document.onkeyup = e => {
 	if (e.code == "ArrowRight") pressed.right = false
 	if (e.code == "ArrowLeft") pressed.left = false
 	if (e.code == "ArrowUp") pressed.up = false
 	if (e.code == "ArrowDown") pressed.down = false
+
+	if (e.code == "ShiftLeft") pressed.shift = false
 }
 
 class Drawing {
@@ -43,10 +49,12 @@ class Player extends Drawing {
 	}
 
 	move() {
-		if (pressed.left) this.x -= 3
-		if (pressed.right) this.x += 3
-		if (pressed.up) this.y -= 3
-		if (pressed.down) this.y += 3
+		let speed = pressed.shift ? 3 : 6
+
+		if (pressed.left) this.x -= speed
+		if (pressed.right) this.x += speed
+		if (pressed.up) this.y -= speed
+		if (pressed.down) this.y += speed
 	}
 }
 
