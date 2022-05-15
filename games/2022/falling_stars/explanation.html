@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link href="https://unpkg.com/sakura.css/css/sakura.css" rel="stylesheet">
+
+		<title>Explanation</title>
+	</head>
+	<body>
+		<h1>Falling Stars: Explanation</h1>
+		<a href="index.html">Back</a>
+
+		<hr>
+
+		<h3>Controls</h3>
+		<p>In this game, you control the white square.</p>
+
+		<img src="images/player.png" alt="Player image">
+
+		<p>Use the arrow keys to move. While holding Shift, your movement speed
+		will be split in half.</p>
+
+		<h3>Objective</h3>
+
+		<p>The goal of the player is to maximize their score. The score is
+		increased by 1 every frame and by 200 when catching a star (see next
+		section). For reference, I achieved a score of 60680 a minute ago, in
+		which I would describe my skill/concentration level as "medium".</p>
+
+		<h3>Stars</h3>
+		<img src="images/star.png" alt="Star image">
+
+		<p>Touching a star will...</p>
+		<ol>
+			<li>reset the star to a random position at the top of the screen</li>
+			<li>increase your score by 200, as mentioned in the previous</li>
+			<li>increase your lives by 1 (see next section)</li>
+		</ol>
+
+		<p>If you miss a star, it resets without any further direct punishment.</p>
+
+		<h3>Enemies</h3>
+		<img src="images/enemy.png" alt="Enemy image">
+
+		<p>Touching an enemy will delete the enemy but decrease your number of
+		lives by 1. When you run out of lives, the game is over, so you'll want
+		to prolong this as long as you can by picking up stars and avoiding
+		enemies.</p>
+
+		<p>The interval between enemy spawns is displayed at the bottom of the
+		screen, along with your score and lives. Each time an enemy spawns, the
+		interval is decreased by 1, leading to an exponential decrease until it
+		stops at 0, at which point an enemy will be spawned every frame.</p> 
+
+		<h3>Differences from the assignment template</h3>
+		<p>I...</p>
+		<ul>
+			<li>drew simple assets in GIMP, trying to use colours that were
+			somewhat consistent with the background</li>
+
+			<li>created an additional entity meant for the player to avoid, not catch</li>
+
+			<li>shifted the focus of the game from catching stars to avoiding enemies</li>
+
+			<li>created an entity array system to allow for more than one enemy
+			to exist at once</li>
+
+			<li>let the player move up and down instead of only left and right</li>
+
+			<li>tracked an additional key (Shift) to modify the movement speed</li>
+
+			<li>made the difficulty of the game increase as it went on instead
+			of keeping it constant</li>
+
+			<li>implemented a y velocity changing (stars fall faster as they get
+			lower) and x velocity system (on the enemies)</li>
+
+			<li>stopped the game when the player reached a "lose" state</li>
+		</ul>
+
+		<hr>
+
+		<a href="index.html">Back</a>
+	</body>
+</html>
