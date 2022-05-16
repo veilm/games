@@ -10,7 +10,7 @@ let game = {
 }
 
 class Robot {
-	img: {
+	images: {
 		left: HTMLImageElement[]
 		right: HTMLImageElement[]
 	}
@@ -19,18 +19,23 @@ class Robot {
 	lastSwitch: number
 	costume = 0
 
-	x = 0
+	x = 600
 	changeX: number
 	y: number
 
-	constructor(colour: string, y: number) {
+	dir: string
+
+	constructor(colour: string, y: number, dir: string) {
 		this.switchThreshold = RNG(350, 1000)
 		this.lastSwitch = new Date().getTime()
 
-		this.changeX = 1
+		this.dir = dir
+		this.changeX = dir == "right" ? 1 : -1
+
 		this.y = y
 
-		this.img = {
+
+		this.images = {
 			left: [
 				document.getElementById(`robot_${colour}_l1`) as HTMLImageElement,
 				document.getElementById(`robot_${colour}_l2`) as HTMLImageElement
@@ -53,7 +58,8 @@ class Robot {
 			this.lastSwitch = new Date().getTime()
 		}
 
-		ctx.drawImage(this.img.right[this.costume], this.x, this.y)
+		let img = this.images[this.dir][this.costume]
+		ctx.drawImage(img, this.x, this.y)
 	}
 }
 
@@ -63,7 +69,10 @@ for (let i = 0; i < colours.length; i++) {
 	// The green one is shorter, so let's center it
 	let y = i == 1 ? 165 : i * 150
 
-	robots.push(new Robot(colours[i], y))
+	// Alternate direction
+	let dir = i % 2 == 0 ? "right" : "left"
+
+	robots.push(new Robot(colours[i], y, dir))
 }
 
 const background = {
