@@ -59,12 +59,12 @@ class Robot {
 		if (this.x > this.maxX) {
 			this.x = this.maxX
 			this.dir = "left"
-			this.changeX *= -1
+			this.changeX = -1 * Math.round(RNG(1000, 1000 + game.score) / 1000)
 		}
 		else if (this.x < 0) {
 			this.x = 0
 			this.dir = "right"
-			this.changeX *= -1
+			this.changeX = Math.round(RNG(1000, 1000 + game.score) / 1000)
 		}
 	}
 
