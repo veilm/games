@@ -99,6 +99,28 @@ const background = {
 	}
 }
 
+let pressed = {
+	left : false,
+	right: false,
+	down : false,
+	up   : false,
+	shift: false
+}
+document.onkeydown = e => {
+	if (e.code == "ArrowRight") pressed.right = true
+	if (e.code == "ArrowLeft" ) pressed.left = true
+	if (e.code == "ArrowUp"   ) pressed.up = true
+	if (e.code == "ArrowDown" ) pressed.down = true
+	if (e.code == "ShiftLeft" ) pressed.shift = true
+}
+document.onkeyup = e => {
+	if (e.code == "ArrowRight") pressed.right = false
+	if (e.code == "ArrowLeft" ) pressed.left = false
+	if (e.code == "ArrowUp"   ) pressed.up = false
+	if (e.code == "ArrowDown" ) pressed.down = false
+	if (e.code == "ShiftLeft" ) pressed.shift = false
+}
+
 const player = {
 	length: 50,
 	border: 5,
@@ -106,9 +128,17 @@ const player = {
 	x: canvas.width / 2 - length / 2,
 	y: canvas.height / 2 - length / 2,
 
+	move() {
+		if (pressed.right) this.x += 5
+		if (pressed.left) this.x -= 5
+		if (pressed.down) this.y += 5
+		if (pressed.up) this.y -= 5
+	},
+
 	draw() {
 		let length = this.length - this.border
 
+		ctx.beginPath()
 		ctx.rect(this.x, this.y, length, length)
 		ctx.fill()
 		ctx.stroke()
@@ -121,6 +151,7 @@ ctx.lineWidth = player.border
 function step() {
 	background.draw()
 
+	player.move()
 	player.draw()
 
 	for (const robot of robots) {
