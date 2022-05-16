@@ -166,7 +166,7 @@ const player = {
 		ctx.stroke()
 	}
 }
-ctx.fillStyle = "white"
+ctx.fillStyle = "#f9f9f9"
 ctx.strokeStyle = "#395EA7"
 ctx.lineWidth = player.border
 
@@ -176,11 +176,18 @@ const forcefield = {
 	right: canvas.width,
 
 	leftMax: canvas.width / 2 - 100,
-	rightMin: canvas.width / 2 + 100
+	rightMin: canvas.width / 2 + 100,
+
+	draw() {
+		ctx.rect(0, 0, this.left, canvas.height)
+		ctx.rect(this.right, 0, canvas.width - this.right, canvas.height)
+		ctx.fill()
+	}
 }
 
 function step() {
 	background.draw()
+	forcefield.draw()
 
 	player.move()
 	player.draw()
