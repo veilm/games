@@ -128,6 +128,17 @@ const player = {
 	x: canvas.width / 2 - length / 2,
 	y: canvas.height / 2 - length / 2,
 
+	// Check if the player overlaps a robot (fail)
+	overlap(robot: Robot) {
+		// "left" is arbitrary, both sizes are the same
+		let img = robot.images.left[robot.costume]
+
+		return (robot.x > this.x - img.width &&
+			robot.x < this.x + this.length &&
+			robot.y > this.y - img.height &&
+			robot.y < this.y + this.length)
+	},
+
 	move() {
 		if (pressed.right) this.x += 5
 		if (pressed.left) this.x -= 5
@@ -166,6 +177,12 @@ function step() {
 	for (const robot of robots) {
 		robot.move()
 		robot.draw()
+	}
+
+	// Separate loop to esnure all robots are drawn before terminating
+	for (const robot of robots) {
+		// The function ends and has no chance to cal requestAnimationFrame() again
+		if (player.overlap(robot)) return
 	}
 
 	game.score++
