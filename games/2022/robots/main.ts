@@ -1,3 +1,4 @@
+const scoreElement = document.getElementById("score")
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
@@ -54,6 +55,7 @@ class Robot {
 	move() {
 		this.x += this.changeX
 
+		// Flip direction when hitting the game border
 		if (this.x > this.maxX) {
 			this.x = this.maxX
 			this.dir = "left"
@@ -104,6 +106,10 @@ function step() {
 		robot.move()
 		robot.draw()
 	}
+
+	game.score++
+	console.log(scoreElement)
+	scoreElement.innerHTML = game.score.toString()
 
 	window.requestAnimationFrame(step)
 }
