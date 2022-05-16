@@ -1,6 +1,22 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")
 
+class Robot {
+	img: HTMLImageElement[]
+
+	constructor(id) {
+		this.img = [
+			document.getElementById(id + "1") as HTMLImageElement,
+			document.getElementById(id + "2") as HTMLImageElement
+		]
+	}
+
+	draw() {
+		ctx.drawImage(this.img[0], 0, 0)
+	}
+}
+
+/*
 const background = document.getElementById("background") as HTMLImageElement
 const robot_blue1 = document.getElementById("robot_blue1") as HTMLImageElement
 const robot_blue2 = document.getElementById("robot_blue2") as HTMLImageElement
@@ -20,3 +36,7 @@ ctx.drawImage(robot_red1, 0, 0)
 ctx.drawImage(robot_red2, 0, 0)
 ctx.drawImage(robot_yellow1, 0, 0)
 ctx.drawImage(robot_yellow2, 0, 0)
+*/
+
+let robot_blue = new Robot("robot_blue")
+robot_blue.draw()
