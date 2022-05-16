@@ -133,6 +133,15 @@ const player = {
 		if (pressed.left) this.x -= 5
 		if (pressed.down) this.y += 5
 		if (pressed.up) this.y -= 5
+
+		// Enclose borders
+		let maxX = canvas.width - this.length
+		let maxY = canvas.height - this.length
+
+		if (this.x > maxX) this.x = maxX
+		if (this.x < 0) this.x = 0
+		if (this.y > maxY) this.y = maxY
+		if (this.y < 0) this.y = 0
 	},
 
 	draw() {
