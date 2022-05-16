@@ -16,35 +16,20 @@ class Robot {
 	}
 }
 
+const robot_blue = new Robot("robot_blue")
+
 const background = {
 	img: document.getElementById("background") as HTMLImageElement,
-	draw() {
+	draw: function() {
 		ctx.drawImage(this.img, 0, 0)
 	}
 }
 
-/*
-const background = document.getElementById("background") as HTMLImageElement
-const robot_blue1 = document.getElementById("robot_blue1") as HTMLImageElement
-const robot_blue2 = document.getElementById("robot_blue2") as HTMLImageElement
-const robot_green1 = document.getElementById("robot_green1") as HTMLImageElement
-const robot_green2 = document.getElementById("robot_green2") as HTMLImageElement
-const robot_red1 = document.getElementById("robot_red1") as HTMLImageElement
-const robot_red2 = document.getElementById("robot_red2") as HTMLImageElement
-const robot_yellow1 = document.getElementById("robot_yellow1") as HTMLImageElement
-const robot_yellow2 = document.getElementById("robot_yellow2") as HTMLImageElement
+function step() {
+	background.draw()
+	robot_blue.draw()
 
-ctx.drawImage(background, 0, 0)
-ctx.drawImage(robot_blue1, 0, 0)
-ctx.drawImage(robot_blue2, 0, 0)
-ctx.drawImage(robot_green1, 0, 0)
-ctx.drawImage(robot_green2, 0, 0)
-ctx.drawImage(robot_red1, 0, 0)
-ctx.drawImage(robot_red2, 0, 0)
-ctx.drawImage(robot_yellow1, 0, 0)
-ctx.drawImage(robot_yellow2, 0, 0)
-*/
+	window.requestAnimationFrame(step)
+}
 
-let robot_blue = new Robot("robot_blue")
-background.draw()
-robot_blue.draw()
+window.requestAnimationFrame(step)
