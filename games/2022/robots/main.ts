@@ -5,6 +5,10 @@ const RNG = (min, max) => {
 	return Math.round(Math.random() * (max - min)) + min
 }
 
+let game = {
+	score: 0
+}
+
 class Robot {
 	img: HTMLImageElement[]
 
@@ -13,18 +17,24 @@ class Robot {
 	costume = 0
 
 	x = 0
+	changeX: number
 	y: number
 
 	constructor(colour: string, y: number) {
 		this.switchThreshold = RNG(350, 1000)
 		this.lastSwitch = new Date().getTime()
 
+		this.changeX = 1
 		this.y = y
 
 		this.img = [
 			document.getElementById(`robot_${colour}1`) as HTMLImageElement,
 			document.getElementById(`robot_${colour}2`) as HTMLImageElement
 		]
+	}
+
+	move() {
+		this.x += this.changeX
 	}
 
 	draw() {
@@ -58,6 +68,7 @@ function step() {
 	background.draw()
 
 	for (const robot of robots) {
+		robot.move()
 		robot.draw()
 	}
 
