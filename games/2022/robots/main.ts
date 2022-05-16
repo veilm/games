@@ -12,9 +12,14 @@ class Robot {
 	lastSwitch: number
 	costume = 0
 
-	constructor(colour: string) {
+	x = 0
+	y: number
+
+	constructor(colour: string, y: number) {
 		this.switchThreshold = RNG(350, 1000)
 		this.lastSwitch = new Date().getTime()
+
+		this.y = y
 
 		this.img = [
 			document.getElementById(`robot_${colour}1`) as HTMLImageElement,
@@ -29,14 +34,17 @@ class Robot {
 			this.lastSwitch = new Date().getTime()
 		}
 
-		ctx.drawImage(this.img[this.costume], 0, 0)
+		ctx.drawImage(this.img[this.costume], this.x, this.y)
 	}
 }
 
 let robots = []
 const colours = ["red", "green", "blue", "yellow"]
-for (const colour of colours) {
-	robots.push(new Robot(colour))
+for (let i = 0; i < colours.length; i++) {
+	// The green one is shorter, so let's center it
+	let y = i == 1 ? 165 : i * 150
+
+	robots.push(new Robot(colours[i], y))
 }
 
 const background = {
