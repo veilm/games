@@ -16,6 +16,13 @@ class Robot {
 	}
 }
 
+const background = {
+	img: document.getElementById("background") as HTMLImageElement,
+	draw() {
+		ctx.drawImage(this.img, 0, 0)
+	}
+}
+
 /*
 const background = document.getElementById("background") as HTMLImageElement
 const robot_blue1 = document.getElementById("robot_blue1") as HTMLImageElement
@@ -39,4 +46,5 @@ ctx.drawImage(robot_yellow2, 0, 0)
 */
 
 let robot_blue = new Robot("robot_blue")
+background.draw()
 robot_blue.draw()
