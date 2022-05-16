@@ -19,7 +19,7 @@ class Robot {
 	lastSwitch: number
 	costume = 0
 
-	x = 600
+	x: number
 	changeX: number
 	y: number
 
@@ -31,9 +31,7 @@ class Robot {
 
 		this.dir = dir
 		this.changeX = dir == "right" ? 1 : -1
-
 		this.y = y
-
 
 		this.images = {
 			left: [
@@ -45,6 +43,9 @@ class Robot {
 				document.getElementById(`robot_${colour}_r2`) as HTMLImageElement
 			]
 		}
+
+		// Start on the left/right side based on direction
+		this.x = dir == "right" ? 0 : 1300 - this.images[dir][0].width
 	}
 
 	move() {
