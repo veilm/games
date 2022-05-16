@@ -10,7 +10,10 @@ let game = {
 }
 
 class Robot {
-	img: HTMLImageElement[]
+	img: {
+		left: HTMLImageElement[]
+		right: HTMLImageElement[]
+	}
 
 	switchThreshold: number
 	lastSwitch: number
@@ -27,10 +30,16 @@ class Robot {
 		this.changeX = 1
 		this.y = y
 
-		this.img = [
-			document.getElementById(`robot_${colour}1`) as HTMLImageElement,
-			document.getElementById(`robot_${colour}2`) as HTMLImageElement
-		]
+		this.img = {
+			left: [
+				document.getElementById(`robot_${colour}_l1`) as HTMLImageElement,
+				document.getElementById(`robot_${colour}_l2`) as HTMLImageElement
+			],
+			right: [
+				document.getElementById(`robot_${colour}_r1`) as HTMLImageElement,
+				document.getElementById(`robot_${colour}_r2`) as HTMLImageElement
+			]
+		}
 	}
 
 	move() {
@@ -44,7 +53,7 @@ class Robot {
 			this.lastSwitch = new Date().getTime()
 		}
 
-		ctx.drawImage(this.img[this.costume], this.x, this.y)
+		ctx.drawImage(this.img.right[this.costume], this.x, this.y)
 	}
 }
 
