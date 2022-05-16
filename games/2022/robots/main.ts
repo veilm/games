@@ -46,7 +46,7 @@ class Robot {
 			]
 		}
 
-		this.maxX = 1300 - this.images[dir][0].width
+		this.maxX = canvas.width - this.images[dir][0].width
 
 		// Start on the left/right side based on direction
 		this.x = dir == "right" ? 0 : this.maxX
@@ -99,8 +99,29 @@ const background = {
 	}
 }
 
+const player = {
+	length: 50,
+	border: 5,
+
+	x: canvas.width / 2 - length / 2,
+	y: canvas.height / 2 - length / 2,
+
+	draw() {
+		let length = this.length - this.border
+
+		ctx.rect(this.x, this.y, length, length)
+		ctx.fill()
+		ctx.stroke()
+	}
+}
+ctx.fillStyle = "white"
+ctx.strokeStyle = "#395EA7"
+ctx.lineWidth = player.border
+
 function step() {
 	background.draw()
+
+	player.draw()
 
 	for (const robot of robots) {
 		robot.move()
@@ -108,7 +129,6 @@ function step() {
 	}
 
 	game.score++
-	console.log(scoreElement)
 	scoreElement.innerHTML = game.score.toString()
 
 	window.requestAnimationFrame(step)
