@@ -24,6 +24,7 @@ class Robot {
 	y: number
 
 	dir: string
+	maxX: number
 
 	constructor(colour: string, y: number, dir: string) {
 		this.switchThreshold = RNG(350, 1000)
@@ -44,12 +45,25 @@ class Robot {
 			]
 		}
 
+		this.maxX = 1300 - this.images[dir][0].width
+
 		// Start on the left/right side based on direction
-		this.x = dir == "right" ? 0 : 1300 - this.images[dir][0].width
+		this.x = dir == "right" ? 0 : this.maxX
 	}
 
 	move() {
 		this.x += this.changeX
+
+		if (this.x > this.maxX) {
+			this.x = this.maxX
+			this.dir = "left"
+			this.changeX *= -1
+		}
+		else if (this.x < 0) {
+			this.x = 0
+			this.dir = "right"
+			this.changeX *= -1
+		}
 	}
 
 	draw() {
