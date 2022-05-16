@@ -146,11 +146,13 @@ const player = {
 		if (pressed.up) this.y -= 5
 
 		// Enclose borders
-		let maxX = canvas.width - this.length
+
+		let maxX = forcefield.right - this.length
+		let minX = forcefield.left
 		let maxY = canvas.height - this.length
 
 		if (this.x > maxX) this.x = maxX
-		if (this.x < 0) this.x = 0
+		if (this.x < minX) this.x = minX
 		if (this.y > maxY) this.y = maxY
 		if (this.y < 0) this.y = 0
 	},
@@ -168,6 +170,15 @@ ctx.fillStyle = "white"
 ctx.strokeStyle = "#395EA7"
 ctx.lineWidth = player.border
 
+// The shrinking walls
+const forcefield = {
+	left: 0,
+	right: canvas.width,
+
+	leftMax: canvas.width / 2 - 100,
+	rightMin: canvas.width / 2 + 100
+}
+
 function step() {
 	background.draw()
 
@@ -184,6 +195,10 @@ function step() {
 		// The function ends and has no chance to cal requestAnimationFrame() again
 		if (player.overlap(robot)) return
 	}
+
+	// Shrink field of play
+	if (forcefield.left < forcefield.leftMax) forcefield.left += 0.1
+	if (forcefield.right > forcefield.rightMin) forcefield.right -= 0.1
 
 	game.score++
 	scoreElement.innerHTML = game.score.toString()
