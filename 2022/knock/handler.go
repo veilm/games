@@ -5,8 +5,8 @@ import (
 	"math/rand"
 )
 
-func joke_handler(w http.ResponseWriter, r *http.Request) {
-	joke := jokes[rand.Intn(num_jokes)]
+func jokeHandler(w http.ResponseWriter, r *http.Request) {
+	joke := jokes[rand.Intn(numJokes)]
 
 	err := templates.ExecuteTemplate(w, "index.html", joke)
 	handle(err)

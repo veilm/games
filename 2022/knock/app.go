@@ -19,21 +19,21 @@ func handle(err error) {
 	}
 }
 
-func get_lines(filename string) []string {
+func getLines(filename string) []string {
 	file, err := ioutil.ReadFile("static/jokes.txt")
 	handle(err)
 
 	return strings.Split(string(file), "\n")
 }
 
-var jokes = get_lines("static/jokes.txt")
-var num_jokes = len(jokes) - 1
+var jokes = getLines("static/jokes.txt")
+var numJokes = len(jokes) - 1
 
 func main() {
 	server := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", server))
 
-	http.HandleFunc("/", joke_handler)
+	http.HandleFunc("/", jokeHandler)
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
