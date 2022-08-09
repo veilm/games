@@ -164,7 +164,7 @@ function drawPlayer()
             if(seenSign == false) setObjectY("Player", canvas.height - 100);
             else
             {
-                reDir("Ending.html");
+                reDir("ending.html");
             }
         }
         if (xs[id("Player")] > canvas.width - 100) // if right

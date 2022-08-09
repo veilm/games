@@ -6,7 +6,7 @@
 
     <head>
 
-            <title> Esacpe - The Game </title>
+            <title> Escape - The Game </title>
 
             <style>
             
@@ -35,15 +35,12 @@
         <!-- F Canv Code <canvas style="display: block; margin:auto;" id="myCanvas" height="500px" width="665px"></canvas> -->
         <!-- Make xy elements pos abs -->
         
-        <p style="text-align: center; font-size: 38px; color: #ffffff;"> Story </p> 
+        <p style="text-align: center; font-size: 38px; color: #ffffff;"> Escape - an SGM Demo by Michael Skyba </p> 
 
-        <p style="text-align: center; font-size: 28px; color: #fff;">
-            One night you were so drunk that you wandered outside into the woods. While you were walking, you felt a hard to hit to the head.
-            Now you wake up in a strange facility that you have never seen before. "There must be a way to escape!" you think as you begin
-            looking around. Use WASD to move.
-        </p>
+        <img class="center" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkdXuuJAhvzaFeiiSp41Os_mC3x6ZBSnQp161RQTWniOmMJvmE">
 
-        <input style="background-color: black; color: white; width: 100px; height: 30px;" class="center" type="button" onclick="start()" value="Back">
+        <input style="background-color: black; color: white; width: 100px; height: 30px;" class="center" type="button" onclick="start()" value="Begin">
+        <input style="background-color: black; color: white; width: 100px; height: 30px;" class="center" type="button" onclick="story()" value="Story">
 
         <!-- End of Body Code -->
 
@@ -54,7 +51,7 @@
         
             // S T A R T   O F   S C R I P T   ///////////////////////////////////////////
             // Made by Michael Skyba
-            // SGM 7.9.0
+            // SGM 7.9.0 
 
 
             // P R E - M A D E   L O A D I N G   ///////////////////////////////////////
@@ -80,12 +77,12 @@
 
             function start()
             {
-                reDir("Title Screen.html");  
+                reDir("escape.html");  
             }
 
             function story()
             {
-                reDir("https://jsfight.skyba.ca");  
+                reDir("story.html");  
             }
 
             // P R E - M A D E   F U N C T I O N S   ///////////////////////////
