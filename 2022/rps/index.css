@@ -1,0 +1,8 @@
+img {
+	border: 1px solid #f9f9f9;
+}
+
+img:hover {
+	border: 1px solid #4a4a4a;
+	background: #dcdcdc;
+}
