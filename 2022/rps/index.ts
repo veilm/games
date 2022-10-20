@@ -20,6 +20,8 @@ document.getElementById("next").onclick = () => {
 	updateRounds()
 }
 
+document.getElementById("exit").onclick = () => location.reload()
+
 function updateRounds() {
 	round++
 	roundText.innerHTML = round.toString()
