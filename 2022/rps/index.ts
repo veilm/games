@@ -1,4 +1,5 @@
 let gameMode: string
+let backgroundRGB = [98, 98, 98]
 let round = 1
 
 let playerOption: string
@@ -17,6 +18,18 @@ const logic = {
 	rock: "scissors",
 	paper: "rock",
 	scissors: "paper"
+}
+
+const hex = {
+	tie: "#4a4a4a",
+	win: "#2c8898",
+	lose: "#982c2c"
+}
+
+const RGB = {
+	tie: [29, 29, 29],
+	win: [44, 136, 152],
+	lose:[60, 17, 17]
 }
 
 document.getElementById("random").onclick = () => setGameMode("random")
@@ -48,7 +61,7 @@ function setGameMode(mode: string) {
 	document.getElementById("game").style.display = "block"
 }
 
-function getCompOption() {
+function getCompOption(): string {
 	return "rock"
 }
 
@@ -63,21 +76,8 @@ function displayResults(playerOption: string, compOption: string) {
 
 	resultText.innerHTML = `Result: ${result}`
 
-	let colour: string
-	switch(result) {
-		case "tie":
-			colour = "4a4a4a"
-			break
-
-		case "win":
-			colour = "2c8898"
-			break
-
-		case "lose":
-			colour = "982c2c"
-			break
-	}
-	resultText.style.color = `#${colour}`
+	resultText.style.color = hex[result]
+	backgroundRGB = RGB[result]
 }
 
 function playOption(option: string) {
