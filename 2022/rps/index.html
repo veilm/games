@@ -12,17 +12,27 @@
 		<hr>
 
 		<div id="title">
-			<p class="text">Pick a game mode.</p>
+			<p>Pick a game mode.</p>
 			<input type="button" id="random" value="Random Mode">
 			<input type="button" id="reddit" value="Redditor Mode">
 			<input type="button" id="psychology" value="Psychology PhD Mode">
 		</div>
 
 		<div id="game">
-			<p class="text">Pick an option.</p>
-			<img width="150" src="rock.png">
-			<img width="150" src="paper.png">
-			<img width="150" src="scissors.png">
+			<div id="results">
+				<h3 id="result">Result: Tie</h3>
+				<p id="streakText">Ha! You have lost <span id="streak">3</span> rounds in a row.</p>
+				<p>You're probably going to lose the next round, because you're
+				bad at Rock, Paper, Scissors.</p>
+				<input id="next" type="button" value="Next round">
+			</div>
+
+			<div id="play">
+				<p>Round <span id="round">1</span>: Pick an option.</p>
+				<img id="rock" src="rock.png">
+				<img id="paper" src="paper.png">
+				<img id="scissors" src="scissors.png">
+			</div>
 		</div>
 
 		<script src="index.js"></script>
