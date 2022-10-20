@@ -1,6 +1,8 @@
 let gameMode: string
 let backgroundRGB = [249, 249, 249]
+
 let round = 1
+let loseStreak = 0
 
 let playerOption: string
 let compOption: string
@@ -11,6 +13,9 @@ const play = document.getElementById("play")
 const results = document.getElementById("results")
 const roundText = document.getElementById("round")
 const resultText = document.getElementById("result")
+
+const streakWholeText = document.getElementById("streakText")
+const streakCountText = document.getElementById("streak")
 
 const playerImg = document.getElementById("playerOption") as HTMLImageElement
 const compImg = document.getElementById("compOption") as HTMLImageElement
@@ -67,6 +72,17 @@ function getCompOption(): string {
 	return "rock"
 }
 
+function updateLoseStreak(result: string) {
+	if (result == "lose") loseStreak++
+	else loseStreak = 0
+
+	if (loseStreak >= 2) {
+		streakCountText.innerHTML = loseStreak.toString()
+		streakWholeText.style.display = "block"
+	}
+	else streakWholeText.style.display = "none"
+}
+
 function displayResults(playerOption: string, compOption: string) {
 	playerImg.src = `${playerOption}.png`
 	compImg.src = `${compOption}.png`
@@ -75,6 +91,8 @@ function displayResults(playerOption: string, compOption: string) {
 	if (playerOption == compOption) result = "tie"
 	else if (logic[playerOption] == compOption) result = "win"
 	else result = "lose"
+
+	updateLoseStreak(result)
 
 	resultText.innerHTML = `Result: ${result}`
 	resultText.style.color = hex[result]
