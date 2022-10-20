@@ -119,7 +119,7 @@ function displayResults(playerOption: string, compOption: string) {
 	updateWinRate(result)
 
 	resultText.innerHTML = `Result: ${result}`
-	resultText.style.color = hex[result]
+	document.body.style.color = hex[result]
 
 	backgroundRGB = RGB[result]
 	initDate = Date.now()
@@ -132,7 +132,7 @@ function playOption(option: string) {
 	displayResults(playerOption, compOption)
 
 	play.style.display = "none"
-	results.style.display = "block"
+	results.style.display = "grid"
 }
 
 function updateBackground() {

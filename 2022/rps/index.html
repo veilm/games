@@ -20,25 +20,32 @@
 
 		<div id="game">
 			<div id="results">
-				<img class="resultImg" id="compOption" src="">
-				<label for="compOption">Computer</label>
-				<br>
-				<img class="resultImg" id="playerOption" src="">
-				<label for="playerOption">Player</label>
+				<div id="optionsChosen">
+					<img class="resultImg" id="compOption" src="">
+					<label for="compOption">Computer</label>
+					<hr>
+					<img class="resultImg" id="playerOption" src="">
+					<label for="playerOption">Player</label>
+				</div>
 
-				<h3 id="result">Result: Tie</h3>
-				<p id="streakText">Ha! You have lost <span id="streak">3</span> rounds in a row.</p>
+				<div id="stats">
+					<h3 id="result">Result: Tie</h3>
+					<p id="streakText">Ha! You have lost <span id="streak">3</span> rounds in a row.</p>
 
-				<ul>
-					<li>Player win rate: <span id="playerWinRate"></span>%.</li>
-					<li>Computer win rate: <span id="compWinRate"></span>%.</li>
-					<li>Tie rate: <span id="tieRate"></span>%.</li>
-				</ul>
+					<ul>
+						<li>Player win rate: <span id="playerWinRate"></span>%.</li>
+						<li>Computer win rate: <span id="compWinRate"></span>%.</li>
+						<li>Tie rate: <span id="tieRate"></span>%.</li>
+					</ul>
+				</div>
 
-				<p>You're probably going to lose the next round, because you're
-				bad at Rock, Paper, Scissors.</p>
-				<input id="next" type="button" value="Next round">
-				<input id="exit" type="button" value="Exit to menu">
+				<div id="resultsUI">
+					<hr>
+					<p>You're probably going to lose the next round, because you're
+					bad at Rock, Paper, Scissors.</p>
+					<input id="next" type="button" value="Next round">
+					<input id="exit" type="button" value="Exit to menu">
+				</div>
 			</div>
 
 			<div id="play">

@@ -4,6 +4,17 @@
 
 #results {
 	display: none;
+	grid-template-rows: 1fr auto;
+	grid-template-columns: auto auto;
+	justify-items: center;
+}
+
+#results img {
+	margin-bottom: 0;
+}
+
+#resultsUI {
+	grid-column: 1 / 3;
 }
 
 p {
