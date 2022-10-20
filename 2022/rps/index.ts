@@ -1,9 +1,11 @@
 let gameMode: string
-let backgroundRGB = [98, 98, 98]
+let backgroundRGB = [249, 249, 249]
 let round = 1
 
 let playerOption: string
 let compOption: string
+
+let initDate = Date.now()
 
 const play = document.getElementById("play")
 const results = document.getElementById("results")
@@ -27,9 +29,9 @@ const hex = {
 }
 
 const RGB = {
-	tie: [29, 29, 29],
+	tie: [74, 74, 74],
 	win: [44, 136, 152],
-	lose:[60, 17, 17]
+	lose:[152, 44, 44]
 }
 
 document.getElementById("random").onclick = () => setGameMode("random")
@@ -75,9 +77,10 @@ function displayResults(playerOption: string, compOption: string) {
 	else result = "lose"
 
 	resultText.innerHTML = `Result: ${result}`
-
 	resultText.style.color = hex[result]
+
 	backgroundRGB = RGB[result]
+	initDate = Date.now()
 }
 
 function playOption(option: string) {
@@ -89,3 +92,28 @@ function playOption(option: string) {
 	play.style.display = "none"
 	results.style.display = "block"
 }
+
+function updateBackground() {
+	let diff = Date.now() - initDate
+	let duration = 500
+
+	if (diff < duration) {
+		let progress = diff/duration
+
+		// [249, 249, 249] is the default
+
+		let updated = [0, 0, 0]
+		for (let i = 0; i < 3; i++) {
+			let c = backgroundRGB[i]
+			updated[i] = c + (249-c) * progress
+		}
+
+		let r = updated[0]
+		let g = updated[1]
+		let b = updated[2]
+		document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`
+	}
+
+	window.requestAnimationFrame(updateBackground)
+}
+window.requestAnimationFrame(updateBackground)
