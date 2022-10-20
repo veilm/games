@@ -2,6 +2,8 @@ let gameMode: string
 let backgroundRGB = [249, 249, 249]
 
 let round = 1
+let playerWins = 0
+let compWins = 0
 let loseStreak = 0
 
 let playerOption: string
@@ -16,6 +18,10 @@ const resultText = document.getElementById("result")
 
 const streakWholeText = document.getElementById("streakText")
 const streakCountText = document.getElementById("streak")
+
+const playerWinRate = document.getElementById("playerWinRate")
+const compWinRate = document.getElementById("compWinRate")
+const tieRate = document.getElementById("tieRate")
 
 const playerImg = document.getElementById("playerOption") as HTMLImageElement
 const compImg = document.getElementById("compOption") as HTMLImageElement
@@ -83,6 +89,23 @@ function updateLoseStreak(result: string) {
 	else streakWholeText.style.display = "none"
 }
 
+function updateWinRate(result: string) {
+	if (result == "win") playerWins++
+	else if (result == "lose") compWins++
+
+	let rate: number
+
+	rate = Math.round(playerWins/round * 100)
+	playerWinRate.innerHTML = rate.toString()
+
+	rate = Math.round(compWins/round * 100)
+	compWinRate.innerHTML = rate.toString()
+
+	let ties = round - compWins - playerWins
+	rate = Math.round(ties/round * 100)
+	tieRate.innerHTML = rate.toString()
+}
+
 function displayResults(playerOption: string, compOption: string) {
 	playerImg.src = `${playerOption}.png`
 	compImg.src = `${compOption}.png`
@@ -93,6 +116,7 @@ function displayResults(playerOption: string, compOption: string) {
 	else result = "lose"
 
 	updateLoseStreak(result)
+	updateWinRate(result)
 
 	resultText.innerHTML = `Result: ${result}`
 	resultText.style.color = hex[result]
