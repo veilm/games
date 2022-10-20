@@ -62,6 +62,10 @@ document.getElementById("next").onclick = () => {
 
 document.getElementById("exit").onclick = () => location.reload()
 
+function RNG(min: number, max: number): number {
+	return Math.round(Math.random() * (max - min)) + min
+}
+
 function updateRounds() {
 	round++
 	roundText.innerHTML = round.toString()
@@ -75,7 +79,11 @@ function setGameMode(mode: string) {
 }
 
 function getCompOption(): string {
-	return "rock"
+	if (gameMode == "random") {
+		let option = RNG(0, 100) % 3
+		return ["rock", "paper", "scissors"][option]
+	}
+	else return "rock"
 }
 
 function updateLoseStreak(result: string) {
