@@ -49,8 +49,7 @@ const RGB = {
 let pHistory: string[] = []
 
 const options = ["r", "p", "s", "w", "l", "t"]
-const pHead = pHead()
-console.log(pHead)
+const pHead = pNode()
 
 document.getElementById("random").onclick = () => setGameMode("random")
 document.getElementById("reddit").onclick = () => setGameMode("reddit")
@@ -139,6 +138,32 @@ function pNode(): any {
 	})
 
 	return node
+}
+
+// Result: (0, 0.5, 1) for (L, T, W)
+function pAddSinglePath(path: string[], result: number) {
+	let node = pHead
+
+	// We have to go one less than the whole path
+	// Because we're recording the performance after a path, not with a path
+	// Idk this whole concept is so convoluted that I don't think I can make it
+	// possible to understand no matter how well I explain it
+	let length = path.length - 1
+	for (let i = 0; i < length; i++) {
+		let game = path[i]
+
+		// Connect a node to the path if it doesn't exist
+		if (node[game] == undefined)
+			node[game] = pNode()
+
+		// Traverse to next node
+		node = node[game]
+	}
+
+	// Our option in the last game (which we just played)
+	let tail = path[length][1]
+	node[tail].wins += result
+	node[tail].games++
 }
 
 function updateRounds() {
