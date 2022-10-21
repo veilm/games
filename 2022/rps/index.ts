@@ -140,14 +140,16 @@ function pNode(): any {
 	return node
 }
 
-// Result: (0, 0.5, 1) for (L, T, W)
+// Result: (0, 0.45, 1) for (L, T, W)
+// 0.45 is used for ties so that it's not used over the default of 0.5,
+// encouraging the model to learn more and not be satisfied with ties
 // Remember, round[0] is player and round[1] is comp
 function getResults(round: string): number {
 	let a = shorts[round[0]]
 	let b = shorts[round[1]]
 
 	// A tie counts as the winner, since there's no loser
-	if (a == b) return 0.5
+	if (a == b) return 0.45
 	else if (logic[a] == b) return 0
 	else return 1
 }
