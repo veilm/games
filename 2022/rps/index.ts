@@ -140,6 +140,8 @@ function pNode(): any {
 	return node
 }
 
+// Result: (0, 0.5, 1) for (L, T, W)
+// Remember, round[0] is player and round[1] is comp
 function getResults(round: string): number {
 	let a = shorts[round[0]]
 	let b = shorts[round[1]]
@@ -150,7 +152,6 @@ function getResults(round: string): number {
 	else return 1
 }
 
-// Result: (0, 0.5, 1) for (L, T, W)
 function pAddSinglePath(path: string[]) {
 	let node = pHead
 
@@ -176,6 +177,21 @@ function pAddSinglePath(path: string[]) {
 	let option = tail[1]
 	node[option].wins += getResults(tail)
 	node[option].games++
+}
+
+/*
+Add all subpaths of path
+
+e.g. ["rr", "ps", "ss"]
+would add
+s after ["rr", "ps"] = tie
+s after ["ps"] = tie
+s = tie
+*/
+function pAddAllPaths(path: string[]) {
+	for (let i = 0; i < path.length; i++) {
+		pAddSinglePath(path.slice(i))
+	}
 }
 
 function updateRounds() {
