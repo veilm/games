@@ -287,9 +287,13 @@ function pGetAverage(perfs) {
 function pGetCompOption(): string {
 	const perfs = pGetRelevantPerformances()
 	const avg = pGetAverage(perfs)
-	console.log(avg)
 
-	return "rock"
+	// Find highest
+	let max = "r"
+	if (avg.p > avg[max]) max = "p"
+	if (avg.s > avg[max]) max = "s"
+
+	return shorts[max]
 }
 
 function getRandom(): string {
