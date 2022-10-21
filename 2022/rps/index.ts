@@ -45,6 +45,13 @@ const RGB = {
 	lose:[152, 44, 44]
 }
 
+// Psychology PhD Game history
+let pHistory: string[] = []
+
+const options = ["r", "p", "s", "w", "l", "t"]
+const pHead = pHead()
+console.log(pHead)
+
 document.getElementById("random").onclick = () => setGameMode("random")
 document.getElementById("reddit").onclick = () => setGameMode("reddit")
 document.getElementById("psychology").onclick = () => setGameMode("psychology")
@@ -62,6 +69,76 @@ document.getElementById("next").onclick = () => {
 
 function RNG(min: number, max: number): number {
 	return Math.round(Math.random() * (max - min)) + min
+}
+
+/*
+Original Psychology PhD mode idea
+
+- Each pattern and its result is stored
+e.g.
+R, R --> Tie
+P, S --> Win
+R, S --> Lose
+Would store
+1.
+	(R = tie)
+2.
+	(S = win)
+	(S after (R,R) = win)
+3.
+	(S = Lose)
+	(S after (P,S) = lose)
+	(S after (R,R),(P,S) = lose)
+--
+Then, in the future, if the game state ever leads to (P,S), it would be less
+likely to play S on the next round, because this pattern has lost in the past
+--
+Also: It wouldn't just look at the last round, it would look at the entire game
+history for patterns
+So if the round was (P,S), it might not want to do S this round
+BUT
+There might be many wins for (R,R)(P,S) and many losses for (S,P)(P,S)
+Here it would be looking at the last two rounds instead of just the last one
+--
+What if there isn't enough data? It has to compare data across patterns.
+The very easiest match is to just look at the single choice: S = lose, R = win, etc.
+So that would match almost every time. But, the success rate on those might be
+closer to 33%, and it wants the highest success rate possible
+It would look at the longest patterns possible and judge them according to
+laplace's rule of sucession
+--
+Also, don't just use (R,P,S) literally. Also store the same kinds of patterns but
+for (W,L,T) for (would win against last round, would lose to last round, would
+tie with last round)
+So if your opponent always picks the winner, for example, it would pick up on that
+.
+I mean like
+R, P
+P, S
+Here, the player picked P the second time, which was the winner of the first round
+So that would count as T for tie - it tied with the winner of last round)
+--
+Idk hopefully it makes sense
+*/
+
+// Stores performance of option for given pattern path
+function pOption() {
+	return {
+		games: 0,
+		wins: 0
+	}
+}
+
+// Stores branching game paths and success of different options at current path
+// The branching paths are assigned later, not initially
+function pNode(): any {
+	let node: any = {}
+
+	options.forEach(option => {
+		node[option] = pOption()
+	})
+
+	return node
 }
 
 function updateRounds() {
@@ -158,9 +235,17 @@ function displayResults() {
 	initDate = Date.now()
 }
 
+function updateHistory() {
+	if (gameMode != "psychology") return
+
+	pHistory.push(playerOption[0] + compOption[0])
+}
+
 function playOption(option: string) {
 	compOption = getCompOption()
 	playerOption = option
+
+	updateHistory()
 
 	displayResults()
 
