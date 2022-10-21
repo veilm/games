@@ -21,7 +21,6 @@ const streakCountText = document.getElementById("streak")
 
 const playerWinRate = document.getElementById("playerWinRate")
 const compWinRate = document.getElementById("compWinRate")
-const tieRate = document.getElementById("tieRate")
 
 const playerImg = document.getElementById("playerOption") as HTMLImageElement
 const compImg = document.getElementById("compOption") as HTMLImageElement
@@ -68,8 +67,6 @@ document.getElementById("scissors").onclick = () => playOption("scissors")
 document.getElementById("next").onclick = () => {
 	results.style.display = "none"
 	play.style.display = "block"
-
-	updateRounds()
 }
 
 function RNG(min: number, max: number): number {
@@ -104,15 +101,6 @@ So if the round was (P,S), it might not want to do S this round
 BUT
 There might be many wins for (R,R)(P,S) and many losses for (S,P)(P,S)
 Here it would be looking at the last two rounds instead of just the last one
---
-What if there isn't enough data? It has to compare data across patterns.
-The very easiest match is to just look at the single choice: S = lose, R = win, etc.
-So that would match almost every time. But, the success rate on those might be
-closer to 33%, and it wants the highest success rate possible
-It would look at the longest patterns possible and judge them according to
-laplace's rule of sucession
---
-Idk hopefully it makes sense
 */
 
 // Stores performance of option for given pattern path
@@ -338,8 +326,11 @@ function updateLoseStreak(result: string) {
 }
 
 function updateWinRate(result: string) {
+	// Don't count ties in the win rate
+	if (result == "tie") return
+
 	if (result == "win") playerWins++
-	else if (result == "lose") compWins++
+	else compWins++
 
 	let rate: number
 
@@ -349,9 +340,7 @@ function updateWinRate(result: string) {
 	rate = Math.round(compWins/round * 100)
 	compWinRate.innerHTML = rate.toString()
 
-	let ties = round - compWins - playerWins
-	rate = Math.round(ties/round * 100)
-	tieRate.innerHTML = rate.toString()
+	updateRounds()
 }
 
 function displayResults() {
