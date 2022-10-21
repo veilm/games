@@ -33,6 +33,12 @@ const logic = {
 	scissors: "paper"
 }
 
+const shorts = {
+	r: "rock",
+	p: "paper",
+	s: "scissors",
+}
+
 const hex = {
 	tie: "#4a4a4a",
 	win: "#2c8898",
@@ -138,6 +144,16 @@ function pNode(): any {
 	})
 
 	return node
+}
+
+function getWinner(round: string): string {
+	let a = shorts[round[0]]
+	let b = shorts[round[1]]
+
+	// A tie counts as the winner, since there's no loser
+	if (a == b) return round[0]
+	else if (logic[a] == b) return round[0]
+	else return round[1]
 }
 
 // Result: (0, 0.5, 1) for (L, T, W)
