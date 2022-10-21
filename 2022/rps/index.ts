@@ -236,12 +236,12 @@ function setGameMode(mode: string) {
 	document.getElementById("game").style.display = "block"
 }
 
-function pGetOptimalOption(): string {
+// The performances of each option relevant to the current history pattern
+function pGetRelevantPerformances() {
 	let path = []
-	let perf
+	let perfs = []
 
-	perf = pGetPerformance(path)
-	console.log(path, perf)
+	perfs.push(pGetPerformance(path))
 
 	/*
 	Doing it backwards lets us cut off the check as soon as a subpath is not
@@ -253,14 +253,41 @@ function pGetOptimalOption(): string {
 	*/
 	for (let i = pHistory.length-1; i >= 0; i--) {
 		path.unshift(pHistory[i])
-		perf = pGetPerformance(path)
 
-		console.log(path, perf)
+		let perf = pGetPerformance(path)
 
 		if (perf == null) break
+		perfs.push(perf)
 	}
 
-	console.log("=================================================")
+	return perfs
+}
+
+function pGetAverage(perfs) {
+	const avg = {
+		r: 0,
+		p: 0,
+		s: 0
+	}
+
+	perfs.forEach(perf => {
+		options.forEach(opt => {
+			avg[opt] += perf[opt]
+		})
+	})
+
+	const length = perfs.length
+	options.forEach(opt => {
+		avg[opt] = avg[opt]/length
+	})
+
+	return avg
+}
+
+function pGetCompOption(): string {
+	const perfs = pGetRelevantPerformances()
+	const avg = pGetAverage(perfs)
+	console.log(avg)
 
 	return "rock"
 }
@@ -290,7 +317,7 @@ function getReddit(): string {
 function getCompOption(): string {
 	if (gameMode == "random") return getRandom()
 	else if (gameMode == "reddit") return getReddit()
-	else return pGetOptimalOption()
+	else return pGetCompOption()
 }
 
 function updateLoseStreak(result: string) {
