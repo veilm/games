@@ -5,8 +5,13 @@
 #results {
 	display: none;
 	grid-template-rows: 1fr auto;
-	grid-template-columns: auto auto;
+	grid-template-columns: 1fr 1fr;
 	justify-items: center;
+}
+
+#next {
+	height: 4em;
+	font-size: 1em;
 }
 
 #results img {

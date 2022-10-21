@@ -60,8 +60,6 @@ document.getElementById("next").onclick = () => {
 	updateRounds()
 }
 
-document.getElementById("exit").onclick = () => location.reload()
-
 function RNG(min: number, max: number): number {
 	return Math.round(Math.random() * (max - min)) + min
 }
@@ -78,12 +76,39 @@ function setGameMode(mode: string) {
 	document.getElementById("game").style.display = "block"
 }
 
+function getPsychology(): string {
+	return "rock"
+}
+
+function getRandom(): string {
+	let option = RNG(0, 100) % 3
+	return ["rock", "paper", "scissors"][option]
+}
+
+function getReddit(): string {
+	// playerOption and compOption are of the previous round right now
+	// console.log("player", playerOption)
+	// console.log("computer", compOption)
+	// console.log("=================================================")
+
+	// If we tied or it's the first round, choose randomly
+	if (playerOption == null || playerOption == compOption)
+		return getRandom()
+
+	// If we won last round, play what we would have lost against
+	// (We're expecting the player to copy us)
+	if (logic[compOption] == playerOption)
+		return logic[playerOption]
+
+	// If we lost the last round, play what would have won against the player
+	// (We're expecting the player to play the same thing again)
+	return logic[compOption]
+}
+
 function getCompOption(): string {
-	if (gameMode == "random") {
-		let option = RNG(0, 100) % 3
-		return ["rock", "paper", "scissors"][option]
-	}
-	else return "rock"
+	if (gameMode == "random") return getRandom()
+	else if (gameMode == "reddit") return getReddit()
+	else return getPsychology()
 }
 
 function updateLoseStreak(result: string) {
@@ -114,7 +139,7 @@ function updateWinRate(result: string) {
 	tieRate.innerHTML = rate.toString()
 }
 
-function displayResults(playerOption: string, compOption: string) {
+function displayResults() {
 	playerImg.src = `${playerOption}.png`
 	compImg.src = `${compOption}.png`
 
@@ -134,10 +159,10 @@ function displayResults(playerOption: string, compOption: string) {
 }
 
 function playOption(option: string) {
-	let playerOption = option
-	let compOption = getCompOption()
+	compOption = getCompOption()
+	playerOption = option
 
-	displayResults(playerOption, compOption)
+	displayResults()
 
 	play.style.display = "none"
 	results.style.display = "grid"
