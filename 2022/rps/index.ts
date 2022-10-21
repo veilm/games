@@ -236,7 +236,32 @@ function setGameMode(mode: string) {
 	document.getElementById("game").style.display = "block"
 }
 
-function getPsychology(): string {
+function pGetOptimalOption(): string {
+	let path = []
+	let perf
+
+	perf = pGetPerformance(path)
+	console.log(path, perf)
+
+	/*
+	Doing it backwards lets us cut off the check as soon as a subpath is not
+	found. For example, in
+	["sr", "rr", pr"]
+	we know we don't have to check rr-pr or sr-rr-pr because pr is not found
+	(pr is not found because it was just played - we don't know what happens
+	after it. See pAddSinglePath comment)
+	*/
+	for (let i = pHistory.length-1; i >= 0; i--) {
+		path.unshift(pHistory[i])
+		perf = pGetPerformance(path)
+
+		console.log(path, perf)
+
+		if (perf == null) break
+	}
+
+	console.log("=================================================")
+
 	return "rock"
 }
 
@@ -247,9 +272,6 @@ function getRandom(): string {
 
 function getReddit(): string {
 	// playerOption and compOption are of the previous round right now
-	// console.log("player", playerOption)
-	// console.log("computer", compOption)
-	// console.log("=================================================")
 
 	// If we tied or it's the first round, choose randomly
 	if (playerOption == null || playerOption == compOption)
@@ -268,7 +290,7 @@ function getReddit(): string {
 function getCompOption(): string {
 	if (gameMode == "random") return getRandom()
 	else if (gameMode == "reddit") return getReddit()
-	else return getPsychology()
+	else return pGetOptimalOption()
 }
 
 function updateLoseStreak(result: string) {
