@@ -179,6 +179,36 @@ function pAddSinglePath(path: string[]) {
 	node[option].games++
 }
 
+// Works for path = [], which returns the base (head) performance
+function pGetPerformance(path: string[]) {
+	let node = pHead
+
+	for (let i = 0; i < path.length; i++) {
+		let game = path[i]
+
+		// We've never had this path before
+		// e.g. ["pr", "sr", "rr"] - we don't have any performance statistics
+		// for post-rr, so we can't make any prediction based on it
+		// Instead, it would just look at global rps stats
+		if (node[game] == undefined)
+			return null
+
+		// Traverse to next node
+		node = node[game]
+	}
+
+	let rt = {}
+
+	// Use Laplace's rule of succession
+	// Add 1 favourable and 1 unfavourable outcome
+	// aka matching + 1, total + 2
+	options.forEach(opt => {
+		rt[opt] = (node[opt].wins + 1) / (node[opt].games + 2)
+	})
+
+	return rt
+}
+
 /*
 Add all subpaths of path
 
