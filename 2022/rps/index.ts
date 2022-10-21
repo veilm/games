@@ -288,18 +288,18 @@ function displayResults() {
 	initDate = Date.now()
 }
 
-function updateHistory() {
+function pUpdateModel() {
 	if (gameMode != "psychology") return
 
 	pHistory.push(playerOption[0] + compOption[0])
+	pAddAllPaths(pHistory)
 }
 
 function playOption(option: string) {
 	compOption = getCompOption()
 	playerOption = option
 
-	updateHistory()
-
+	pUpdateModel()
 	displayResults()
 
 	play.style.display = "none"
