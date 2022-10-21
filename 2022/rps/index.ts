@@ -54,7 +54,7 @@ const RGB = {
 // Psychology PhD Game history
 let pHistory: string[] = []
 
-const options = ["r", "p", "s", "w", "l", "t"]
+const options = ["r", "p", "s"]
 const pHead = pNode()
 
 document.getElementById("random").onclick = () => setGameMode("random")
@@ -112,17 +112,6 @@ closer to 33%, and it wants the highest success rate possible
 It would look at the longest patterns possible and judge them according to
 laplace's rule of sucession
 --
-Also, don't just use (R,P,S) literally. Also store the same kinds of patterns but
-for (W,L,T) for (would win against last round, would lose to last round, would
-tie with last round)
-So if your opponent always picks the winner, for example, it would pick up on that
-.
-I mean like
-R, P
-P, S
-Here, the player picked P the second time, which was the winner of the first round
-So that would count as T for tie - it tied with the winner of last round)
---
 Idk hopefully it makes sense
 */
 
@@ -139,25 +128,30 @@ function pOption() {
 function pNode(): any {
 	let node: any = {}
 
+	// Stores the performance of each option on this path
 	options.forEach(option => {
 		node[option] = pOption()
 	})
 
+	// The actual paths branching from this node are added later
+	// The notation is node[xy] where x is the player option and y is the comp
+	// option
+
 	return node
 }
 
-function getWinner(round: string): string {
+function getResults(round: string): number {
 	let a = shorts[round[0]]
 	let b = shorts[round[1]]
 
 	// A tie counts as the winner, since there's no loser
-	if (a == b) return round[0]
-	else if (logic[a] == b) return round[0]
-	else return round[1]
+	if (a == b) return 0.5
+	else if (logic[a] == b) return 0
+	else return 1
 }
 
 // Result: (0, 0.5, 1) for (L, T, W)
-function pAddSinglePath(path: string[], result: number) {
+function pAddSinglePath(path: string[]) {
 	let node = pHead
 
 	// We have to go one less than the whole path
@@ -165,6 +159,7 @@ function pAddSinglePath(path: string[], result: number) {
 	// Idk this whole concept is so convoluted that I don't think I can make it
 	// possible to understand no matter how well I explain it
 	let length = path.length - 1
+
 	for (let i = 0; i < length; i++) {
 		let game = path[i]
 
@@ -176,10 +171,11 @@ function pAddSinglePath(path: string[], result: number) {
 		node = node[game]
 	}
 
-	// Our option in the last game (which we just played)
-	let tail = path[length][1]
-	node[tail].wins += result
-	node[tail].games++
+	// Add stats to this path
+	let tail = path[length]
+	let option = tail[1]
+	node[option].wins += getResults(tail)
+	node[option].games++
 }
 
 function updateRounds() {
