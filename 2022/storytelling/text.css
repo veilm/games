@@ -1,0 +1,37 @@
+#t2-1, #t2-2 {
+	text-align: center;
+	background-color: black;
+	color: white;
+	padding-bottom: 0.7em;
+	margin-bottom: 1em;
+}
+
+#t2-2 {
+	padding-top: 0.7em;
+}
+
+#t2-1-1 {
+	color: orange;
+	font-size: 2em;
+	margin: 0;
+}
+
+#t2-1-2 {
+	margin: 0;
+}
+
+#t2-2-1 {
+	color: #d94fff;
+}
+
+#t2-2-2 {
+	color: red;
+}
+
+#t2-2-3 {
+	color: #ff4fd9;
+}
+
+#t2-2-4 {
+	margin: 0;
+}

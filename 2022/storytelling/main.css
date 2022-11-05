@@ -1,0 +1,17 @@
+body > div {
+	display: none;
+}
+
+body {
+	margin-bottom: 2em;
+}
+
+#s1 {
+	display: block;
+}
+
+/*
+#s2 {
+	display: block;
+}
+*/
