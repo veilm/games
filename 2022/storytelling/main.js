@@ -21,9 +21,12 @@ const prologue = {
 	progress() {
 		hide(this.content)
 		show(morningOpening.alarm.content)
+	},
+
+	init() {
+		this.b1.onclick = this.progress.bind(this)
 	}
 }
-prologue.b1.onclick = prologue.progress.bind(prologue)
 
 const morningOpening = {
 	alarm: {
@@ -115,4 +118,6 @@ const morningOpening = {
 		this.progress.init()
 	}
 }
+
+prologue.init()
 morningOpening.init()
