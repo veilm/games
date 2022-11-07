@@ -14,6 +14,10 @@ function disable(b) {
 	b.disabled = true
 }
 
+function resetScroll() {
+	window.scrollTo(0, 0)
+}
+
 const prologue = {
 	b1: getId("b1-1"),
 	content: getId("s1"),
@@ -104,7 +108,8 @@ const morningOpening = {
 			hide(morningOpening.meditation.content)
 			hide(this.content)
 
-			console.log("Done")
+			show(beforeWork.main.content)
+			resetScroll()
 		},
 
 		init() {
@@ -119,5 +124,17 @@ const morningOpening = {
 	}
 }
 
+const beforeWork = {
+	main: {
+		content: getId("s4")
+	}
+}
+
 prologue.init()
 morningOpening.init()
+
+// Testing
+prologue.progress()
+morningOpening.alarm.progressStandard()
+morningOpening.main.buttons[0].click()
+morningOpening.progress.progress()

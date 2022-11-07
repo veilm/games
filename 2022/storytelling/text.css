@@ -28,9 +28,31 @@
 	margin: 0;
 }
 
-/* d1: Nicholas dialogue */
-blockquote.d1 > span {
+#t4-1 {
+	text-align: center;
+	background-color: #fff6f6;
+	padding: 0.5em;
+	margin-bottom: 1em;
+}
+#t4-1 > h3 {
+	color: maroon;
+	margin: 0;
+}
+#t4-1 > p {
+	color: #320000;
+	margin: 0;
+}
+
+blockquote > span {
 	font-weight: bold;
+}
+
+/* Bus stop stranger dialogue */
+blockquote.d2 {
+	border-left-color: maroon;
+}
+blockquote.d2 > hr {
+	border-color: maroon;
 }
 
 .purple {
