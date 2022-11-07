@@ -322,6 +322,7 @@ const epiphany = {
 				hide(epiphany.alarm.content)
 				hide(this.content)
 				show(epiphany.rehab.content)
+				resetScroll()
 			}.bind(this)
 		}
 	},
@@ -334,6 +335,7 @@ const epiphany = {
 			this.b.onclick = function() {
 				hide(this.content)
 				show(epiphany.beforeWork.content)
+				resetScroll()
 			}.bind(this)
 		}
 	},
@@ -346,6 +348,7 @@ const epiphany = {
 			this.b.onclick = function() {
 				hide(this.content)
 				show(epiphany.atWork.content)
+				resetScroll()
 			}.bind(this)
 		}
 	},
@@ -358,6 +361,7 @@ const epiphany = {
 			this.b.onclick = function() {
 				hide(this.content)
 				show(epiphany.death.content)
+				resetScroll()
 			}.bind(this)
 		}
 	},
