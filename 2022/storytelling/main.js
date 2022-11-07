@@ -19,7 +19,7 @@ function resetScroll() {
 }
 
 const prologue = {
-	b1: getId("b1-1"),
+	b1: getId("b1"),
 	content: getId("s1"),
 
 	progress() {
@@ -34,24 +34,16 @@ const prologue = {
 
 const morningOpening = {
 	alarm: {
-		b1: getId("b2-1"),
-		b2: getId("b2-2"),
+		b1: getId("b2"),
 		content: getId("s2"),
 
 		init() {
-			this.b1.onclick = this.progressStandard.bind(this)
+			this.b1.onclick = this.progress.bind(this)
 		},
 
-		// Standard timeline
-		progressStandard() {
+		progress() {
 			disable(this.b1)
 			show(morningOpening.main.content)
-		},
-
-		// True ending
-		progressTrue() {
-			disable(this.b1)
-			disable(this.b2)
 		}
 	},
 
@@ -134,7 +126,9 @@ prologue.init()
 morningOpening.init()
 
 // Testing
+/*
 prologue.progress()
-morningOpening.alarm.progressStandard()
+morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
+*/
