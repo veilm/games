@@ -9,3 +9,9 @@ body {
 #s1 {
 	display: block;
 }
+
+#b6-2 {
+	background-color: #007559;
+	color: #fff;
+	display: none;
+}
