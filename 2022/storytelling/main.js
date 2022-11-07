@@ -352,10 +352,18 @@ const epiphany = {
 
 	atWork: {
 		content: getId("s7-5"),
-		b: null
+		b: getId("b7-5"),
+
+		init() {
+			this.b.onclick = function() {
+				hide(this.content)
+				show(epiphany.death.content)
+			}.bind(this)
+		}
 	},
 
 	death: {
+		content: getId("s7-6")
 	},
 
 	init() {
@@ -364,6 +372,7 @@ const epiphany = {
 		this.alarm2.init()
 		this.rehab.init()
 		this.beforeWork.init()
+		this.atWork.init()
 	}
 }
 
