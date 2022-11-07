@@ -170,8 +170,10 @@ morningOpening.init()
 beforeWork.init()
 
 // Testing
+/*
 prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
 beforeWork.main.buttons[2].click()
+*/
