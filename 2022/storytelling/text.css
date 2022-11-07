@@ -6,17 +6,21 @@
 	padding-bottom: 0.7em;
 	margin-bottom: 1em;
 }
+
 #t3-2 {
 	padding-top: 0.7em;
 }
+
 #t3-1-1 {
 	color: orange;
 	font-size: 2em;
 	margin: 0;
 }
+
 #t3-1-2 {
 	margin: 0;
 }
+
 #t3-2-4 {
 	margin: 0;
 }
@@ -27,10 +31,12 @@
 	padding: 0.5em;
 	margin-bottom: 1em;
 }
+
 #t4-1 > h3 {
 	color: maroon;
 	margin: 0;
 }
+
 #t4-1 > p {
 	color: #320000;
 	margin: 0;
@@ -53,45 +59,4 @@
 #t4-1-2 {
 	font-size: 3em;
 	text-align: center;
-}
-
-blockquote > span {
-	font-weight: bold;
-}
-
-/* Bus stop stranger dialogue */
-blockquote.d2 {
-	border-left-color: maroon;
-}
-blockquote.d2 > hr {
-	border-color: maroon;
-}
-
-.purple {
-	color: #d94fff;
-}
-
-.red {
-	color: red;
-}
-
-.pink {
-	color: #ff4fd9;
-}
-
-.google-blue {
-	color: #4285F4;
-}
-.google-red {
-	color: #DB4437;
-}
-.google-yellow {
-	color: #F4B400;
-}
-.google-green {
-	color: #0F9D58;
-}
-
-.gray {
-	color: gray;
 }

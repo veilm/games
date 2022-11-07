@@ -1,0 +1,11 @@
+blockquote > span {
+	font-weight: bold;
+}
+
+/* Bus stop stranger dialogue */
+blockquote.d2 {
+	border-left-color: maroon;
+}
+blockquote.d2 > hr {
+	border-color: maroon;
+}
