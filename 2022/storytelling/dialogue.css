@@ -2,11 +2,26 @@ blockquote > span {
 	font-weight: bold;
 }
 
-/* Bus stop stranger dialogue */
-/* Uber driver dialogue */
+/* Bus stop stranger, Uber driver */
 blockquote.d2 {
 	border-left-color: maroon;
 }
 blockquote.d2 > hr {
 	border-color: maroon;
+}
+
+/* Luna */
+blockquote.d3 {
+	border-left-color: purple;
+}
+blockquote.d3 > hr {
+	border-color: purple;
+}
+
+/* George */
+blockquote.d4 {
+	border-left-color: brown;
+}
+blockquote.d4 > hr {
+	border-color: brown;
 }

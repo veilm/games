@@ -1,3 +1,8 @@
+/*
+The code quality is not good but I am on a strict deadline so I have to take
+tech debt
+*/
+
 function getId(id) {
     return document.getElementById(id)
 }
@@ -155,6 +160,7 @@ const beforeWork = {
 		progress() {
 			hide(this.content)
 			show(atWork.fromBus.content)
+			resetScroll()
 		},
 
 		init() {
@@ -169,6 +175,7 @@ const beforeWork = {
 		progress() {
 			hide(this.content)
 			show(atWork.fromUber.content)
+			resetScroll()
 		},
 
 		init() {
@@ -183,6 +190,7 @@ const beforeWork = {
 		progress() {
 			hide(this.content)
 			show(death.content)
+			resetScroll()
 		},
 
 		init() {
@@ -200,10 +208,29 @@ const beforeWork = {
 
 const atWork = {
 	fromBus: {
-		content: getId("s5-1")
+		content: getId("s5-1"),
+		b: getId("b5-1"),
+
+		progress() {
+			hide(this.content)
+			show(death.content)
+			resetScroll()
+		},
+
+		init() {
+			this.b.onclick = this.progress.bind(this)
+		}
 	},
+
 	fromUber: {
-		content: getId("s5-2")
+		content: getId("s5-2"),
+		init() {
+		}
+	},
+
+	init() {
+		this.fromBus.init()
+		this.fromUber.init()
 	}
 }
 
@@ -214,10 +241,11 @@ const death = {
 prologue.init()
 morningOpening.init()
 beforeWork.init()
+atWork.init()
 
 // Testing
 prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
-// beforeWork.main.buttons[2].click()
+beforeWork.main.buttons[0].click()
