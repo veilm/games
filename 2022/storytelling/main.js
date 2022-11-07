@@ -25,6 +25,11 @@ function resetScroll() {
 	window.scrollTo(0, 0)
 }
 
+const style = {
+	sakura1: getId("sakura-1"),
+	sakura2: getId("sakura-2")
+}
+
 const prologue = {
 	b1: getId("b1"),
 	content: getId("s1"),
@@ -265,6 +270,55 @@ const death = {
 			show(morningOpening.alarm.content)
 			resetScroll()
 		}.bind(this)
+
+		this.b2.onclick = function() {
+			hide(this.content)
+
+			style.sakura1.disabled = true
+			style.sakura2.disabled = false
+
+			show(epiphany.main.content)
+			resetScroll()
+		}.bind(this)
+	}
+}
+
+const epiphany = {
+	main: {
+		content: getId("s7"),
+		b: getId("b7"),
+
+		init() {
+			this.b.onclick = function() {
+				hide(this.content)
+
+				style.sakura1.disabled = false
+				style.sakura2.disabled = true
+
+				show(epiphany.alarm.content)
+				resetScroll()
+			}.bind(this)
+		}
+	},
+
+	alarm: {
+		content: getId("s7-1")
+	},
+
+	rehab: {
+	},
+
+	beforeWork: {
+	},
+
+	atWork: {
+	},
+
+	death: {
+	},
+
+	init() {
+		this.main.init()
 	}
 }
 
@@ -273,6 +327,10 @@ morningOpening.init()
 beforeWork.init()
 atWork.init()
 death.init()
+epiphany.init()
 
 // Testing
-// death.show()
+iteration = 3
+hide(prologue.content)
+death.show()
+death.b2.click()
