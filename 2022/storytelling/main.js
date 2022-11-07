@@ -118,17 +118,58 @@ const morningOpening = {
 
 const beforeWork = {
 	main: {
-		content: getId("s4")
+		content: getId("s4"),
+
+		options: [
+			"wait",
+			"uber",
+			"home"
+		],
+
+		buttons: [
+			getId("b4-1"),
+			getId("b4-2"),
+			getId("b4-3")
+		],
+
+		handleOption(option) {
+			hide(this.content)
+			disable(this.buttons[this.options.indexOf(option)])
+			show(beforeWork[option].content)
+			resetScroll()
+		},
+
+		init() {
+			for (let i = 0; i < 2; i++) {
+				this.buttons[i].onclick = function() {
+					this.handleOption(this.options[i])
+				}.bind(this)
+			}
+		}
+	},
+
+	wait: {
+		content: getId("s4-1")
+	},
+
+	uber: {
+	},
+
+	home: {
+	},
+
+	init() {
+		this.main.init()
 	}
 }
 
 prologue.init()
 morningOpening.init()
+beforeWork.init()
 
 // Testing
-/*
 prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
-*/
+beforeWork.main.buttons[0].click()

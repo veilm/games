@@ -1,10 +1,3 @@
-/* True route init */
-#b2-2 {
-	background-color: maroon;
-	border: 1px solid maroon;
-	display: none;
-}
-
 /* Phone screen */
 #t3-1, #t3-2 {
 	text-align: center;
@@ -43,6 +36,25 @@
 	margin: 0;
 }
 
+#t4-1-1 {
+	text-align: center;
+}
+
+#t4-1-1-1 {
+	margin-bottom: 0.5em;
+}
+
+#t4-1-1-2 {
+	margin-top: 0;
+	color: gray;
+	font-size: 0.7em;
+}
+
+#t4-1-2 {
+	font-size: 3em;
+	text-align: center;
+}
+
 blockquote > span {
 	font-weight: bold;
 }
@@ -65,4 +77,21 @@ blockquote.d2 > hr {
 
 .pink {
 	color: #ff4fd9;
+}
+
+.google-blue {
+	color: #4285F4;
+}
+.google-red {
+	color: #DB4437;
+}
+.google-yellow {
+	color: #F4B400;
+}
+.google-green {
+	color: #0F9D58;
+}
+
+.gray {
+	color: gray;
 }
