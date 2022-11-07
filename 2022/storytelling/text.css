@@ -3,7 +3,7 @@
 }
 
 /* Phone screen */
-#t3-1, #t3-2 {
+.t3-1, #t3-2, #t7-2 {
 	text-align: center;
 	background-color: black;
 	color: white;
@@ -15,7 +15,7 @@
 	padding-top: 0.7em;
 }
 
-#t3-1-1 {
+#t3-1-1, #t7-2-1 {
 	color: orange;
 	font-size: 2em;
 	margin: 0;
@@ -25,7 +25,7 @@
 	margin: 0;
 }
 
-#t3-2-4 {
+#t3-2-4, #t7-2-3 {
 	margin: 0;
 }
 

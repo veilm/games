@@ -302,10 +302,32 @@ const epiphany = {
 	},
 
 	alarm: {
-		content: getId("s7-1")
+		content: getId("s7-1"),
+		b: getId("b7-1"),
+
+		init() {
+			this.b.onclick = function() {
+				this.b.disabled = true
+				show(epiphany.alarm2.content)
+			}.bind(this)
+		}
+	},
+
+	alarm2: {
+		content: getId("s7-2"),
+		b: getId("b7-2"),
+
+		init() {
+			this.b.onclick = function() {
+				hide(epiphany.alarm.content)
+				hide(this.content)
+				show(epiphany.rehab.content)
+			}.bind(this)
+		}
 	},
 
 	rehab: {
+		content: getId("s7-3")
 	},
 
 	beforeWork: {
@@ -319,6 +341,8 @@ const epiphany = {
 
 	init() {
 		this.main.init()
+		this.alarm.init()
+		this.alarm2.init()
 	}
 }
 
@@ -334,3 +358,5 @@ iteration = 3
 hide(prologue.content)
 death.show()
 death.b2.click()
+epiphany.main.b.click()
+epiphany.alarm.b.click()
