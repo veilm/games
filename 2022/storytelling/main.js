@@ -3,8 +3,7 @@ The code quality is not good but I am on a strict deadline so I have to take
 tech debt
 */
 
-let iteration = 3
-// let iteration = 1
+let iteration = 1
 
 function getId(id) {
     return document.getElementById(id)
@@ -30,13 +29,11 @@ const prologue = {
 	b1: getId("b1"),
 	content: getId("s1"),
 
-	progress() {
-		hide(this.content)
-		show(morningOpening.alarm.content)
-	},
-
 	init() {
-		this.b1.onclick = this.progress.bind(this)
+		this.b1.onclick = function() {
+			hide(this.content)
+			show(morningOpening.alarm.content)
+		}.bind(this)
 	}
 }
 
@@ -45,13 +42,11 @@ const morningOpening = {
 		b1: getId("b2"),
 		content: getId("s2"),
 
-		progress() {
-			disable(this.b1)
-			show(morningOpening.main.content)
-		},
-
 		init() {
-			this.b1.onclick = this.progress.bind(this)
+			this.b1.onclick = function() {
+				disable(this.b1)
+				show(morningOpening.main.content)
+			}.bind(this)
 		}
 	},
 
@@ -113,20 +108,18 @@ const morningOpening = {
 		content: getId("s3-4"),
 		b: getId("b3-4"),
 
-		progress() {
-			hide(morningOpening.alarm.content)
-			hide(morningOpening.main.content)
-			hide(morningOpening.weather.content)
-			hide(morningOpening.stocks.content)
-			hide(morningOpening.meditation.content)
-			hide(this.content)
-
-			show(beforeWork.main.content)
-			resetScroll()
-		},
-
 		init() {
-			this.b.onclick = this.progress.bind(this)
+			this.b.onclick = function() {
+				hide(morningOpening.alarm.content)
+				hide(morningOpening.main.content)
+				hide(morningOpening.weather.content)
+				hide(morningOpening.stocks.content)
+				hide(morningOpening.meditation.content)
+				hide(this.content)
+
+				show(beforeWork.main.content)
+				resetScroll()
+			}.bind(this)
 		}
 	},
 
@@ -173,14 +166,12 @@ const beforeWork = {
 		content: getId("s4-1"),
 		b: getId("b4-1-1"),
 
-		progress() {
-			hide(this.content)
-			show(atWork.fromBus.content)
-			resetScroll()
-		},
-
 		init() {
-			this.b.onclick = this.progress.bind(this)
+			this.b.onclick = function() {
+				hide(this.content)
+				show(atWork.fromBus.content)
+				resetScroll()
+			}.bind(this)
 		}
 	},
 
@@ -188,14 +179,12 @@ const beforeWork = {
 		content: getId("s4-2"),
 		b: getId("b4-2-1"),
 
-		progress() {
-			hide(this.content)
-			show(atWork.fromUber.content)
-			resetScroll()
-		},
-
 		init() {
-			this.b.onclick = this.progress.bind(this)
+			this.b.onclick = function() {
+				hide(this.content)
+				show(atWork.fromUber.content)
+				resetScroll()
+			}.bind(this)
 		}
 	},
 
@@ -203,14 +192,12 @@ const beforeWork = {
 		content: getId("s4-3"),
 		b: getId("b4-3-1"),
 
-		progress() {
-			hide(this.content)
-			death.show()
-			resetScroll()
-		},
-
 		init() {
-			this.b.onclick = this.progress.bind(this)
+			this.b.onclick = function() {
+				hide(this.content)
+				death.show()
+				resetScroll()
+			}.bind(this)
 		}
 	},
 
@@ -227,14 +214,12 @@ const atWork = {
 		content: getId("s5-1"),
 		b: getId("b5-1"),
 
-		progress() {
-			hide(this.content)
-			death.show()
-			resetScroll()
-		},
-
 		init() {
-			this.b.onclick = this.progress.bind(this)
+			this.b.onclick = function() {
+				hide(this.content)
+				death.show()
+				resetScroll()
+			}.bind(this)
 		}
 	},
 
@@ -242,14 +227,12 @@ const atWork = {
 		content: getId("s5-2"),
 		b: getId("b5-2"),
 
-		progress() {
-			hide(this.content)
-			death.show()
-			resetScroll()
-		},
-
 		init() {
-			this.b.onclick = this.progress.bind(this)
+			this.b.onclick = function() {
+				hide(this.content)
+				death.show()
+				resetScroll()
+			}.bind(this)
 		}
 	},
 
@@ -292,12 +275,4 @@ atWork.init()
 death.init()
 
 // Testing
-/*
-prologue.progress()
-morningOpening.alarm.progress()
-morningOpening.main.buttons[0].click()
-morningOpening.progress.progress()
-beforeWork.main.buttons[0].click()
-beforeWork.wait.progress()
-atWork.fromBus.progress()
-*/
+// death.show()
