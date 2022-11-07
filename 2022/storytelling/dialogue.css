@@ -25,3 +25,11 @@ blockquote.d4 {
 blockquote.d4 > hr {
 	border-color: blue;
 }
+
+/* Grandmother */
+blockquote.d5 {
+	border-left-color: black;
+}
+blockquote.d5 > hr {
+	border-color: black;
+}
