@@ -140,7 +140,7 @@ const beforeWork = {
 		},
 
 		init() {
-			for (let i = 0; i < 2; i++) {
+			for (let i = 0; i < 3; i++) {
 				this.buttons[i].onclick = function() {
 					this.handleOption(this.options[i])
 				}.bind(this)
@@ -174,4 +174,4 @@ prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
-beforeWork.main.buttons[1].click()
+beforeWork.main.buttons[2].click()
