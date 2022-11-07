@@ -60,3 +60,11 @@
 	font-size: 3em;
 	text-align: center;
 }
+
+#t4-2-1 {
+	text-align: center;
+	background-color: black;
+	color: white;
+	padding: 0.01em;
+	margin-bottom: 1em;
+}

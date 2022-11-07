@@ -3,6 +3,7 @@ blockquote > span {
 }
 
 /* Bus stop stranger dialogue */
+/* Uber driver dialogue */
 blockquote.d2 {
 	border-left-color: maroon;
 }

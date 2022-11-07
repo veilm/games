@@ -153,9 +153,11 @@ const beforeWork = {
 	},
 
 	uber: {
+		content: getId("s4-2")
 	},
 
 	home: {
+		content: getId("s4-3")
 	},
 
 	init() {
@@ -172,4 +174,4 @@ prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
-beforeWork.main.buttons[0].click()
+beforeWork.main.buttons[1].click()
