@@ -37,13 +37,13 @@ const morningOpening = {
 		b1: getId("b2"),
 		content: getId("s2"),
 
-		init() {
-			this.b1.onclick = this.progress.bind(this)
-		},
-
 		progress() {
 			disable(this.b1)
 			show(morningOpening.main.content)
+		},
+
+		init() {
+			this.b1.onclick = this.progress.bind(this)
 		}
 	},
 
@@ -149,20 +149,66 @@ const beforeWork = {
 	},
 
 	wait: {
-		content: getId("s4-1")
+		content: getId("s4-1"),
+		b: getId("b4-1-1"),
+
+		progress() {
+			hide(this.content)
+			show(atWork.fromBus.content)
+		},
+
+		init() {
+			this.b.onclick = this.progress.bind(this)
+		}
 	},
 
 	uber: {
-		content: getId("s4-2")
+		content: getId("s4-2"),
+		b: getId("b4-2-1"),
+
+		progress() {
+			hide(this.content)
+			show(atWork.fromUber.content)
+		},
+
+		init() {
+			this.b.onclick = this.progress.bind(this)
+		}
 	},
 
 	home: {
-		content: getId("s4-3")
+		content: getId("s4-3"),
+		b: getId("b4-3-1"),
+
+		progress() {
+			hide(this.content)
+			show(death.content)
+		},
+
+		init() {
+			this.b.onclick = this.progress.bind(this)
+		}
 	},
 
 	init() {
 		this.main.init()
+		this.wait.init()
+		this.uber.init()
+		this.home.init()
 	}
+}
+
+const atWork = {
+	fromBus: {
+		content: getId("s5-1")
+	},
+	fromUber: {
+		content: getId("s5-2")
+	}
+}
+
+const death = {
+	content: getId("s6")
 }
 
 prologue.init()
@@ -170,10 +216,8 @@ morningOpening.init()
 beforeWork.init()
 
 // Testing
-/*
 prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
-beforeWork.main.buttons[2].click()
-*/
+// beforeWork.main.buttons[2].click()
