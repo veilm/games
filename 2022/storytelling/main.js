@@ -224,7 +224,16 @@ const atWork = {
 
 	fromUber: {
 		content: getId("s5-2"),
+		b: getId("b5-2"),
+
+		progress() {
+			hide(this.content)
+			show(death.content)
+			resetScroll()
+		},
+
 		init() {
+			this.b.onclick = this.progress.bind(this)
 		}
 	},
 
@@ -248,4 +257,5 @@ prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
 morningOpening.progress.progress()
-beforeWork.main.buttons[0].click()
+beforeWork.main.buttons[1].click()
+beforeWork.uber.b.click()
