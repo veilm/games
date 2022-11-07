@@ -384,6 +384,7 @@ death.init()
 epiphany.init()
 
 // Testing
+/*
 iteration = 3
 hide(prologue.content)
 death.show()
@@ -393,3 +394,4 @@ epiphany.alarm.b.click()
 epiphany.alarm2.b.click()
 epiphany.rehab.b.click()
 epiphany.beforeWork.b.click()
+*/
