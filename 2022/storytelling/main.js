@@ -3,6 +3,9 @@ The code quality is not good but I am on a strict deadline so I have to take
 tech debt
 */
 
+let iteration = 3
+// let iteration = 1
+
 function getId(id) {
     return document.getElementById(id)
 }
@@ -60,7 +63,14 @@ const morningOpening = {
 			getId("b3-3")
 		],
 
+		enabled: {
+			weather: true,
+			stocks: true,
+			meditation: true
+		},
+
 		handleOption(option) {
+			this.enabled[option] = false
 			show(morningOpening[option].content)
 			this.buttons.forEach(b => {
 				disable(b)
@@ -78,6 +88,12 @@ const morningOpening = {
 			this.buttons[2].onclick = function() {
 				this.handleOption("meditation")
 			}.bind(this)
+		},
+
+		setEnabled() {
+			if (this.enabled.weather) this.buttons[0].disabled = false
+			if (this.enabled.stocks) this.buttons[1].disabled = false
+			if (this.enabled.meditation) this.buttons[2].disabled = false
 		}
 	},
 
@@ -189,7 +205,7 @@ const beforeWork = {
 
 		progress() {
 			hide(this.content)
-			show(death.content)
+			death.show()
 			resetScroll()
 		},
 
@@ -213,7 +229,7 @@ const atWork = {
 
 		progress() {
 			hide(this.content)
-			show(death.content)
+			death.show()
 			resetScroll()
 		},
 
@@ -228,7 +244,7 @@ const atWork = {
 
 		progress() {
 			hide(this.content)
-			show(death.content)
+			death.show()
 			resetScroll()
 		},
 
@@ -244,15 +260,39 @@ const atWork = {
 }
 
 const death = {
-	content: getId("s6")
+	content: getId("s6"),
+	b1: getId("b6-1"),
+	b2: getId("b6-2"),
+
+	show() {
+		show(this.content)
+		if (iteration == 3) {
+			hide(this.b1)
+			show(this.b2)
+		}
+	},
+
+	init() {
+		this.b1.onclick = function() {
+			hide(this.content)
+			iteration++
+
+			morningOpening.alarm.b1.disabled = false
+			morningOpening.main.setEnabled()
+			show(morningOpening.alarm.content)
+			resetScroll()
+		}.bind(this)
+	}
 }
 
 prologue.init()
 morningOpening.init()
 beforeWork.init()
 atWork.init()
+death.init()
 
 // Testing
+/*
 prologue.progress()
 morningOpening.alarm.progress()
 morningOpening.main.buttons[0].click()
@@ -260,3 +300,4 @@ morningOpening.progress.progress()
 beforeWork.main.buttons[0].click()
 beforeWork.wait.progress()
 atWork.fromBus.progress()
+*/
