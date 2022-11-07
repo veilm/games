@@ -2,7 +2,7 @@ blockquote > span {
 	font-weight: bold;
 }
 
-/* Bus stop stranger, Uber driver */
+/* Bus stop stranger, Uber driver, 911 call dispatcher */
 blockquote.d2 {
 	border-left-color: maroon;
 }
@@ -20,8 +20,8 @@ blockquote.d3 > hr {
 
 /* George */
 blockquote.d4 {
-	border-left-color: brown;
+	border-left-color: blue;
 }
 blockquote.d4 > hr {
-	border-color: brown;
+	border-color: blue;
 }
