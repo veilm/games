@@ -5,10 +5,19 @@ const RNG = (min, max) => {
 	return Math.round(Math.random() * (max - min)) + min
 }
 
+const configs = [
+	{
+		name: "Multiplication 10-20",
+		min: 10,
+		max: 20
+	}
+]
+
 const game = {
-	multiplication() {
-		return `${RNG(0, 5)} * ${RNG(0, 5)}`
+	multiplication(min, max) {
+		return `${RNG(min, max)} * ${RNG(min, max)}`
 	}
 }
 
-question.innerHTML = game.multiplication()
+let config = configs[0]
+question.innerHTML = game.multiplication(config.min, config.max)
