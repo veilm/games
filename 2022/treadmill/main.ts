@@ -15,7 +15,7 @@ const configs = [
 
 const game = {
 	multiplication(min, max) {
-		return `${RNG(min, max)} * ${RNG(min, max)}`
+		return `${RNG(min, max)} × ${RNG(min, max)}`
 	}
 }
 

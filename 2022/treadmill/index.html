@@ -5,11 +5,16 @@
 		<link href="https://unpkg.com/sakura.css/css/sakura.css" rel="stylesheet">
 		<style>
 			body {
+				text-align: center;
 			}
 
 			#progress {
 				margin: auto;
 				width: 20em;
+			}
+
+			#dropdown {
+				margin: 40px auto 0 auto;
 			}
 		</style>
 
@@ -18,7 +23,12 @@
 	<body>
 		<h1 id="question"></h1>
 		<h1 id="answer"></h1>
-		<progress id="progress" value="100" max="100"></progress>
+		<progress id="progress" value="65" max="100"></progress>
+
+		<br>
+		<select id="dropdown">
+			<option value="0">Multiplication 10-20</option>
+		</select>
 
 		<script src="main.js"></script>
 	</body>
