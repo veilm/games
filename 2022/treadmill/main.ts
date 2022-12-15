@@ -6,37 +6,57 @@ const RNG = (min, max) => {
 	return Math.round(Math.random() * (max - min)) + min
 }
 
+const operations = {
+	multiplication(a, b) {
+		return `${a} × ${b}`
+	},
+
+	addition(a, b) {
+		return `${a} + ${b}`
+	}
+}
+
 const configs = [
 	{
 		name: "Multiplication 10-20",
-		operation: "multiplication",
-		min: 10,
-		max: 20,
-		secs: 45
+		secs: 45,
+
+		operation() {
+			let min = 10
+			let max = 20
+			return operations.multiplication(RNG(min, max), RNG(min, max))
+		}
 	},
 	{
-		name: "Addition 100-200",
-		operation: "addition",
-		min: 100,
-		max: 200,
-		secs: 20
+		name: "Multiplication 1d by 2d",
+		secs: 10,
+
+		operation() {
+			let a = RNG(2, 9)
+			let b = RNG(10, 99)
+			if (RNG(1, 100) % 2 == 0)
+				return operations.multiplication(a, b)
+			else
+				return operations.multiplication(b, a)
+		}
+	},
+	{
+		name: "Addition 100-500",
+		secs: 20,
+
+		operation() {
+			let min = 100
+			let max = 500
+			return operations.addition(RNG(min, max), RNG(min, max))
+		}
 	}
 ]
 
 const game = {
 	config: configs[0],
 
-	multiplication(min, max) {
-		return `${RNG(min, max)} × ${RNG(min, max)}`
-	},
-
-	addition(min, max) {
-		return `${RNG(min, max)} + ${RNG(min, max)}`
-	},
-
 	getQuestion() {
-		let c = this.config
-		return this[c.operation](c.min, c.max)
+		return this.config.operation()
 	},
 
 	setConfig(config) {
