@@ -53,6 +53,8 @@ const configs = [
 const game = {
 	config: configs[0],
 	lastSave: 0,
+	state: "question",
+	answer: 5,
 
 	updateSave() {
 		this.lastSave = Date.now()
@@ -69,10 +71,19 @@ const game = {
 
 	step() {
 		let elapsed = Date.now() - this.lastSave
-		let finished = progress.update(elapsed, this.config.secs)
+
+		let secs = this.state == "question" ? this.config.secs : 10
+		let finished = progress.update(elapsed, secs)
 
 		if (finished) {
-			question.el.innerHTML += " = 5"
+			if (this.state == "question") {
+				this.state = "answer"
+				question.setAnswer(this.answer)
+			} else {
+				this.state = "question"
+				question.create()
+			}
+
 			this.updateSave()
 		}
 	},
@@ -101,6 +112,10 @@ const progress = {
 
 const question = {
 	el: getId("question"),
+
+	setAnswer(answer) {
+		this.el.innerHTML += ` = ${answer}`
+	},
 
 	create() {
 		this.el.innerHTML = game.getQuestion()
