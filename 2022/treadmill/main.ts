@@ -6,11 +6,11 @@ const RNG = (min, max) => {
 
 const operations = {
 	multiplication(a, b) {
-		return `${a} × ${b}`
+		return [`${a} × ${b}`, a * b]
 	},
 
 	addition(a, b) {
-		return `${a} + ${b}`
+		return [`${a} + ${b}`, a + b]
 	}
 }
 
@@ -32,6 +32,7 @@ const configs = [
 		operation() {
 			let a = RNG(2, 9)
 			let b = RNG(10, 99)
+			let answer = a * b
 			if (RNG(1, 100) % 2 == 0)
 				return operations.multiplication(a, b)
 			else
@@ -61,7 +62,9 @@ const game = {
 	},
 
 	getQuestion() {
-		return this.config.operation()
+		let results = this.config.operation()
+		this.answer = results[1]
+		return results[0]
 	},
 
 	setConfig(config) {
