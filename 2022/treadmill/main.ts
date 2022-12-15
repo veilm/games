@@ -56,7 +56,7 @@ const game = {
 	state: "question",
 	answer: 5,
 
-	updateSave() {
+	resetTimer() {
 		this.lastSave = Date.now()
 	},
 
@@ -66,7 +66,9 @@ const game = {
 
 	setConfig(config) {
 		this.config = config
+
 		question.create()
+		this.resetTimer()
 	},
 
 	step() {
@@ -84,12 +86,12 @@ const game = {
 				question.create()
 			}
 
-			this.updateSave()
+			this.resetTimer()
 		}
 	},
 
 	init() {
-		this.updateSave()
+		this.resetTimer()
 
 		dropdown.create()
 		question.create()
