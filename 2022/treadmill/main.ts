@@ -1,7 +1,5 @@
 const getId = id => document.getElementById(id)
 
-const progress = getId("progress")
-
 const RNG = (min, max) => {
 	return Math.round(Math.random() * (max - min)) + min
 }
@@ -54,6 +52,7 @@ const configs = [
 
 const game = {
 	config: configs[0],
+	lastSave: Date.now(),
 
 	getQuestion() {
 		return this.config.operation()
@@ -62,6 +61,20 @@ const game = {
 	setConfig(config) {
 		this.config = config
 		question.create()
+	},
+
+	step() {
+		let elapsed = Date.now() - this.lastSave
+		progress.update(elapsed, this.config.secs)
+	}
+}
+
+const progress = {
+	el: getId("progress"),
+
+	update(elapsed, limit) {
+		let raw = 100 - (elapsed/1000 / limit * 100)
+		this.el.value = Math.round(raw)
 	}
 }
 
@@ -95,3 +108,5 @@ const dropdown = {
 
 dropdown.create()
 question.create()
+
+setInterval(game.step.bind(game), 10)
