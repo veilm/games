@@ -1,0 +1,42 @@
+:root {
+	--bg: rgba(179, 80, 72, 0.75);
+	--fg: #d4aba7;
+}
+
+body {
+	text-align: center;
+	background-color: var(--bg);
+	background-image: url("sakura.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+#question {
+	color: white;
+	display: inline;
+	padding: 0.2em 0.5em 0.2em 0.5em;
+	background-color: var(--bg);
+}
+
+#progress {
+	margin: auto;
+	width: 70%;
+	background: rgba(0, 0, 0, 0);
+	border: 3px solid var(--fg);
+
+}
+#progress::-moz-progress-bar {
+	background: var(--fg);
+}
+#progress::-webkit-progress-value {
+	background: var(--fg);
+}
+#progress::-webkit-progress-bar {
+	background: rgba(0, 0, 0, 0);
+}
+
+#dropdown {
+	margin: 40px auto 0 auto;
+	background-color: var(--bg);
+	color: white;
+}
