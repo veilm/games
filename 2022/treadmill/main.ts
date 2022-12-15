@@ -52,7 +52,11 @@ const configs = [
 
 const game = {
 	config: configs[0],
-	lastSave: Date.now(),
+	lastSave: 0,
+
+	updateSave() {
+		this.lastSave = Date.now()
+	},
 
 	getQuestion() {
 		return this.config.operation()
@@ -65,7 +69,21 @@ const game = {
 
 	step() {
 		let elapsed = Date.now() - this.lastSave
-		progress.update(elapsed, this.config.secs)
+		let finished = progress.update(elapsed, this.config.secs)
+
+		if (finished) {
+			question.el.innerHTML += " = 5"
+			this.updateSave()
+		}
+	},
+
+	init() {
+		this.updateSave()
+
+		dropdown.create()
+		question.create()
+
+		setInterval(this.step.bind(this), 10)
 	}
 }
 
@@ -75,6 +93,9 @@ const progress = {
 	update(elapsed, limit) {
 		let raw = 100 - (elapsed/1000 / limit * 100)
 		this.el.value = Math.round(raw)
+
+		// Are we finished?
+		return raw < 0
 	}
 }
 
@@ -106,7 +127,5 @@ const dropdown = {
 	}
 }
 
-dropdown.create()
-question.create()
 
-setInterval(game.step.bind(game), 10)
+game.init()
