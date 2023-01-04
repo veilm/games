@@ -13,7 +13,7 @@ var operations = {
 var configs = [
     {
         name: "Multiplication 10-20",
-        secs: 45,
+        secs: 20,
         operation: function () {
             var min = 10;
             var max = 20;
@@ -35,7 +35,7 @@ var configs = [
     },
     {
         name: "Addition 100-500",
-        secs: 20,
+        secs: 12,
         operation: function () {
             var min = 100;
             var max = 500;
