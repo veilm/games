@@ -46,6 +46,24 @@ var parseTransformation = function () {
     });
     return transformation;
 };
+var transform = function (inputCoords, transformation) {
+    /*
+    (1, 0) --> (x1, y1)
+    (0, 1) --> (x2, y2)
+
+    (x, y) = x(1, 0) + y(0, 1)
+    x(1, 0) + y(0, 1) --> x(x1, y1) + y(x2, y2)
+    = (x(x1) + y(x2)), (x(y1) + y(y2))
+    */
+    var coords = inputCoords;
+    for (var i = 0; i < coords.length; i++) {
+        if (!coords[i].valid)
+            return;
+        coords[i].x = coords[i].x * transformation.x1 + coords[i].y * transformation.x2;
+        coords[i].y = coords[i].x * transformation.y1 + coords[i].y * transformation.y2;
+    }
+    return coords;
+};
 var update = function () {
     Array.from(inputStatus.children).forEach(function (child) { child.remove(); });
     var coords = parseCoords(input.value);
@@ -53,6 +71,8 @@ var update = function () {
     if (inputStatus.children.length > 0)
         return;
     addStatusMessage("All input valid");
+    var newCoords = transform(coords, transformation);
+    console.log(newCoords);
 };
 input.addEventListener("input", update);
 transIDs.forEach(function (id) {
