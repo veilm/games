@@ -1,6 +1,7 @@
 var input = document.getElementById("input");
 var output = document.getElementById("output");
 var inputStatus = document.getElementById("status");
+var transIDs = ["x1", "y1", "x2", "y2"];
 var addStatusMessage = function (message) {
     var li = document.createElement("li");
     li.innerHTML = message;
@@ -33,11 +34,28 @@ var parseCoords = function (lines) {
     });
     return coords;
 };
+var parseTransformation = function () {
+    var transformation = {};
+    transIDs.forEach(function (id) {
+        var el = document.getElementById(id);
+        transformation[id] = Number(el.value);
+        if (el.value == "")
+            addStatusMessage("No ".concat(id, " provided"));
+        else if (isNaN(transformation[id]))
+            addStatusMessage("Invalid ".concat(id, " \"").concat(el.value, "\""));
+    });
+    return transformation;
+};
 var update = function () {
     Array.from(inputStatus.children).forEach(function (child) { child.remove(); });
     var coords = parseCoords(input.value);
-    if (inputStatus.children.length == 0)
-        addStatusMessage("All input valid");
+    var transformation = parseTransformation();
+    if (inputStatus.children.length > 0)
+        return;
+    addStatusMessage("All input valid");
 };
 input.addEventListener("input", update);
+transIDs.forEach(function (id) {
+    document.getElementById(id).addEventListener("input", update);
+});
 update();

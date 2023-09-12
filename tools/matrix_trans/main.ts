@@ -1,7 +1,8 @@
 const input = document.getElementById("input") as HTMLTextAreaElement
 const output = document.getElementById("output")
-
 const inputStatus = document.getElementById("status")
+
+const transIDs = ["x1", "y1", "x2", "y2"]
 
 const addStatusMessage = message => {
 	const li = document.createElement("li")
@@ -49,14 +50,36 @@ const parseCoords = lines => {
 	return coords
 }
 
+const parseTransformation = () => {
+	const transformation = {}
+	transIDs.forEach(id => {
+		const el = document.getElementById(id) as HTMLInputElement
+		transformation[id] = Number(el.value)
+
+		if (el.value == "")
+			addStatusMessage(`No ${id} provided`)
+		else if (isNaN(transformation[id]))
+			addStatusMessage(`Invalid ${id} "${el.value}"`)
+	})
+
+	return transformation
+}
+
 const update = () => {
 	Array.from(inputStatus.children).forEach(child => {child.remove()})
 
 	const coords = parseCoords(input.value)
+	const transformation = parseTransformation()
 
-	if (inputStatus.children.length == 0)
-		addStatusMessage("All input valid")
+	if (inputStatus.children.length > 0)
+		return
+
+	addStatusMessage("All input valid")
 }
 
 input.addEventListener("input", update)
+transIDs.forEach(id => {
+	document.getElementById(id).addEventListener("input", update)
+})
+
 update()
