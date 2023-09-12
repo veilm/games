@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!--<link href="/sakura.css" rel="stylesheet">-->
+		<link href="https://michaelskyba.github.io/sakura.css" rel="stylesheet">
+		<link href="../tools.css" rel="stylesheet">
+
+		<style>
+			div#coordinates {
+				display: flex;
+				justify-content: space-between;
+				column-gap: 30px;
+			}
+			div#coordinates div {
+				flex-grow: 1;
+			}
+
+			input {
+				width: 80px;
+			}
+		</style>
+
+		<title>Matrix Transformations</title>
+	</head>
+
+	<body>
+		<h1>Matrix Transformations</h1>
+		<div id="links">
+			<a href="..">Tools Index</a>
+			<a href="https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:matrices/x9e81a4f98389efdf:matrices-as-transformations/v/matrices-as-transformations-of-the-plane">Relevant KhanAcademy lesson</a>
+		</div>
+
+		<hr>
+
+		<div id="coordinates">
+			<div>
+			<label for="input">Input coordinates</label>
+			<textarea id="input" rows="10">
+(0, 0)
+(1, 0)
+(0, 1)
+(1, 1)</textarea>
+			</div>
+			<div>
+				<label for="output">Output coordinates</label>
+				<textarea disabled id="output" rows="10"></textarea>
+			</div>
+		</div>
+
+
+		<ol>
+			<li>Map (1, 0) to (<input placeholder="x₁" value="2">, <input placeholder="y₁" value="0">)</li>
+			<li>Map (0, 1) to (<input placeholder="x₂" value="0">, <input placeholder="y₂" value="1">)</li>
+		</ol>
+
+		<hr>
+
+		<h3>Status</h3>
+		<ul id="status">
+		</ul>
+
+		<hr>
+
+		<p>Note: The matrix below would state that (1, 0) maps to (a, c) and
+		that (0, 1) maps to (b, d).</p>
+
+		<img src="matrix.png" alt="2x2 matrix: a, b, c, d">
+
+		<script src="main.js"></script>
+	</body>
+</html>
