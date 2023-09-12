@@ -66,14 +66,8 @@ function transform(inputCoords, transformation) {
     return coords;
 }
 function showOutput(coords) {
-    var outText = [];
-    coords.forEach(function (coord) {
-        if (coord.valid)
-            outText.push("(".concat(coord.x, ", ").concat(coord.y, ")"));
-        else
-            outText.push("-");
-    });
-    output.value = outText.join("\n");
+    // All coords are valid, or else showOutput would not have run
+    output.value = coords.map(function (coord) { return "(".concat(coord.x, ", ").concat(coord.y, ")"); }).join("\n");
 }
 function update() {
     Array.from(inputStatus.children).forEach(function (child) { child.remove(); });

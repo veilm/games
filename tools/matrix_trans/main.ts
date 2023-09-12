@@ -96,16 +96,8 @@ function transform(inputCoords: Coord[], transformation: Transformation) {
 }
 
 function showOutput(coords: Coord[]) {
-	const outText: string[] = []
-
-	coords.forEach(coord => {
-		if (coord.valid)
-			outText.push(`(${coord.x}, ${coord.y})`)
-		else
-			outText.push("-")
-	})
-
-	output.value = outText.join("\n")
+	// All coords are valid, or else showOutput would not have run
+	output.value = coords.map(coord => `(${coord.x}, ${coord.y})`).join("\n")
 }
 
 function update() {
