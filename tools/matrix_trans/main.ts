@@ -1,5 +1,5 @@
 const input = document.getElementById("input") as HTMLTextAreaElement
-const output = document.getElementById("output")
+const output = document.getElementById("output") as HTMLTextAreaElement
 const inputStatus = document.getElementById("status")
 
 const transIDs = ["x1", "y1", "x2", "y2"]
@@ -87,6 +87,22 @@ const transform = (inputCoords, transformation) => {
 	return coords
 }
 
+const addOutput = message => {
+}
+
+const showOutput = coords => {
+	const outText = []
+
+	coords.forEach(coord => {
+		if (coord.valid)
+			outText.push(`(${coord.x}, ${coord.y})`)
+		else
+			outText.push("-")
+	})
+
+	output.value = outText.join("\n")
+}
+
 const update = () => {
 	Array.from(inputStatus.children).forEach(child => {child.remove()})
 
@@ -97,9 +113,7 @@ const update = () => {
 		return
 
 	addStatusMessage("All input valid")
-
-	const newCoords = transform(coords, transformation)
-	console.log(newCoords)
+	showOutput(transform(coords, transformation))
 }
 
 input.addEventListener("input", update)

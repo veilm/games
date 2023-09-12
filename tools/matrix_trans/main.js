@@ -64,6 +64,18 @@ var transform = function (inputCoords, transformation) {
     }
     return coords;
 };
+var addOutput = function (message) {
+};
+var showOutput = function (coords) {
+    var outText = [];
+    coords.forEach(function (coord) {
+        if (coord.valid)
+            outText.push("(".concat(coord.x, ", ").concat(coord.y, ")"));
+        else
+            outText.push("-");
+    });
+    output.value = outText.join("\n");
+};
 var update = function () {
     Array.from(inputStatus.children).forEach(function (child) { child.remove(); });
     var coords = parseCoords(input.value);
@@ -71,8 +83,7 @@ var update = function () {
     if (inputStatus.children.length > 0)
         return;
     addStatusMessage("All input valid");
-    var newCoords = transform(coords, transformation);
-    console.log(newCoords);
+    showOutput(transform(coords, transformation));
 };
 input.addEventListener("input", update);
 transIDs.forEach(function (id) {
