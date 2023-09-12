@@ -1,10 +1,10 @@
 const input = document.getElementById("input") as HTMLTextAreaElement
 const output = document.getElementById("output") as HTMLTextAreaElement
-const inputStatus = document.getElementById("status")
+const inputStatus = document.getElementById("status")!
 
 const transIDs = ["x1", "y1", "x2", "y2"]
 
-const addStatusMessage = message => {
+function addStatusMessage(message: string) {
 	const li = document.createElement("li")
 	li.innerHTML = message
 	inputStatus.appendChild(li)
@@ -16,7 +16,7 @@ interface Coord {
 	valid: boolean
 }
 
-const parseCoords = lines => {
+function parseCoords(lines: string) {
 	const coords: Coord[] = []
 
 	lines.split("\n").forEach((coordsLine, i) => {
@@ -50,8 +50,16 @@ const parseCoords = lines => {
 	return coords
 }
 
-const parseTransformation = () => {
-	const transformation = {}
+interface Transformation {
+	x1: number
+	y1: number
+	x2: number
+	y2: number
+}
+
+function parseTransformation() {
+	let transformation: Transformation = {}
+
 	transIDs.forEach(id => {
 		const el = document.getElementById(id) as HTMLInputElement
 		transformation[id] = Number(el.value)
@@ -65,7 +73,7 @@ const parseTransformation = () => {
 	return transformation
 }
 
-const transform = (inputCoords, transformation) => {
+function transform(inputCoords: Coord[], transformation: Transformation) {
 	/*
 	(1, 0) --> (x1, y1)
 	(0, 1) --> (x2, y2)
@@ -78,7 +86,7 @@ const transform = (inputCoords, transformation) => {
 	const coords = inputCoords
 	for (let i = 0; i < coords.length; i++) {
 		if (!coords[i].valid)
-			return
+			continue
 
 		coords[i].x = coords[i].x * transformation.x1 + coords[i].y * transformation.x2
 		coords[i].y = coords[i].x * transformation.y1 + coords[i].y * transformation.y2
@@ -87,11 +95,8 @@ const transform = (inputCoords, transformation) => {
 	return coords
 }
 
-const addOutput = message => {
-}
-
-const showOutput = coords => {
-	const outText = []
+function showOutput(coords: Coord[]) {
+	const outText: string[] = []
 
 	coords.forEach(coord => {
 		if (coord.valid)
@@ -103,7 +108,7 @@ const showOutput = coords => {
 	output.value = outText.join("\n")
 }
 
-const update = () => {
+function update() {
 	Array.from(inputStatus.children).forEach(child => {child.remove()})
 
 	const coords = parseCoords(input.value)
@@ -118,7 +123,7 @@ const update = () => {
 
 input.addEventListener("input", update)
 transIDs.forEach(id => {
-	document.getElementById(id).addEventListener("input", update)
+	document.getElementById(id)!.addEventListener("input", update)
 })
 
 update()

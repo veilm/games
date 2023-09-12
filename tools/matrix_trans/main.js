@@ -1,13 +1,14 @@
+"use strict";
 var input = document.getElementById("input");
 var output = document.getElementById("output");
 var inputStatus = document.getElementById("status");
 var transIDs = ["x1", "y1", "x2", "y2"];
-var addStatusMessage = function (message) {
+function addStatusMessage(message) {
     var li = document.createElement("li");
     li.innerHTML = message;
     inputStatus.appendChild(li);
-};
-var parseCoords = function (lines) {
+}
+function parseCoords(lines) {
     var coords = [];
     lines.split("\n").forEach(function (coordsLine, i) {
         var invalid = function () {
@@ -33,8 +34,8 @@ var parseCoords = function (lines) {
         coords.push({ x: x, y: y, valid: true });
     });
     return coords;
-};
-var parseTransformation = function () {
+}
+function parseTransformation() {
     var transformation = {};
     transIDs.forEach(function (id) {
         var el = document.getElementById(id);
@@ -45,8 +46,8 @@ var parseTransformation = function () {
             addStatusMessage("Invalid ".concat(id, " \"").concat(el.value, "\""));
     });
     return transformation;
-};
-var transform = function (inputCoords, transformation) {
+}
+function transform(inputCoords, transformation) {
     /*
     (1, 0) --> (x1, y1)
     (0, 1) --> (x2, y2)
@@ -58,15 +59,13 @@ var transform = function (inputCoords, transformation) {
     var coords = inputCoords;
     for (var i = 0; i < coords.length; i++) {
         if (!coords[i].valid)
-            return;
+            continue;
         coords[i].x = coords[i].x * transformation.x1 + coords[i].y * transformation.x2;
         coords[i].y = coords[i].x * transformation.y1 + coords[i].y * transformation.y2;
     }
     return coords;
-};
-var addOutput = function (message) {
-};
-var showOutput = function (coords) {
+}
+function showOutput(coords) {
     var outText = [];
     coords.forEach(function (coord) {
         if (coord.valid)
@@ -75,8 +74,8 @@ var showOutput = function (coords) {
             outText.push("-");
     });
     output.value = outText.join("\n");
-};
-var update = function () {
+}
+function update() {
     Array.from(inputStatus.children).forEach(function (child) { child.remove(); });
     var coords = parseCoords(input.value);
     var transformation = parseTransformation();
@@ -84,7 +83,7 @@ var update = function () {
         return;
     addStatusMessage("All input valid");
     showOutput(transform(coords, transformation));
-};
+}
 input.addEventListener("input", update);
 transIDs.forEach(function (id) {
     document.getElementById(id).addEventListener("input", update);
