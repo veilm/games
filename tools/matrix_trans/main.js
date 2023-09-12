@@ -60,8 +60,10 @@ function transform(inputCoords, transformation) {
     for (var i = 0; i < coords.length; i++) {
         if (!coords[i].valid)
             continue;
-        coords[i].x = coords[i].x * transformation.x1 + coords[i].y * transformation.x2;
-        coords[i].y = coords[i].x * transformation.y1 + coords[i].y * transformation.y2;
+        var x = coords[i].x;
+        var y = coords[i].y;
+        coords[i].x = x * transformation.x1 + y * transformation.x2;
+        coords[i].y = x * transformation.y1 + y * transformation.y2;
     }
     return coords;
 }
