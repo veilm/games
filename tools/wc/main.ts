@@ -2,8 +2,8 @@ const auto = document.getElementById("auto") as HTMLInputElement
 const convert = document.getElementById("convert") as HTMLInputElement
 const text = document.getElementById("input") as HTMLInputElement
 
-const words_span = document.getElementById("words")
-const characters_span = document.getElementById("characters")
+const words_span = document.getElementById("words")!
+const characters_span = document.getElementById("characters")!
 
 // Update the word and character count
 function count() {

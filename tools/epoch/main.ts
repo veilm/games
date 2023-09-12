@@ -1,12 +1,12 @@
 const invalid = "Invalid Date"
 
 // Is this syntax idiomatic? It looks weird
-const get_unix = now => Math.floor(now.getTime() / 1000).toString()
+const get_unix = (now: Date) => Math.floor(now.getTime() / 1000).toString()
 
 let time_input = document.getElementById("time_input") as HTMLInputElement
-document.getElementById("current").innerHTML = get_unix(new Date())
+document.getElementById("current")!.innerHTML = get_unix(new Date())
 
-document.getElementById("convert").onclick = function() {
+document.getElementById("convert")!.onclick = function() {
 	let output: string[] = []
 
 	let conversions = time_input.value.split("\n")

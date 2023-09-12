@@ -1,9 +1,9 @@
 declare var MathJax
 
-let output = document.getElementById("math_output")
+let output = document.getElementById("math_output")!
 let input = document.getElementById("math_input") as HTMLInputElement
 
-document.getElementById("render").onclick = () => {
+document.getElementById("render")!.onclick = () => {
 	// Delete existing elements
 	while (output.children.length != 0) {
 		output.children[0].remove()

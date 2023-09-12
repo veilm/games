@@ -1,3 +1,4 @@
+"use strict";
 var output = document.getElementById("math_output");
 var input = document.getElementById("math_input");
 document.getElementById("render").onclick = function () {

@@ -1,3 +1,4 @@
+"use strict";
 var auto = document.getElementById("auto");
 var convert = document.getElementById("convert");
 var text = document.getElementById("input");

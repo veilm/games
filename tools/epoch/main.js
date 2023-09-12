@@ -1,3 +1,4 @@
+"use strict";
 var invalid = "Invalid Date";
 // Is this syntax idiomatic? It looks weird
 var get_unix = function (now) { return Math.floor(now.getTime() / 1000).toString(); };
