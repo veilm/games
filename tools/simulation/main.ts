@@ -17,9 +17,17 @@ class Canvas {
 	canvas: HTMLCanvasElement
 	context: CanvasRenderingContext2D
 
-	frect() {
-		this.context.fillStyle = "maroon"
-		this.context.fillRect(0, 0, environment.width, environment.height)
+	frect(x: number, y: number, w: number, h: number, colour: string) {
+		this.context.fillStyle = colour
+		this.context.fillRect(x, y, w, h)
+	}
+
+	draw() {
+		this.frect(0, 0, environment.width, environment.height, "#dedeff")
+
+		for (const microbe of environment.microbes) {
+			this.frect(microbe.x - 2, microbe.y - 2, 4, 4, "#119911")
+		}
 	}
 
 	constructor() {
@@ -32,4 +40,9 @@ class Canvas {
 }
 
 const c = new Canvas()
-c.frect()
+
+environment.microbes.add({x: 10, y: 10})
+environment.microbes.add({x: 100, y: 100})
+environment.microbes.add({x: 250, y: 250})
+
+c.draw()
