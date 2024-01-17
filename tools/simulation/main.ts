@@ -1,18 +1,23 @@
-const canvas = document.getElementById("canvas")! as HTMLCanvasElement
-const c = canvas.getContext("2d") as CanvasRenderingContext2D
+const width = 1000
+const height = 500
 
-const frect = () => {
-	c.fillStyle = "maroon"
-	c.fillRect(0, 0, canvas.width, canvas.height)
+class Canvas {
+	canvas: HTMLCanvasElement
+	context: CanvasRenderingContext2D
 
-	console.log("Done")
+	frect() {
+		this.context.fillStyle = "maroon"
+		this.context.fillRect(0, 0, width, height)
+	}
+
+	constructor() {
+		this.canvas = document.getElementById("canvas") as HTMLCanvasElement
+		this.canvas.width = width
+		this.canvas.height = height
+
+		this.context = this.canvas.getContext("2d")!
+	}
 }
 
-const init = () => {
-	canvas.width = 1000
-	canvas.height = 500
-
-	frect()
-}
-
-init()
+const c = new Canvas()
+c.frect()
