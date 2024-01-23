@@ -3,7 +3,10 @@ interface Coordinate {
 	y: number
 }
 
-interface Microbe {
+// Prot: protozoan
+// Plural "protozoa"
+// (Microbes that evolve to eat bacteria)
+interface Prot {
 	dx: number,
 	dy: number,
 }
@@ -12,17 +15,17 @@ class Environment {
 	width = 1000
 	height = 500
 
-	microbeCoordinates = new Map<Coordinate, Set<Microbe>>()
+	protCoords = new Map<Coordinate, Set<Prot>>()
 	bacteria = new Set<Coordinate>()
 
-	addMicrobe(x: number, y: number) {
+	addProt(x: number, y: number) {
 		const dx = 1
 		const dy = 1
 
-		const microbe = new Set([{dx: dx, dy: dy}])
-		const cell = {x: x, y: y}
+		const protozoan = new Set([{dx: dx, dy: dy}])
+		const coord = {x: x, y: y}
 
-		this.microbeCoordinates.set(cell, microbe)
+		this.protCoords.set(coord, protozoan)
 	}
 }
 
@@ -40,9 +43,9 @@ class Canvas {
 	draw() {
 		this.frect(0, 0, environment.width, environment.height, "#dedeff")
 
-		for (const pair of environment.microbeCoordinates) {
-			const cell = pair[0]
-			this.frect(cell.x - 2, cell.y - 2, 4, 4, "#119911")
+		for (const pair of environment.protCoords) {
+			const coord = pair[0]
+			this.frect(coord.x - 2, coord.y - 2, 4, 4, "#119911")
 		}
 	}
 
@@ -57,8 +60,8 @@ class Canvas {
 
 const c = new Canvas()
 
-environment.addMicrobe(10, 10)
-environment.addMicrobe(100, 100)
-environment.addMicrobe(250, 250)
+environment.addProt(10, 10)
+environment.addProt(100, 100)
+environment.addProt(250, 250)
 
 c.draw()
