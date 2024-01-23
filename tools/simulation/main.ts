@@ -7,6 +7,9 @@ interface Coordinate {
 // Plural "protozoa"
 // (Microbes that evolve to eat bacteria)
 interface Prot {
+	x: number,
+	y: number,
+
 	dx: number,
 	dy: number,
 }
@@ -15,17 +18,14 @@ class Environment {
 	width = 1000
 	height = 500
 
-	protCoords = new Map<Coordinate, Set<Prot>>()
+	protozoa = new Set<Prot>()
 	bacteria = new Set<Coordinate>()
 
 	addProt(x: number, y: number) {
 		const dx = 1
 		const dy = 1
 
-		const protozoan = new Set([{dx: dx, dy: dy}])
-		const coord = {x: x, y: y}
-
-		this.protCoords.set(coord, protozoan)
+		this.protozoa.add({x: x, y: y, dx: dx, dy: dy})
 	}
 }
 
@@ -43,9 +43,8 @@ class Canvas {
 	draw() {
 		this.frect(0, 0, environment.width, environment.height, "#dedeff")
 
-		for (const pair of environment.protCoords) {
-			const coord = pair[0]
-			this.frect(coord.x - 2, coord.y - 2, 4, 4, "#119911")
+		for (const prot of environment.protozoa) {
+			this.frect(prot.x - 2, prot.y - 2, 4, 4, "#119911")
 		}
 	}
 
