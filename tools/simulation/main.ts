@@ -66,11 +66,6 @@ class Config {
 }
 const cfg = new Config()
 
-interface Coordinate {
-	x: number
-	y: number
-}
-
 // Prot: protozoan
 // Plural "protozoa"
 // (Microbes that evolve to eat bacteria)
@@ -89,7 +84,7 @@ class Environment {
 	lastStep = 0
 
 	protozoa = new Set<Prot>()
-	bacteria = new Set<Coordinate>()
+	bacteria = new Map<number, Map<number, boolean>>()
 
 	mutateGene(genome: number[], geneIdx: number, variance: number) {
 		// How much will be added to gene
@@ -143,11 +138,21 @@ class Environment {
 
 	addProt() {
 		this.protozoa.add({
-			x: 0, y: 0,
+			x: cfg.width/2, y: cfg.height/2,
 			genome: this.randomGenome(),
 			dir: Math.round(RNG(0, 7)),
 			energy: 1000
 		})
+	}
+
+	addBct() {
+		const x = RNG(0, cfg.width)
+		const y = RNG(0, cfg.height)
+
+		if (!this.bacteria.has(x))
+			this.bacteria.set(x, new Map<number, boolean>())
+
+		this.bacteria.get(x)!.set(y, true)
 	}
 
 	// Returns change in index of dirs
@@ -241,6 +246,18 @@ class Canvas {
 	draw() {
 		this.frect(0, 0, cfg.width, cfg.height, "#eeeeff")
 
+		for (const bctX of environment.bacteria) {
+			const x = bctX[0]
+
+			for (const bctY of bctX[1]) {
+				if (!bctY[1])
+					continue
+
+				const y = bctY[0]
+				this.frect(x - 2, y - 2, 4, 4, "#ff0000")
+			}
+		}
+
 		for (const prot of environment.protozoa) {
 			this.frect(prot.x - 2, prot.y - 2, 4, 4, "#000")
 		}
@@ -257,8 +274,10 @@ class Canvas {
 
 const c = new Canvas()
 
-for (let i = 0; i < 300; i++)
+for (let i = 0; i < 300; i++) {
 	environment.addProt()
+	environment.addBct()
+}
 
 environment.start()
 
