@@ -58,6 +58,8 @@ interface Prot {
 	x: number
 	y: number
 
+	dir: number
+
 	genome: number[]
 	energy: number
 }
@@ -105,6 +107,8 @@ class Environment {
 	}
 
 	randomGenome() {
+		// return [0.5, 0, 0, 0, 0.5, 0, 0, 0]
+
 		const genome: number[] = []
 
 		// Start with equal distribution
@@ -118,11 +122,25 @@ class Environment {
 	}
 
 	addProt() {
-		this.protozoa.add({x: 0, y: 0, genome: this.randomGenome(), energy: 200})
+		this.protozoa.add({
+			x: 0, y: 0,
+			genome: this.randomGenome(),
+			dir: Math.round(RNG(0, 7)),
+			energy: 200
+		})
 	}
 
-	// Returns index of dirs
-	computeDir(prot: Prot) {
+	// Returns change in index of dirs
+	// Emergent change in behaviour:
+	// 0: No change
+	// 1: Slight right turn
+	// 2: Moderate right turn
+	// 3: Hard right turn
+	// 4: Reverse
+	// 5: Hard left turn
+	// 6: Moderate left turn
+	// 7: Slight left turn
+	getDirChange(prot: Prot) {
 		const threshold = RNG(0, 1)
 
 		let sum = 0
@@ -140,7 +158,9 @@ class Environment {
 			if (prot.energy <= 0)
 				this.protozoa.delete(prot)
 
-			const dir = cfg.dirs[this.computeDir(prot)]
+			const dirChange = this.getDirChange(prot)
+			prot.dir = (prot.dir + dirChange) % 8
+			const dir = cfg.dirs[prot.dir]
 
 			prot.x += dir.dx * 5
 			prot.y += dir.dy * 5
