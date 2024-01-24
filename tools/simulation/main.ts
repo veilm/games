@@ -24,7 +24,7 @@ class Config {
 	// After how many ms to skip the step update
 	// Useful if switching tabs or lagging for a while
 	// Otherwise you'll have an enormous update at once
-	skipTime = 1000 * 5
+	skipTime = 1000 * 2
 
 	// Energy change (lose) per step
 	stepEnergy = -1
@@ -46,7 +46,14 @@ class Config {
 	}
 
 	// Change in energy from consuming bacterium
-	bctEnergy = 1000
+	bctEnergy = 40
+
+	// Chance that a bacterium will spawn each step
+	bctSpawn = 1
+
+	// The max number of bacteria that can exist
+	// It will progressively lag; try to stay below 10,000 or so
+	bctMax = 6000
 
 	// 8-grid, starting top left, going clockwise
 	// Negative y: up
@@ -89,7 +96,9 @@ class Environment {
 	lastStep = 0
 
 	protozoa = new Set<Prot>()
+
 	bacteria = new Map<number, Set<number>>()
+	bctNum = 0
 
 	mutateGene(genome: number[], geneIdx: number, variance: number) {
 		// How much will be added to gene
@@ -151,6 +160,9 @@ class Environment {
 	}
 
 	addBct() {
+		if (this.bctNum >= cfg.bctMax)
+			return
+
 		const x = Math.round(RNG(0, cfg.width))
 		const y = Math.round(RNG(0, cfg.height))
 
@@ -158,6 +170,7 @@ class Environment {
 			this.bacteria.set(x, new Set<number>())
 
 		this.bacteria.get(x)!.add(y)
+		this.bctNum++
 	}
 
 	// Returns change in index of dirs
@@ -189,6 +202,7 @@ class Environment {
 		if (!this.bacteria.get(prot.x)!.delete(prot.y))
 			return
 
+		this.bctNum--
 		prot.energy += cfg.bctEnergy
 	}
 
@@ -217,6 +231,9 @@ class Environment {
 			prot.y = prot.y % cfg.height
 
 			this.checkBct(prot)
+
+			if (Math.round(RNG(1, 1/cfg.bctSpawn)) == 1)
+				this.addBct()
 		}
 
 		c.draw()
@@ -292,7 +309,6 @@ const c = new Canvas()
 
 for (let i = 0; i < 300; i++) {
 	environment.addProt()
-	environment.addBct()
 }
 
 environment.start()
