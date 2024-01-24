@@ -15,6 +15,11 @@ class Config {
 	// Duration (ms)
 	stepLength = 16
 
+	// After how many ms to skip the step update
+	// Useful if switching tabs or lagging for a while
+	// Otherwise you'll have an enormous update at once
+	skipTime = 1000 * 5
+
 	// 8-grid, starting top left, going clockwise
 	// Negative y: up
 	// Positive y: down
@@ -47,10 +52,10 @@ interface Coordinate {
 // Plural "protozoa"
 // (Microbes that evolve to eat bacteria)
 interface Prot {
-	x: number,
-	y: number,
+	x: number
+	y: number
 
-	genome: number[],
+	genome: number[]
 }
 
 class Environment {
@@ -153,6 +158,9 @@ class Environment {
 		}
 
 		let elapsed = time - this.lastStep
+
+		if (elapsed > cfg.skipTime)
+			elapsed = cfg.stepLength + 1
 
 		if (elapsed > cfg.stepLength)
 			this.lastStep = time
