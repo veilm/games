@@ -13,8 +13,10 @@ interface RotationEnergy {
 }
 
 class Config {
-	width = 1000
-	height = 500
+	pxScale = 5
+
+	width = 200
+	height = 100
 
 	// Duration (ms)
 	stepLength = 16
@@ -149,11 +151,8 @@ class Environment {
 	}
 
 	addBct() {
-		let x = Math.round(RNG(0, cfg.width))
-		x -= x % 5
-
-		let y = Math.round(RNG(0, cfg.height))
-		y -= y % 5
+		const x = Math.round(RNG(0, cfg.width))
+		const y = Math.round(RNG(0, cfg.height))
 
 		if (!this.bacteria.has(x))
 			this.bacteria.set(x, new Map<number, boolean>())
@@ -210,8 +209,8 @@ class Environment {
 			prot.dir = (prot.dir + dirChange) % 8
 			const dir = cfg.dirs[prot.dir]
 
-			prot.x += dir.dx * 5
-			prot.y += dir.dy * 5
+			prot.x += dir.dx
+			prot.y += dir.dy
 
 			// We're assuming you can't go back more than two screenfuls
 			// in one step.
@@ -268,29 +267,31 @@ class Canvas {
 	}
 
 	draw() {
-		this.frect(0, 0, cfg.width, cfg.height, "#eeeeff")
+		this.frect(0, 0, cfg.width * cfg.pxScale, cfg.height * cfg.pxScale, "#eeeeff")
 
 		for (const bctX of environment.bacteria) {
-			const x = bctX[0]
+			const x = bctX[0] * cfg.pxScale
 
 			for (const bctY of bctX[1]) {
 				if (!bctY[1])
 					continue
 
-				const y = bctY[0]
-				this.frect(x - 2, y - 2, 4, 4, "#ff0000")
+				const y = bctY[0] * cfg.pxScale
+				this.frect(x, y, cfg.pxScale, cfg.pxScale, "#ff0000")
 			}
 		}
 
 		for (const prot of environment.protozoa) {
-			this.frect(prot.x - 2, prot.y - 2, 4, 4, "#000")
+			const x = prot.x * cfg.pxScale
+			const y = prot.y * cfg.pxScale
+			this.frect(x, y, cfg.pxScale, cfg.pxScale, "#000")
 		}
 	}
 
 	constructor() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement
-		this.canvas.width = cfg.width
-		this.canvas.height = cfg.height
+		this.canvas.width = cfg.width * cfg.pxScale
+		this.canvas.height = cfg.height * cfg.pxScale
 
 		this.context = this.canvas.getContext("2d")!
 	}
