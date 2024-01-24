@@ -89,7 +89,7 @@ class Environment {
 	lastStep = 0
 
 	protozoa = new Set<Prot>()
-	bacteria = new Map<number, Map<number, boolean>>()
+	bacteria = new Map<number, Set<number>>()
 
 	mutateGene(genome: number[], geneIdx: number, variance: number) {
 		// How much will be added to gene
@@ -155,9 +155,9 @@ class Environment {
 		const y = Math.round(RNG(0, cfg.height))
 
 		if (!this.bacteria.has(x))
-			this.bacteria.set(x, new Map<number, boolean>())
+			this.bacteria.set(x, new Set<number>())
 
-		this.bacteria.get(x)!.set(y, true)
+		this.bacteria.get(x)!.add(y)
 	}
 
 	// Returns change in index of dirs
@@ -183,18 +183,12 @@ class Environment {
 	}
 
 	checkBct(prot: Prot) {
-		const bcts = this.bacteria
-
-		if (!bcts.has(prot.x))
+		if (!this.bacteria.has(prot.x))
 			return
 
-		if (!bcts.get(prot.x)!.has(prot.y))
+		if (!this.bacteria.get(prot.x)!.delete(prot.y))
 			return
 
-		if (!bcts.get(prot.x)!.get(prot.y)!)
-			return
-
-		bcts.get(prot.x)!.set(prot.y, false)
 		prot.energy += cfg.bctEnergy
 	}
 
@@ -273,10 +267,7 @@ class Canvas {
 			const x = bctX[0] * cfg.pxScale
 
 			for (const bctY of bctX[1]) {
-				if (!bctY[1])
-					continue
-
-				const y = bctY[0] * cfg.pxScale
+				const y = bctY * cfg.pxScale
 				this.frect(x, y, cfg.pxScale, cfg.pxScale, "#ff0000")
 			}
 		}
