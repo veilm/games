@@ -1,3 +1,6 @@
+// Decimal
+const RNG = (min: number, max: number) => Math.random() * (max - min) + min
+
 interface Coordinate {
 	x: number
 	y: number
@@ -57,18 +60,56 @@ class Environment {
 	protozoa = new Set<Prot>()
 	bacteria = new Set<Coordinate>()
 
-	standardGenome() {
+	mutateGene(genome: number[], geneIdx: number, variance: number) {
+		// How much will be added to gene
+		let mod = 0
+
+		// How much will be added to other genes, to compensate
+		let otherMod = 0
+
+		let valid = false
+		while (!valid) {
+			mod = RNG(-variance, variance)
+			otherMod = -mod/(8-1)
+
+			valid = true
+
+			if (mod + genome[geneIdx] < 0)
+				valid = false
+
+			for (let i = 0; valid && i < 8; i++) {
+				if (i == geneIdx)
+					continue
+
+				if (genome[i] + otherMod < 0)
+					valid = false
+			}
+		}
+
+		genome[geneIdx] += mod
+		for (let i = 0; i < 8; i++) {
+			if (i == geneIdx)
+				continue
+
+			genome[i] += otherMod
+		}
+	}
+
+	randomGenome() {
 		const genome: number[] = []
 
 		// Start with equal distribution
 		for (let i = 0; i < 8; i++)
 			genome.push(1/8)
 
+		for (let i = 0; i < 8; i++)
+			this.mutateGene(genome, i, 1/8)
+
 		return genome
 	}
 
 	addProt(x: number, y: number, dir: number) {
-		this.protozoa.add({x: x, y: y, dir: dir, genome: this.standardGenome()})
+		this.protozoa.add({x: x, y: y, dir: dir, genome: this.randomGenome()})
 	}
 
 	step() {
