@@ -90,6 +90,8 @@ interface Prot {
 	dir: number
 
 	genome: number[]
+	colour: string
+
 	energy: number
 }
 
@@ -152,13 +154,26 @@ class Environment {
 		return genome
 	}
 
+	setProtColour(prot: Prot) {
+		const genome = prot.genome
+
+		const r = (genome[6] + genome[2]) * 1.5 * 1.4 * 255
+		const g = (genome[0] + genome[1] + genome[7]) * 1.4 * 255
+		const b = (genome[3] + genome[4] + genome[5]) * 1.4 * 255
+
+		prot.colour = `rgb(${r}, ${g}, ${b})`
+	}
+
 	addProt() {
-		this.protozoa.add({
+		const prot = {
 			x: cfg.width/2, y: cfg.height/2,
 			genome: this.randomGenome(),
 			dir: Math.round(RNG(0, 7)),
-			energy: 1000
-		})
+			energy: 1000,
+			colour: ""
+		}
+		this.setProtColour(prot)
+		this.protozoa.add(prot)
 	}
 
 	addBct() {
@@ -288,14 +303,14 @@ class Canvas {
 
 			for (const bctY of bctX[1]) {
 				const y = bctY * cfg.pxScale
-				this.frect(x, y, cfg.pxScale, cfg.pxScale, "#ff0000")
+				this.frect(x, y, cfg.pxScale, cfg.pxScale, "#888")
 			}
 		}
 
 		for (const prot of environment.protozoa) {
 			const x = prot.x * cfg.pxScale
 			const y = prot.y * cfg.pxScale
-			this.frect(x, y, cfg.pxScale, cfg.pxScale, "#000")
+			this.frect(x, y, cfg.pxScale, cfg.pxScale, prot.colour)
 		}
 	}
 
