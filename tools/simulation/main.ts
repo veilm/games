@@ -45,10 +45,12 @@ class Config {
 		4: -8,
 	}
 
+	protMaxEnergy = 1500
+
 	// Change in energy from consuming bacterium
 	bctEnergy = 40
 
-	// Chance that a bacterium will spawn each step
+	// Chance that a bacterium will spawn each step (/1)
 	bctSpawn = 1
 
 	// The max number of bacteria that can exist
@@ -204,6 +206,7 @@ class Environment {
 
 		this.bctNum--
 		prot.energy += cfg.bctEnergy
+		prot.energy = Math.min(prot.energy, cfg.protMaxEnergy)
 	}
 
 	step() {
