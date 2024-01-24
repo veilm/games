@@ -41,9 +41,6 @@ interface Prot {
 	x: number,
 	y: number,
 
-	// Index of dirs
-	dir: number,
-
 	genome: number[],
 }
 
@@ -108,13 +105,26 @@ class Environment {
 		return genome
 	}
 
-	addProt(x: number, y: number, dir: number) {
-		this.protozoa.add({x: x, y: y, dir: dir, genome: this.randomGenome()})
+	addProt(x: number, y: number) {
+		this.protozoa.add({x: x, y: y, genome: this.randomGenome()})
+	}
+
+	// Returns index of dirs
+	computeDir(prot: Prot) {
+		const threshold = RNG(0, 1)
+
+		let sum = 0
+		let i = 0
+
+		for (; sum < threshold && i < 8; i++)
+			sum += prot.genome[i]
+
+		return i-1
 	}
 
 	step() {
 		for (const prot of this.protozoa) {
-			const dir = dirs[prot.dir]
+			const dir = dirs[this.computeDir(prot)]
 
 			prot.x += dir.dx * 5
 			prot.y += dir.dy * 5
@@ -187,8 +197,8 @@ class Canvas {
 
 const c = new Canvas()
 
-environment.addProt(10, 10, 4)
-environment.addProt(100, 100, 5)
-environment.addProt(250, 250, 6)
+environment.addProt(10, 10)
+environment.addProt(100, 100)
+environment.addProt(250, 250)
 
 environment.start()
