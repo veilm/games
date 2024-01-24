@@ -8,6 +8,10 @@ interface Directions {
 	}
 }
 
+interface RotationEnergy {
+	[key: number]: number
+}
+
 class Config {
 	width = 1000
 	height = 500
@@ -22,6 +26,22 @@ class Config {
 
 	// Energy change (lose) per step
 	stepEnergy = -1
+
+	// How much additional energy is spent for different rotations
+	rotEnergy: RotationEnergy = {
+		0: 0,
+
+		1: -1,
+		7: -1,
+
+		2: -2,
+		6: -2,
+
+		3: -4,
+		5: -4,
+
+		4: -8,
+	}
 
 	// 8-grid, starting top left, going clockwise
 	// Negative y: up
@@ -107,7 +127,7 @@ class Environment {
 	}
 
 	randomGenome() {
-		// return [0.5, 0, 0, 0, 0.5, 0, 0, 0]
+		// return [0.5, 0.5, 0, 0, 0, 0, 0, 0]
 
 		const genome: number[] = []
 
@@ -126,7 +146,7 @@ class Environment {
 			x: 0, y: 0,
 			genome: this.randomGenome(),
 			dir: Math.round(RNG(0, 7)),
-			energy: 200
+			energy: 1000
 		})
 	}
 
@@ -154,11 +174,12 @@ class Environment {
 
 	step() {
 		for (const prot of this.protozoa) {
-			prot.energy += cfg.stepEnergy
+			const dirChange = this.getDirChange(prot)
+
+			prot.energy += cfg.stepEnergy + cfg.rotEnergy[dirChange] * 3
 			if (prot.energy <= 0)
 				this.protozoa.delete(prot)
 
-			const dirChange = this.getDirChange(prot)
 			prot.dir = (prot.dir + dirChange) % 8
 			const dir = cfg.dirs[prot.dir]
 
@@ -240,3 +261,10 @@ for (let i = 0; i < 300; i++)
 	environment.addProt()
 
 environment.start()
+
+// environment.protozoa.add({
+// 	x: 0, y: 0,
+// 	genome: [1, 0, 0, 0, 0, 0, 0, 0],
+// 	dir: 0,
+// 	energy: 1000
+// })
