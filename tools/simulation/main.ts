@@ -43,6 +43,9 @@ class Config {
 		4: -8,
 	}
 
+	// Change in energy from consuming bacterium
+	bctEnergy = 1000
+
 	// 8-grid, starting top left, going clockwise
 	// Negative y: up
 	// Positive y: down
@@ -146,8 +149,11 @@ class Environment {
 	}
 
 	addBct() {
-		const x = RNG(0, cfg.width)
-		const y = RNG(0, cfg.height)
+		let x = Math.round(RNG(0, cfg.width))
+		x -= x % 5
+
+		let y = Math.round(RNG(0, cfg.height))
+		y -= y % 5
 
 		if (!this.bacteria.has(x))
 			this.bacteria.set(x, new Map<number, boolean>())
@@ -177,6 +183,22 @@ class Environment {
 		return i-1
 	}
 
+	checkBct(prot: Prot) {
+		const bcts = this.bacteria
+
+		if (!bcts.has(prot.x))
+			return
+
+		if (!bcts.get(prot.x)!.has(prot.y))
+			return
+
+		if (!bcts.get(prot.x)!.get(prot.y)!)
+			return
+
+		bcts.get(prot.x)!.set(prot.y, false)
+		prot.energy += cfg.bctEnergy
+	}
+
 	step() {
 		for (const prot of this.protozoa) {
 			const dirChange = this.getDirChange(prot)
@@ -200,6 +222,8 @@ class Environment {
 
 			prot.x = prot.x % cfg.width
 			prot.y = prot.y % cfg.height
+
+			this.checkBct(prot)
 		}
 
 		c.draw()
