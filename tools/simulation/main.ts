@@ -46,6 +46,12 @@ class Environment {
 	width = 1000
 	height = 500
 
+	// Timestamp (ms) after first step
+	lastStep = 0
+
+	// Duration (ms)
+	stepLength = 16
+
 	protozoa = new Set<Prot>()
 	bacteria = new Set<Coordinate>()
 
@@ -72,13 +78,31 @@ class Environment {
 		}
 
 		c.draw()
+	}
 
-		window.requestAnimationFrame(this.step)
+	frameStep(time: number) {
+		if (!this.lastStep) {
+			this.step()
+			this.lastStep = time
+		}
+
+		let elapsed = time - this.lastStep
+
+		if (elapsed > this.stepLength)
+			this.lastStep = time
+
+		while (elapsed > this.stepLength) {
+			this.step()
+			elapsed -= this.stepLength
+		}
+
+		window.requestAnimationFrame(this.frameStep)
 	}
 }
 
 const environment = new Environment()
 environment.step = environment.step.bind(environment)
+environment.frameStep = environment.frameStep.bind(environment)
 
 class Canvas {
 	canvas: HTMLCanvasElement
@@ -112,4 +136,4 @@ environment.addProt(10, 10, 4)
 environment.addProt(100, 100, 5)
 environment.addProt(250, 250, 6)
 
-window.requestAnimationFrame(environment.step)
+window.requestAnimationFrame(environment.frameStep)
