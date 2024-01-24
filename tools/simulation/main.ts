@@ -52,6 +52,16 @@ class Environment {
 	addProt(x: number, y: number, dir: number) {
 		this.protozoa.add({x: x, y: y, dir: dir})
 	}
+
+	step() {
+		for (const prot of this.protozoa) {
+			const dir = dirs[prot.dir]
+			prot.x += dir.dx * 5
+			prot.y += dir.dy * 5
+		}
+
+		c.draw()
+	}
 }
 
 const environment = new Environment()
