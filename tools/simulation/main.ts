@@ -40,6 +40,8 @@ interface Prot {
 
 	// Index of dirs
 	dir: number,
+
+	genome: number[],
 }
 
 class Environment {
@@ -55,8 +57,18 @@ class Environment {
 	protozoa = new Set<Prot>()
 	bacteria = new Set<Coordinate>()
 
+	standardGenome() {
+		const genome: number[] = []
+
+		// Start with equal distribution
+		for (let i = 0; i < 8; i++)
+			genome.push(1/8)
+
+		return genome
+	}
+
 	addProt(x: number, y: number, dir: number) {
-		this.protozoa.add({x: x, y: y, dir: dir})
+		this.protozoa.add({x: x, y: y, dir: dir, genome: this.standardGenome()})
 	}
 
 	step() {
@@ -98,6 +110,8 @@ class Environment {
 
 		window.requestAnimationFrame(this.frameStep)
 	}
+
+	start = () => window.requestAnimationFrame(this.frameStep)
 }
 
 const environment = new Environment()
@@ -136,4 +150,4 @@ environment.addProt(10, 10, 4)
 environment.addProt(100, 100, 5)
 environment.addProt(250, 250, 6)
 
-window.requestAnimationFrame(environment.frameStep)
+environment.start()
