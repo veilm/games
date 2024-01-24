@@ -47,6 +47,9 @@ class Config {
 
 	protMaxEnergy = 1500
 
+	// Energy required to reproduce
+	protRepEnergy = 1000
+
 	// Change in energy from consuming a bacterium
 	bctEnergy = 40
 
@@ -230,6 +233,23 @@ class Environment {
 		prot.energy = Math.min(prot.energy, cfg.protMaxEnergy)
 	}
 
+	reproduce(prot: Prot) {
+		const energy = Math.round(prot.energy/2)
+		prot.energy = energy
+
+		const prot2 = {
+			x: prot.x,
+			y: prot.y,
+			dir: prot.dir,
+			energy: energy,
+			genome: prot.genome,
+			colour: "",
+		}
+
+		this.setProtColour(prot2)
+		this.protozoa.add(prot2)
+	}
+
 	step() {
 		for (let i = 0; i < cfg.bctSpawn; i++)
 			this.addBct()
@@ -258,6 +278,9 @@ class Environment {
 			prot.y = prot.y % cfg.height
 
 			this.checkBct(prot)
+
+			if (prot.energy >= cfg.protRepEnergy)
+				this.reproduce(prot)
 		}
 
 		c.draw()
