@@ -90,10 +90,10 @@ class Canvas {
 	}
 
 	draw() {
-		this.frect(0, 0, environment.width, environment.height, "#dedeff")
+		this.frect(0, 0, environment.width, environment.height, "#eeeeff")
 
 		for (const prot of environment.protozoa) {
-			this.frect(prot.x - 2, prot.y - 2, 4, 4, "#119911")
+			this.frect(prot.x - 2, prot.y - 2, 4, 4, "#000")
 		}
 	}
 

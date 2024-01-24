@@ -9,3 +9,7 @@ header {
 	max-width: 50em;
 	margin: 2em 0 2em 0;
 }
+
+canvas#canvas {
+	border: 0.2em solid blue;
+}
