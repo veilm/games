@@ -56,8 +56,19 @@ class Environment {
 	step() {
 		for (const prot of this.protozoa) {
 			const dir = dirs[prot.dir]
+
 			prot.x += dir.dx * 5
 			prot.y += dir.dy * 5
+
+			// We're assuming you can't go back more than two screenfuls
+			// in one step.
+			if (prot.x < 0)
+				prot.x += this.width
+			if (prot.y < 0)
+				prot.y += this.height
+
+			prot.x = prot.x % this.width
+			prot.y = prot.y % this.height
 		}
 
 		c.draw()
