@@ -1,11 +1,6 @@
 // Decimal
 const RNG = (min: number, max: number) => Math.random() * (max - min) + min
 
-interface Coordinate {
-	x: number
-	y: number
-}
-
 interface Directions {
 	[key: number]: {
 		dx: number
@@ -13,25 +8,39 @@ interface Directions {
 	}
 }
 
-// 8-grid, starting top left, going clockwise
-// Negative y: up
-// Positive y: down
-const dirs: Directions = {
-	// Top
-	0: {dx: -1, dy: -1},
-	1: {dx: 0, dy: -1},
-	2: {dx: 1, dy: -1},
+class Config {
+	width = 1000
+	height = 500
 
-	// Right
-	3: {dx: 1, dy: 0},
+	// Duration (ms)
+	stepLength = 16
 
-	// Bottom
-	4: {dx: 1, dy: 1},
-	5: {dx: 0, dy: 1},
-	6: {dx: -1, dy: 1},
+	// 8-grid, starting top left, going clockwise
+	// Negative y: up
+	// Positive y: down
+	dirs: Directions = {
+		// Top
+		0: {dx: -1, dy: -1},
+		1: {dx: 0, dy: -1},
+		2: {dx: 1, dy: -1},
 
-	// Left
-	7: {dx: -1, dy: 0},
+		// Right
+		3: {dx: 1, dy: 0},
+
+		// Bottom
+		4: {dx: 1, dy: 1},
+		5: {dx: 0, dy: 1},
+		6: {dx: -1, dy: 1},
+
+		// Left
+		7: {dx: -1, dy: 0},
+	}
+}
+const cfg = new Config()
+
+interface Coordinate {
+	x: number
+	y: number
 }
 
 // Prot: protozoan
@@ -45,14 +54,8 @@ interface Prot {
 }
 
 class Environment {
-	width = 1000
-	height = 500
-
 	// Timestamp (ms) after first step
 	lastStep = 0
-
-	// Duration (ms)
-	stepLength = 16
 
 	protozoa = new Set<Prot>()
 	bacteria = new Set<Coordinate>()
@@ -105,8 +108,8 @@ class Environment {
 		return genome
 	}
 
-	addProt(x: number, y: number) {
-		this.protozoa.add({x: x, y: y, genome: this.randomGenome()})
+	addProt() {
+		this.protozoa.add({x: 0, y: 0, genome: this.randomGenome()})
 	}
 
 	// Returns index of dirs
@@ -124,7 +127,7 @@ class Environment {
 
 	step() {
 		for (const prot of this.protozoa) {
-			const dir = dirs[this.computeDir(prot)]
+			const dir = cfg.dirs[this.computeDir(prot)]
 
 			prot.x += dir.dx * 5
 			prot.y += dir.dy * 5
@@ -132,12 +135,12 @@ class Environment {
 			// We're assuming you can't go back more than two screenfuls
 			// in one step.
 			if (prot.x < 0)
-				prot.x += this.width
+				prot.x += cfg.width
 			if (prot.y < 0)
-				prot.y += this.height
+				prot.y += cfg.height
 
-			prot.x = prot.x % this.width
-			prot.y = prot.y % this.height
+			prot.x = prot.x % cfg.width
+			prot.y = prot.y % cfg.height
 		}
 
 		c.draw()
@@ -151,12 +154,12 @@ class Environment {
 
 		let elapsed = time - this.lastStep
 
-		if (elapsed > this.stepLength)
+		if (elapsed > cfg.stepLength)
 			this.lastStep = time
 
-		while (elapsed > this.stepLength) {
+		while (elapsed > cfg.stepLength) {
 			this.step()
-			elapsed -= this.stepLength
+			elapsed -= cfg.stepLength
 		}
 
 		window.requestAnimationFrame(this.frameStep)
@@ -179,7 +182,7 @@ class Canvas {
 	}
 
 	draw() {
-		this.frect(0, 0, environment.width, environment.height, "#eeeeff")
+		this.frect(0, 0, cfg.width, cfg.height, "#eeeeff")
 
 		for (const prot of environment.protozoa) {
 			this.frect(prot.x - 2, prot.y - 2, 4, 4, "#000")
@@ -188,8 +191,8 @@ class Canvas {
 
 	constructor() {
 		this.canvas = document.getElementById("canvas") as HTMLCanvasElement
-		this.canvas.width = environment.width
-		this.canvas.height = environment.height
+		this.canvas.width = cfg.width
+		this.canvas.height = cfg.height
 
 		this.context = this.canvas.getContext("2d")!
 	}
@@ -197,8 +200,7 @@ class Canvas {
 
 const c = new Canvas()
 
-environment.addProt(10, 10)
-environment.addProt(100, 100)
-environment.addProt(250, 250)
+for (let i = 0; i < 300; i++)
+	environment.addProt()
 
 environment.start()
