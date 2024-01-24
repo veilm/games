@@ -61,10 +61,13 @@ class Environment {
 		}
 
 		c.draw()
+
+		window.requestAnimationFrame(this.step)
 	}
 }
 
 const environment = new Environment()
+environment.step = environment.step.bind(environment)
 
 class Canvas {
 	canvas: HTMLCanvasElement
@@ -98,4 +101,4 @@ environment.addProt(10, 10, 4)
 environment.addProt(100, 100, 5)
 environment.addProt(250, 250, 6)
 
-c.draw()
+window.requestAnimationFrame(environment.step)
