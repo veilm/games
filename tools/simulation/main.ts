@@ -47,11 +47,13 @@ class Config {
 
 	protMaxEnergy = 1500
 
-	// Change in energy from consuming bacterium
+	// Change in energy from consuming a bacterium
 	bctEnergy = 40
 
-	// Chance that a bacterium will spawn each step (/1)
-	bctSpawn = 1
+	// Number of bacteria that spawn per step
+	bctSpawn = 20
+
+	bctStart = 6000
 
 	// The max number of bacteria that can exist
 	// It will progressively lag; try to stay below 10,000 or so
@@ -183,11 +185,15 @@ class Environment {
 		const x = Math.round(RNG(0, cfg.width))
 		const y = Math.round(RNG(0, cfg.height))
 
-		if (!this.bacteria.has(x))
-			this.bacteria.set(x, new Set<number>())
+		const bct = this.bacteria
 
-		this.bacteria.get(x)!.add(y)
-		this.bctNum++
+		if (!bct.has(x))
+			bct.set(x, new Set<number>())
+
+		if (!bct.get(x)!.has(y))
+			this.bctNum++
+
+		bct.get(x)!.add(y)
 	}
 
 	// Returns change in index of dirs
@@ -225,6 +231,9 @@ class Environment {
 	}
 
 	step() {
+		for (let i = 0; i < cfg.bctSpawn; i++)
+			this.addBct()
+
 		for (const prot of this.protozoa) {
 			const dirChange = this.getDirChange(prot)
 
@@ -249,9 +258,6 @@ class Environment {
 			prot.y = prot.y % cfg.height
 
 			this.checkBct(prot)
-
-			if (Math.round(RNG(1, 1/cfg.bctSpawn)) == 1)
-				this.addBct()
 		}
 
 		c.draw()
@@ -279,7 +285,17 @@ class Environment {
 		window.requestAnimationFrame(this.frameStep)
 	}
 
-	start = () => window.requestAnimationFrame(this.frameStep)
+	start() {
+		for (let i = 0; i < cfg.bctStart; i++)
+			this.addBct()
+
+		for (let i = 0; i < 300; i++) {
+			this.addProt()
+		}
+
+		window.requestAnimationFrame(this.frameStep)
+	}
+
 }
 
 const environment = new Environment()
@@ -324,10 +340,6 @@ class Canvas {
 }
 
 const c = new Canvas()
-
-for (let i = 0; i < 300; i++) {
-	environment.addProt()
-}
 
 environment.start()
 
