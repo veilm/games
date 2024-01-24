@@ -20,6 +20,9 @@ class Config {
 	// Otherwise you'll have an enormous update at once
 	skipTime = 1000 * 5
 
+	// Energy change (lose) per step
+	stepEnergy = -1
+
 	// 8-grid, starting top left, going clockwise
 	// Negative y: up
 	// Positive y: down
@@ -56,6 +59,7 @@ interface Prot {
 	y: number
 
 	genome: number[]
+	energy: number
 }
 
 class Environment {
@@ -114,7 +118,7 @@ class Environment {
 	}
 
 	addProt() {
-		this.protozoa.add({x: 0, y: 0, genome: this.randomGenome()})
+		this.protozoa.add({x: 0, y: 0, genome: this.randomGenome(), energy: 200})
 	}
 
 	// Returns index of dirs
@@ -132,6 +136,10 @@ class Environment {
 
 	step() {
 		for (const prot of this.protozoa) {
+			prot.energy += cfg.stepEnergy
+			if (prot.energy <= 0)
+				this.protozoa.delete(prot)
+
 			const dir = cfg.dirs[this.computeDir(prot)]
 
 			prot.x += dir.dx * 5
