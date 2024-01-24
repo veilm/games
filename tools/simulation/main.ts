@@ -3,6 +3,34 @@ interface Coordinate {
 	y: number
 }
 
+interface Directions {
+	[key: number]: {
+		dx: number
+		dy: number
+	}
+}
+
+// 8-grid, starting top left, going clockwise
+// Negative y: up
+// Positive y: down
+const dirs: Directions = {
+	// Top
+	0: {dx: -1, dy: -1},
+	1: {dx: 0, dy: -1},
+	2: {dx: 1, dy: -1},
+
+	// Right
+	3: {dx: 1, dy: 0},
+
+	// Bottom
+	4: {dx: 1, dy: 1},
+	5: {dx: 0, dy: 1},
+	6: {dx: -1, dy: 1},
+
+	// Left
+	7: {dx: -1, dy: 0},
+}
+
 // Prot: protozoan
 // Plural "protozoa"
 // (Microbes that evolve to eat bacteria)
@@ -10,8 +38,8 @@ interface Prot {
 	x: number,
 	y: number,
 
-	dx: number,
-	dy: number,
+	// Index of dirs
+	dir: number,
 }
 
 class Environment {
@@ -21,11 +49,8 @@ class Environment {
 	protozoa = new Set<Prot>()
 	bacteria = new Set<Coordinate>()
 
-	addProt(x: number, y: number) {
-		const dx = 1
-		const dy = 1
-
-		this.protozoa.add({x: x, y: y, dx: dx, dy: dy})
+	addProt(x: number, y: number, dir: number) {
+		this.protozoa.add({x: x, y: y, dir: dir})
 	}
 }
 
@@ -59,8 +84,8 @@ class Canvas {
 
 const c = new Canvas()
 
-environment.addProt(10, 10)
-environment.addProt(100, 100)
-environment.addProt(250, 250)
+environment.addProt(10, 10, 4)
+environment.addProt(100, 100, 5)
+environment.addProt(250, 250, 6)
 
 c.draw()
