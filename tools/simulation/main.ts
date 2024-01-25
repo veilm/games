@@ -83,10 +83,23 @@ class Config {
 		7: {dx: -1, dy: 0},
 	}
 
-	protNumEl = document.getElementById("protNum")!
+	stats = ["protNum", "bctNum"]
+	els = new Map<string, HTMLElement>()
+
+	protNum = () => environment.protozoa.size
+	bctNum = () => environment.bctNum
+
+	constructor() {
+		this.stats.forEach(id => {
+			this.els.set(id, document.getElementById(id)!)
+		})
+	}
 
 	updateStats() {
-		this.protNumEl.innerHTML = environment.protozoa.size.toString()
+		this.stats.forEach(id => {
+			// @ts-ignore
+			this.els.get(id)!.innerHTML = this[id]().toString()
+		})
 	}
 }
 const cfg = new Config()
