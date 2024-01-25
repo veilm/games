@@ -10,6 +10,20 @@ header {
 	margin: 2em 0 2em 0;
 }
 
+main section {
+	max-height: 20em;
+	overflow-y: scroll;
+}
+
+main {
+	margin: 2em 0 2em 0;
+	max-width: 75em;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 2em;
+}
+
 canvas#canvas {
 	border: 0.2em solid blue;
 }
