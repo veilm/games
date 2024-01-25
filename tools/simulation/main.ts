@@ -82,6 +82,12 @@ class Config {
 		// Left
 		7: {dx: -1, dy: 0},
 	}
+
+	protNumEl = document.getElementById("protNum")!
+
+	updateStats() {
+		this.protNumEl.innerHTML = environment.protozoa.size.toString()
+	}
 }
 const cfg = new Config()
 
@@ -291,6 +297,7 @@ class Environment {
 		}
 
 		c.draw()
+		cfg.updateStats()
 	}
 
 	frameStep(time: number) {
