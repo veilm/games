@@ -246,6 +246,13 @@ class Environment {
 			colour: "",
 		}
 
+		for (let i = 0; i < 8; i++) {
+			if (RNG(1, 8) != 1)
+				continue
+
+			this.mutateGene(prot2.genome, i, 1/8)
+		}
+
 		this.setProtColour(prot2)
 		this.protozoa.add(prot2)
 	}
