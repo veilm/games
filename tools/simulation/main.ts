@@ -12,6 +12,10 @@ interface RotationEnergy {
 	[key: number]: number
 }
 
+interface GenomeAvg {
+	[key: number]: number
+}
+
 class Config {
 	pxScale = 5
 
@@ -89,10 +93,73 @@ class Config {
 	protNum = () => environment.protozoa.size
 	bctNum = () => environment.bctNum
 
+	genAvg: GenomeAvg = {
+		0: 0,
+		1: 0,
+		2: 0,
+		3: 0,
+		4: 0,
+		5: 0,
+		6: 0,
+		7: 0,
+	}
+
+	// Runs when a new prot is added, and the average needs
+	// to be updated. Updating on deletion is done in Environment.
+	addGenAvg(prot: Prot) {
+		for (let i = 0; i < 8; i++) {
+			// They start at 0 before being initialized
+			if (cfg.genAvg[i] == 0) {
+				cfg.genAvg[i] = prot.genome[i]
+				continue
+			}
+
+			const n = environment.protozoa.size
+			cfg.genAvg[i] = cfg.genAvg[i] * (n-1)/n + prot.genome[i]/n
+		}
+
+	}
+
+	delGenAvg(prot: Prot) {
+		/*
+		other: The average not including this genome
+		avg: The average including this genome genome
+		n: The number of protozoa (=> genomes), including this one
+		g: The genome of this protozoan
+
+		We know
+		avg = other * (n-1)/n + g * 1/n
+		other * (n-1)/n = avg - g/n
+		other * (n-1) = n * avg - g
+		other = (n * avg - g)/(n-1)
+		*/
+
+		for (let i = 0; i < 8; i++) {
+			const avg = cfg.genAvg[i]
+			const n = environment.protozoa.size
+			const g = prot.genome[i]
+
+			if (n == 1) {
+				cfg.genAvg[i] = 0
+				break
+			}
+
+			const other = (n * avg - g)/(n - 1)
+			cfg.genAvg[i] = other
+		}
+	}
+
 	constructor() {
 		this.stats.forEach(id => {
 			this.els.set(id, document.getElementById(id)!)
 		})
+
+		const avgGen = document.getElementById("avgGen")!
+		for (let i = 0; i < 8; i++) {
+			const el = document.createElement("li")
+			this.els.set(`avgGen${i}`, el)
+			avgGen.appendChild(el)
+		}
 	}
 
 	updateStats() {
@@ -100,6 +167,11 @@ class Config {
 			// @ts-ignore
 			this.els.get(id)!.innerHTML = this[id]().toString()
 		})
+
+		for (let i = 0; i < 8; i++) {
+			const val = `${i}: ${this.genAvg[i].toString()}`
+			this.els.get(`avgGen${i}`)!.innerHTML = val
+		}
 	}
 }
 const cfg = new Config()
@@ -198,6 +270,8 @@ class Environment {
 		}
 		this.setProtColour(prot)
 		this.protozoa.add(prot)
+
+		cfg.addGenAvg(prot)
 	}
 
 	addBct() {
@@ -274,6 +348,8 @@ class Environment {
 
 		this.setProtColour(prot2)
 		this.protozoa.add(prot2)
+
+		cfg.addGenAvg(prot)
 	}
 
 	step() {
@@ -284,8 +360,16 @@ class Environment {
 			const dirChange = this.getDirChange(prot)
 
 			prot.energy += cfg.stepEnergy + cfg.rotEnergy[dirChange] * 3
-			if (prot.energy <= 0)
+
+			if (prot.energy <= 0) {
+				cfg.delGenAvg(prot)
+
+				// The prot has to be deleted after the avg is updated,
+				// because it relies on the previous protozoa.size.
 				this.protozoa.delete(prot)
+
+				continue
+			}
 
 			prot.dir = (prot.dir + dirChange) % 8
 			const dir = cfg.dirs[prot.dir]
@@ -339,9 +423,8 @@ class Environment {
 		for (let i = 0; i < cfg.bctStart; i++)
 			this.addBct()
 
-		for (let i = 0; i < 300; i++) {
+		for (let i = 0; i < 300; i++)
 			this.addProt()
-		}
 
 		window.requestAnimationFrame(this.frameStep)
 	}
