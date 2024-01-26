@@ -100,8 +100,29 @@ class Config {
 		"protMax", "protMaxEnergy", "protRepEnergy",
 		"bctEnergy", "bctSpawn", "bctMax",
 	]
+	buttons = ["killProt", "killBct"]
 
 	els = new Map<string, HTMLElement>()
+
+	killProt() {
+		environment.protozoa = new Set<Prot>()
+
+		this.genAvg = {
+			0: 0,
+			1: 0,
+			2: 0,
+			3: 0,
+			4: 0,
+			5: 0,
+			6: 0,
+			7: 0,
+		}
+	}
+
+	killBct() {
+		environment.bctNum = 0
+		environment.bacteria = new Map<number, Set<number>>()
+	}
 
 	protNum = () => environment.protozoa.size
 	bctNum = () => environment.bctNum
@@ -196,6 +217,13 @@ class Config {
 			}
 
 			this.els.set(id, el)
+		})
+
+		this.buttons.forEach(id => {
+			const el = document.getElementById(id) as HTMLInputElement
+
+			// @ts-ignore
+			el.onclick = this[id].bind(this)
 		})
 
 		const avgGen = document.getElementById("avgGen")!
