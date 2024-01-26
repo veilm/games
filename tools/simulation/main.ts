@@ -28,7 +28,9 @@ class Config {
 	// After how many ms to skip the step update
 	// Useful if switching tabs or lagging for a while
 	// Otherwise you'll have an enormous update at once
-	skipTime = 1000 * 2
+	get skipTime() {
+		return this.stepLength * 125
+	}
 
 	// Energy change (lose) per step
 	stepEnergy = -1
