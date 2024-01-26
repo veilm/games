@@ -33,20 +33,23 @@ class Config {
 	// Energy change (lose) per step
 	stepEnergy = -1
 
+	// Energy change (lose) multiplier, for magnitude of rotation
+	rotEnergyMul = -3
+
 	// How much additional energy is spent for different rotations
 	rotEnergy: RotationEnergy = {
 		0: 0,
 
-		1: -1,
-		7: -1,
+		1: 1,
+		7: 1,
 
-		2: -2,
-		6: -2,
+		2: 2,
+		6: 2,
 
-		3: -4,
-		5: -4,
+		3: 4,
+		5: 4,
 
-		4: -8,
+		4: 8,
 	}
 
 	protMaxEnergy = 1500
@@ -91,8 +94,9 @@ class Config {
 	stats = ["protNum", "bctNum"]
 	numInputs = [
 		"pxScale", "width", "height", "stepLength",
-		"stepEnergy", "protMax", "protMaxEnergy", "protRepEnergy", "bctEnergy",
-		"bctSpawn", "bctMax",
+		"stepEnergy", "rotEnergyMul",
+		"protMax", "protMaxEnergy", "protRepEnergy",
+		"bctEnergy", "bctSpawn", "bctMax",
 	]
 
 	els = new Map<string, HTMLElement>()
@@ -403,7 +407,7 @@ class Environment {
 		for (const prot of this.protozoa) {
 			const dirChange = this.getDirChange(prot)
 
-			prot.energy += cfg.stepEnergy + cfg.rotEnergy[dirChange] * 3
+			prot.energy += cfg.stepEnergy + cfg.rotEnergy[dirChange] * cfg.rotEnergyMul
 
 			if (prot.energy <= 0) {
 				cfg.delGenAvg(prot)
