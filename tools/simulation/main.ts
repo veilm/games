@@ -88,7 +88,7 @@ class Config {
 	}
 
 	stats = ["protNum", "bctNum"]
-	numInputs = ["pxScale"]
+	numInputs = ["pxScale", "width", "height"]
 
 	els = new Map<string, HTMLElement>()
 
@@ -143,7 +143,7 @@ class Config {
 
 			if (n == 1) {
 				cfg.genAvg[i] = 0
-				break
+				continue
 			}
 
 			const other = (n * avg - g)/(n - 1)
@@ -176,7 +176,7 @@ class Config {
 				}
 				else el.style.backgroundColor = "#ffaaaa"
 
-				if (id == "pxScale")
+				if (["pxScale", "width", "height"].indexOf(id) != -1)
 					c.init()
 			}
 
