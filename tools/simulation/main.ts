@@ -62,8 +62,9 @@ class Config {
 
 	bctStart = 6000
 
-	// The max number of bacteria that can exist
+	// The max number that can exist
 	// It will progressively lag; try to stay below 10,000 or so
+	protMax = 6000
 	bctMax = 6000
 
 	// 8-grid, starting top left, going clockwise
@@ -90,7 +91,7 @@ class Config {
 	stats = ["protNum", "bctNum"]
 	numInputs = [
 		"pxScale", "width", "height", "stepLength",
-		"stepEnergy", "protMaxEnergy", "protRepEnergy", "bctEnergy",
+		"stepEnergy", "protMax", "protMaxEnergy", "protRepEnergy", "bctEnergy",
 		"bctSpawn", "bctMax",
 	]
 
@@ -176,7 +177,7 @@ class Config {
 					el.style.backgroundColor = "white"
 
 					// @ts-ignore
-					this[id] = el.value
+					this[id] = value
 				}
 				else el.style.backgroundColor = "#ffaaaa"
 
@@ -296,6 +297,9 @@ class Environment {
 	}
 
 	addProt() {
+		if (this.protozoa.size >= cfg.protMax)
+			return
+
 		const prot = {
 			x: cfg.width/2, y: cfg.height/2,
 			genome: this.randomGenome(),
@@ -362,6 +366,9 @@ class Environment {
 	}
 
 	reproduce(prot: Prot) {
+		if (this.protozoa.size >= cfg.protMax)
+			return
+
 		const energy = Math.round(prot.energy/2)
 		prot.energy = energy
 
