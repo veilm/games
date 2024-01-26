@@ -88,6 +88,8 @@ class Config {
 	}
 
 	stats = ["protNum", "bctNum"]
+	numInputs = ["pxScale"]
+
 	els = new Map<string, HTMLElement>()
 
 	protNum = () => environment.protozoa.size
@@ -152,6 +154,33 @@ class Config {
 	constructor() {
 		this.stats.forEach(id => {
 			this.els.set(id, document.getElementById(id)!)
+		})
+
+		this.numInputs.forEach(id => {
+			const el = document.getElementById(id) as HTMLInputElement
+
+			// Not sure how to make this DRY
+			// Don't really have time to research it so I will need
+			// to take tech debt
+			// @ts-ignore
+			el.value = this[id]
+
+			el.oninput = () => {
+				const value = Number(el.value)
+
+				if (value) {
+					el.style.backgroundColor = "white"
+
+					// @ts-ignore
+					this[id] = el.value
+				}
+				else el.style.backgroundColor = "#ffaaaa"
+
+				if (id == "pxScale")
+					c.init()
+			}
+
+			this.els.set(id, el)
 		})
 
 		const avgGen = document.getElementById("avgGen")!
@@ -463,11 +492,14 @@ class Canvas {
 		}
 	}
 
-	constructor() {
-		this.canvas = document.getElementById("canvas") as HTMLCanvasElement
+	init() {
 		this.canvas.width = cfg.width * cfg.pxScale
 		this.canvas.height = cfg.height * cfg.pxScale
+	}
 
+	constructor() {
+		this.canvas = document.getElementById("canvas") as HTMLCanvasElement
+		this.init()
 		this.context = this.canvas.getContext("2d")!
 	}
 }
