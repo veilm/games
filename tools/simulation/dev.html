@@ -23,36 +23,6 @@
 
 				<label>Average genome</label>
 				<ul id="avgGen"></ul>
-
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Morbi eleifend porta eros, sit amet viverra massa interdum ac.
-				Praesent eu odio et ligula luctus placerat sed ut quam. In hac
-				habitasse platea dictumst. Mauris fringilla augue et quam
-				pulvinar, auctor semper metus vulputate. Vivamus vitae massa
-				neque. Nullam condimentum nunc eleifend massa condimentum
-				lacinia. Nunc semper pharetra erat at pharetra. Cras imperdiet
-				ornare augue id interdum. Nulla venenatis felis eu sodales
-				dapibus. Nullam felis augue, lacinia et lacinia venenatis,
-				tincidunt at purus. Sed egestas neque arcu, ut facilisis tortor
-				volutpat vitae. Nulla imperdiet ac turpis et elementum. Duis
-				elementum lacus eros, vel euismod purus blandit sed. Curabitur
-				sem purus, pellentesque vel eleifend eu, accumsan eget erat.
-				Integer lobortis efficitur accumsan.</p>
-
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Morbi eleifend porta eros, sit amet viverra massa interdum ac.
-				Praesent eu odio et ligula luctus placerat sed ut quam. In hac
-				habitasse platea dictumst. Mauris fringilla augue et quam
-				pulvinar, auctor semper metus vulputate. Vivamus vitae massa
-				neque. Nullam condimentum nunc eleifend massa condimentum
-				lacinia. Nunc semper pharetra erat at pharetra. Cras imperdiet
-				ornare augue id interdum. Nulla venenatis felis eu sodales
-				dapibus. Nullam felis augue, lacinia et lacinia venenatis,
-				tincidunt at purus. Sed egestas neque arcu, ut facilisis tortor
-				volutpat vitae. Nulla imperdiet ac turpis et elementum. Duis
-				elementum lacus eros, vel euismod purus blandit sed. Curabitur
-				sem purus, pellentesque vel eleifend eu, accumsan eget erat.
-				Integer lobortis efficitur accumsan.</p>
 			</section>
 
 			<section id="config">
@@ -61,47 +31,49 @@
 						<label for="pxScale">Pixel scale</label>
 						<input id="pxScale" type="number" value="0">
 					</li>
-
 					<li>
 						<label for="width">Width (cells)</label>
 						<input id="width" type="number" value="0">
 					</li>
-
 					<li>
 						<label for="height">Height (cells)</label>
 						<input id="height" type="number" value="0">
 					</li>
+					<li>
+						<label for="stepLength">Duration of one step (ms)</label>
+						<input id="stepLength" type="number" value="0">
+					</li>
 				</ul>
 
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Morbi eleifend porta eros, sit amet viverra massa interdum ac.
-				Praesent eu odio et ligula luctus placerat sed ut quam. In hac
-				habitasse platea dictumst. Mauris fringilla augue et quam
-				pulvinar, auctor semper metus vulputate. Vivamus vitae massa
-				neque. Nullam condimentum nunc eleifend massa condimentum
-				lacinia. Nunc semper pharetra erat at pharetra. Cras imperdiet
-				ornare augue id interdum. Nulla venenatis felis eu sodales
-				dapibus. Nullam felis augue, lacinia et lacinia venenatis,
-				tincidunt at purus. Sed egestas neque arcu, ut facilisis tortor
-				volutpat vitae. Nulla imperdiet ac turpis et elementum. Duis
-				elementum lacus eros, vel euismod purus blandit sed. Curabitur
-				sem purus, pellentesque vel eleifend eu, accumsan eget erat.
-				Integer lobortis efficitur accumsan.</p>
+				<ul>
+					<li>
+						<label for="stepEnergy">Protozoa base energy change per step</label>
+						<input id="stepEnergy" type="number" value="0">
+					</li>
+					<li>
+						<label for="protMaxEnergy">Energy cap for protozoa</label>
+						<input id="protMaxEnergy" type="number" value="0">
+					</li>
+					<li>
+						<label for="protRepEnergy">Energy required for protozoa to reproduce</label>
+						<input id="protRepEnergy" type="number" value="0">
+					</li>
+					<li>
+						<label for="bctEnergy">Energy gained from consuming a bacterium</label>
+						<input id="bctEnergy" type="number" value="0">
+					</li>
+				</ul>
 
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Morbi eleifend porta eros, sit amet viverra massa interdum ac.
-				Praesent eu odio et ligula luctus placerat sed ut quam. In hac
-				habitasse platea dictumst. Mauris fringilla augue et quam
-				pulvinar, auctor semper metus vulputate. Vivamus vitae massa
-				neque. Nullam condimentum nunc eleifend massa condimentum
-				lacinia. Nunc semper pharetra erat at pharetra. Cras imperdiet
-				ornare augue id interdum. Nulla venenatis felis eu sodales
-				dapibus. Nullam felis augue, lacinia et lacinia venenatis,
-				tincidunt at purus. Sed egestas neque arcu, ut facilisis tortor
-				volutpat vitae. Nulla imperdiet ac turpis et elementum. Duis
-				elementum lacus eros, vel euismod purus blandit sed. Curabitur
-				sem purus, pellentesque vel eleifend eu, accumsan eget erat.
-				Integer lobortis efficitur accumsan.</p>
+				<ul>
+					<li>
+						<label for="bctSpawn">Bacteria spawn per step</label>
+						<input id="bctSpawn" type="number" value="0">
+					</li>
+					<li>
+						<label for="bctMax">Max number of alive bacteria</label>
+						<input id="bctMax" type="number" value="0">
+					</li>
+				</ul>
 			</section>
 		</main>
 

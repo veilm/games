@@ -88,7 +88,11 @@ class Config {
 	}
 
 	stats = ["protNum", "bctNum"]
-	numInputs = ["pxScale", "width", "height"]
+	numInputs = [
+		"pxScale", "width", "height", "stepLength",
+		"stepEnergy", "protMaxEnergy", "protRepEnergy", "bctEnergy",
+		"bctSpawn", "bctMax",
+	]
 
 	els = new Map<string, HTMLElement>()
 
@@ -165,7 +169,7 @@ class Config {
 			// @ts-ignore
 			el.value = this[id]
 
-			el.oninput = () => {
+			el.onchange = () => {
 				const value = Number(el.value)
 
 				if (value) {
@@ -176,8 +180,10 @@ class Config {
 				}
 				else el.style.backgroundColor = "#ffaaaa"
 
-				if (["pxScale", "width", "height"].indexOf(id) != -1)
+				if (["pxScale", "width", "height"].indexOf(id) != -1) {
 					c.init()
+					c.draw()
+				}
 			}
 
 			this.els.set(id, el)
