@@ -173,13 +173,15 @@ class Config {
 			el.onchange = () => {
 				const value = Number(el.value)
 
-				if (value) {
+				if (isNaN(value) || !el.value)
+					el.style.backgroundColor = "#ffaaaa"
+
+				else {
 					el.style.backgroundColor = "white"
 
 					// @ts-ignore
 					this[id] = value
 				}
-				else el.style.backgroundColor = "#ffaaaa"
 
 				if (["pxScale", "width", "height"].indexOf(id) != -1) {
 					c.init()
