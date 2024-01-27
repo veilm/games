@@ -413,12 +413,12 @@ class Environment {
 			y: prot.y,
 			dir: prot.dir,
 			energy: energy,
-			genome: prot.genome,
+			genome: prot.genome.slice(),
 			colour: "",
 		}
 
 		for (let i = 0; i < 8; i++) {
-			if (RNG(1, 8) != 1)
+			if (Math.round(RNG(1, 8)) != 1)
 				continue
 
 			this.mutateGene(prot2.genome, i, 1/8)
@@ -427,7 +427,7 @@ class Environment {
 		this.setProtColour(prot2)
 		this.protozoa.add(prot2)
 
-		cfg.addGenAvg(prot)
+		cfg.addGenAvg(prot2)
 	}
 
 	step() {
