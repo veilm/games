@@ -12,10 +12,6 @@ interface RotationEnergy {
 	[key: number]: number
 }
 
-interface GenomeDict {
-	[key: number]: number
-}
-
 class Config {
 	pxScale = 5
 
@@ -128,17 +124,7 @@ class Config {
 
 	killProt() {
 		environment.protozoa = new Set<Prot>()
-
-		this.genAvg = {
-			0: 0,
-			1: 0,
-			2: 0,
-			3: 0,
-			4: 0,
-			5: 0,
-			6: 0,
-			7: 0,
-		}
+		this.genAvg = [0, 0, 0, 0, 0, 0, 0, 0]
 	}
 
 	killBct() {
@@ -150,18 +136,9 @@ class Config {
 	bctNum = () => environment.bctNum
 
 	useUserGen = false
-	userGen: GenomeDict = {
-		0: 0,
-		1: 0,
-		2: 0,
-		3: 0,
-		4: 0,
-		5: 0,
-		6: 0,
-		7: 0,
-	}
+	userGen = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8]
 
-	genAvg = {...this.userGen}
+	genAvg = [0, 0, 0, 0, 0, 0, 0, 0]
 
 	// Runs when a new prot is added, and the average needs
 	// to be updated. Updating on deletion is done in Environment.
