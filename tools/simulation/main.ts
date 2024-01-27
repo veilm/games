@@ -376,7 +376,7 @@ class Environment {
 			return
 
 		const prot = {
-			x: cfg.width/2, y: cfg.height/2,
+			x: Math.round(cfg.width/2), y: Math.round(cfg.height/2),
 			genome: this.randomGenome(),
 			dir: Math.round(RNG(0, 7)),
 			energy: 1000,
@@ -422,8 +422,13 @@ class Environment {
 		let sum = 0
 		let i = 0
 
-		for (; sum < threshold && i < 8; i++)
-			sum += prot.genome[i]
+		for (; sum < threshold && i < 8; i++) {
+			let gene = prot.genome[i]
+			if (cfg.useUserGen)
+				gene = cfg.userGen[i]
+
+			sum += gene
+		}
 
 		return i-1
 	}
