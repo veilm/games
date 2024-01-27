@@ -262,6 +262,29 @@ class Config {
 			el.onclick = this[id].bind(this)
 		})
 
+		const userGen = document.getElementById("userGen")!
+		for (let i = 0; i < 8; i++) {
+			const li = document.createElement("li")
+			li.innerHTML = `${i}: `
+
+			const input = document.createElement("input")
+			input.type = "number"
+			input.value = (1/8).toString()
+			input.onchange = () => {
+				let value = Number(input.value)
+
+				if (isNaN(value) || !input.value || value < 0 || value > 1) {
+					input.value = "0"
+					value = 0
+				}
+
+				this.userGen[i] = value
+			}
+
+			li.appendChild(input)
+			userGen.appendChild(li)
+		}
+
 		const avgGen = document.getElementById("avgGen")!
 		for (let i = 0; i < 8; i++) {
 			const el = document.createElement("li")
