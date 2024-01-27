@@ -100,9 +100,30 @@ class Config {
 		"protMax", "protMaxEnergy", "protRepEnergy",
 		"bctEnergy", "bctSpawn", "bctMax",
 	]
-	buttons = ["killProt", "killBct"]
+	buttons = [
+		"stop", "step", "resume",
+		"killProt", "killBct",
+	]
 
 	els = new Map<string, HTMLElement>()
+
+	stop() {
+		environment.running = false
+	}
+
+	step() {
+		this.stop()
+		environment.step()
+	}
+
+	resume() {
+		if (environment.running)
+			return
+
+		environment.running = true
+		environment.lastStep = 0
+		window.requestAnimationFrame(environment.frameStep)
+	}
 
 	killProt() {
 		environment.protozoa = new Set<Prot>()
@@ -264,6 +285,8 @@ interface Prot {
 }
 
 class Environment {
+	running = true
+
 	// Timestamp (ms) after first step
 	lastStep = 0
 
@@ -494,7 +517,8 @@ class Environment {
 			elapsed -= cfg.stepLength
 		}
 
-		window.requestAnimationFrame(this.frameStep)
+		if (this.running)
+			window.requestAnimationFrame(this.frameStep)
 	}
 
 	start() {
