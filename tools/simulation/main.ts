@@ -12,7 +12,7 @@ interface RotationEnergy {
 	[key: number]: number
 }
 
-interface GenomeAvg {
+interface GenomeDict {
 	[key: number]: number
 }
 
@@ -104,6 +104,7 @@ class Config {
 		"stop", "step", "resume",
 		"killProt", "killBct",
 	]
+	checkboxes = ["useUserGen"]
 
 	els = new Map<string, HTMLElement>()
 
@@ -148,7 +149,8 @@ class Config {
 	protNum = () => environment.protozoa.size
 	bctNum = () => environment.bctNum
 
-	genAvg: GenomeAvg = {
+	useUserGen = false
+	userGen: GenomeDict = {
 		0: 0,
 		1: 0,
 		2: 0,
@@ -158,6 +160,8 @@ class Config {
 		6: 0,
 		7: 0,
 	}
+
+	genAvg = {...this.userGen}
 
 	// Runs when a new prot is added, and the average needs
 	// to be updated. Updating on deletion is done in Environment.
@@ -240,6 +244,17 @@ class Config {
 			this.els.set(id, el)
 		})
 
+		this.checkboxes.forEach(id => {
+			const el = document.getElementById(id) as HTMLInputElement
+
+			el.onchange = () => {
+				// @ts-ignore
+				this[id] = el.checked
+			}
+
+			this.els.set(id, el)
+		})
+
 		this.buttons.forEach(id => {
 			const el = document.getElementById(id) as HTMLInputElement
 
@@ -260,6 +275,9 @@ class Config {
 			// @ts-ignore
 			this.els.get(id)!.innerHTML = this[id]().toString()
 		})
+
+		if (this.useUserGen)
+			return
 
 		for (let i = 0; i < 8; i++) {
 			const val = `${i}: ${this.genAvg[i].toString()}`
@@ -331,8 +349,6 @@ class Environment {
 	}
 
 	randomGenome() {
-		// return [0.5, 0.5, 0, 0, 0, 0, 0, 0]
-
 		const genome: number[] = []
 
 		// Start with equal distribution
@@ -580,10 +596,3 @@ class Canvas {
 const c = new Canvas()
 
 environment.start()
-
-// environment.protozoa.add({
-// 	x: 0, y: 0,
-// 	genome: [1, 0, 0, 0, 0, 0, 0, 0],
-// 	dir: 0,
-// 	energy: 1000
-// })
