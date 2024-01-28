@@ -55,7 +55,7 @@ class Config {
 		4: 8,
 	}
 
-	protStartEnergy = 500
+	protStartEnergy = 750
 	protMaxEnergy = 1500
 
 	// Energy required to reproduce
@@ -287,9 +287,6 @@ class Config {
 			this.els.get(id)!.innerHTML = this[id]().toString()
 		})
 
-		if (this.useUserGen)
-			return
-
 		for (let i = 0; i < 8; i++) {
 			const val = `${i}: ${this.genAvg[i].toString()}`
 			this.els.get(`avgGen${i}`)!.innerHTML = val
@@ -325,42 +322,32 @@ class Environment {
 	bctNum = 0
 
 	mutateGene(genome: number[], geneIdx: number, variance: number) {
-		// How much will be added to gene
-		let mod = 0
-
-		// How much will be added to other genes, to compensate
-		let otherMod = 0
-
 		// Avoid making gene go below 0
 		const min = -Math.min(genome[geneIdx], variance)
 
 		// Avoid making gene go above 1
 		const max = Math.min(1 - genome[geneIdx], variance)
 
-		let valid = false
-		while (!valid) {
-			mod = RNG(min, max)
-			otherMod = -mod/(8-1)
+		const mod = RNG(min, max)
+		genome[geneIdx] += mod
 
-			valid = true
+		// How much will be added to other genes collectively, to compensate
+		let otherMod = -mod
+
+		while (Math.abs(otherMod) > 0.000001) {
+			let split = otherMod/(8-1)
 
 			for (let i = 0; i < 8; i++) {
 				if (i == geneIdx)
 					continue
 
-				if (genome[i] + otherMod < 0) {
-					valid = false
-					break
-				}
+				const update = genome[i] + split
+				if (update < 0 || update > 1)
+					continue
+
+				genome[i] += split
+				otherMod -= split
 			}
-		}
-
-		genome[geneIdx] += mod
-		for (let i = 0; i < 8; i++) {
-			if (i == geneIdx)
-				continue
-
-			genome[i] += otherMod
 		}
 	}
 
