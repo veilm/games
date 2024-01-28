@@ -331,22 +331,27 @@ class Environment {
 		// How much will be added to other genes, to compensate
 		let otherMod = 0
 
+		// Avoid making gene go below 0
+		const min = -Math.min(genome[geneIdx], variance)
+
+		// Avoid making gene go above 1
+		const max = Math.min(1 - genome[geneIdx], variance)
+
 		let valid = false
 		while (!valid) {
-			mod = RNG(-variance, variance)
+			mod = RNG(min, max)
 			otherMod = -mod/(8-1)
 
 			valid = true
 
-			if (mod + genome[geneIdx] < 0)
-				valid = false
-
-			for (let i = 0; valid && i < 8; i++) {
+			for (let i = 0; i < 8; i++) {
 				if (i == geneIdx)
 					continue
 
-				if (genome[i] + otherMod < 0)
+				if (genome[i] + otherMod < 0) {
 					valid = false
+					break
+				}
 			}
 		}
 
