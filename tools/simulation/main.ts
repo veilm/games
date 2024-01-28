@@ -70,6 +70,14 @@ class Config {
 	bctStart = 6000
 	protStart = 300
 
+	// Must match the order of the <select> <option>s in the html
+	bctPatterns = ["random", "circle", "lines"]
+	bctPatternIdx = 1
+
+	get bctPattern() {
+		return this.bctPatterns[this.bctPatternIdx]
+	}
+
 	// The max number that can exist
 	// It will progressively lag; try to stay low
 	protMax = 3000
@@ -250,6 +258,14 @@ class Config {
 			// @ts-ignore
 			el.onclick = this[id].bind(this)
 		})
+
+		const bctPattern = document.getElementById("bctPattern") as HTMLSelectElement
+		bctPattern.selectedIndex = this.bctPatternIdx
+		this.els.set("bctPattern", bctPattern)
+
+		bctPattern.onchange = () => {
+			this.bctPatternIdx = bctPattern.selectedIndex
+		}
 
 		const userGen = document.getElementById("userGen")!
 		for (let i = 0; i < 8; i++) {
@@ -468,18 +484,16 @@ class Environment {
 		if (this.bctNum >= cfg.bctMax)
 			return
 
-		const x = Math.round(RNG(0, cfg.width))
-		const y = Math.round(RNG(0, cfg.height))
-
+		const pos = this.getPos(cfg.bctPattern)
 		const bct = this.bacteria
 
-		if (!bct.has(x))
-			bct.set(x, new Set<number>())
+		if (!bct.has(pos.x))
+			bct.set(pos.x, new Set<number>())
 
-		if (!bct.get(x)!.has(y))
+		if (!bct.get(pos.x)!.has(pos.y))
 			this.bctNum++
 
-		bct.get(x)!.add(y)
+		bct.get(pos.x)!.add(pos.y)
 	}
 
 	// Returns change in index of dirs
