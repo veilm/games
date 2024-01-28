@@ -133,7 +133,7 @@ class Config {
 
 	killProt() {
 		environment.protozoa = new Set<Prot>()
-		this.genAvg = [0, 0, 0, 0, 0, 0, 0, 0]
+		this.genAvg = [-1, -1, -1, -1, -1, -1, -1, -1]
 	}
 
 	killBct() {
@@ -155,8 +155,8 @@ class Config {
 	// to be updated. Updating on deletion is done in Environment.
 	addGenAvg(prot: Prot) {
 		for (let i = 0; i < 8; i++) {
-			// They start at 0 before being initialized
-			if (cfg.genAvg[i] == 0) {
+			// They start at -1 before being initialized
+			if (cfg.genAvg[i] == -1) {
 				cfg.genAvg[i] = prot.genome[i]
 				continue
 			}
@@ -164,7 +164,6 @@ class Config {
 			const n = environment.protozoa.size
 			cfg.genAvg[i] = cfg.genAvg[i] * (n-1)/n + prot.genome[i]/n
 		}
-
 	}
 
 	delGenAvg(prot: Prot) {
@@ -187,7 +186,7 @@ class Config {
 			const g = prot.genome[i]
 
 			if (n == 1) {
-				cfg.genAvg[i] = 0
+				cfg.genAvg[i] = -1
 				continue
 			}
 
@@ -288,7 +287,10 @@ class Config {
 		})
 
 		for (let i = 0; i < 8; i++) {
-			const val = `${i}: ${this.genAvg[i].toString()}`
+			const precision = 100000000
+			const avg = Math.round(this.genAvg[i] * precision)/precision
+
+			const val = `${i}: ${avg.toString()}`
 			this.els.get(`avgGen${i}`)!.innerHTML = val
 		}
 	}
