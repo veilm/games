@@ -70,9 +70,12 @@ class Config {
 	bctStart = 6000
 	protStart = 300
 
+	mutRate = 1/8
+	mutVar = 1/8
+
 	// Must match the order of the <select> <option>s in the html
 	bctPatterns = ["random", "circle", "lines"]
-	bctPatternIdx = 1
+	bctPatternIdx = 0
 
 	get bctPattern() {
 		return this.bctPatterns[this.bctPatternIdx]
@@ -110,6 +113,7 @@ class Config {
 		"stepEnergy", "rotEnergyMul",
 		"protMax", "protMaxEnergy", "protRepEnergy",
 		"bctEnergy", "bctSpawn", "bctMax",
+		"mutRate", "mutVar",
 		"protStart", "protStartEnergy",
 	]
 	buttons = [
@@ -341,7 +345,9 @@ class Environment {
 	bacteria = new Map<number, Set<number>>()
 	bctNum = 0
 
-	mutateGene(genome: number[], geneIdx: number, variance: number) {
+	mutateGene(genome: number[], geneIdx: number) {
+		const variance = cfg.mutVar
+
 		// Avoid making gene go below 0
 		const min = -Math.min(genome[geneIdx], variance)
 
@@ -375,7 +381,7 @@ class Environment {
 			genome.push(1/8)
 
 		for (let i = 0; i < 8; i++)
-			this.mutateGene(genome, i, 1/8)
+			this.mutateGene(genome, i)
 
 		return genome
 	}
@@ -406,9 +412,6 @@ class Environment {
 		// pattern == "lines"
 
 		const line = Math.round(RNG(1, 4))
-		// const line = Math.round(RNG(1, 2))
-		// const line = 1
-
 		let x = 0
 		let y = 0
 
@@ -547,10 +550,15 @@ class Environment {
 		}
 
 		for (let i = 0; i < 8; i++) {
-			if (Math.round(RNG(1, 8)) != 1)
+			const mutRate = Math.min(cfg.mutRate, 1)
+
+			if (mutRate == 0)
+				break
+
+			if (Math.round(RNG(1, 1/mutRate)) != 1)
 				continue
 
-			this.mutateGene(prot2.genome, i, 1/8)
+			this.mutateGene(prot2.genome, i)
 		}
 
 		this.setProtColour(prot2)
