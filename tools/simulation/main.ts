@@ -334,20 +334,16 @@ class Environment {
 		// How much will be added to other genes collectively, to compensate
 		let otherMod = -mod
 
-		while (Math.abs(otherMod) > 0.000001) {
-			let split = otherMod/(8-1)
+		const sum = genome.reduce((a, b) => a + b) - genome[geneIdx]
 
-			for (let i = 0; i < 8; i++) {
-				if (i == geneIdx)
-					continue
+		for (let i = 0; i < 8; i++) {
+			if (i == geneIdx)
+				continue
 
-				const update = genome[i] + split
-				if (update < 0 || update > 1)
-					continue
-
-				genome[i] += split
-				otherMod -= split
-			}
+			if (sum == 0)
+				genome[i] += otherMod/(8-1)
+			else
+				genome[i] += otherMod * genome[i]/sum
 		}
 	}
 
