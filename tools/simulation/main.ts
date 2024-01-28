@@ -71,8 +71,8 @@ class Config {
 	protStart = 300
 
 	// The max number that can exist
-	// It will progressively lag; try to stay below 10,000 or so
-	protMax = 6000
+	// It will progressively lag; try to stay low
+	protMax = 3000
 	bctMax = 6000
 
 	// 8-grid, starting top left, going clockwise
@@ -107,7 +107,7 @@ class Config {
 	buttons = [
 		"stop", "step", "resume",
 		"killProt", "killBct",
-		"protCenter",
+		"protCenter", "protRandom", "protLines",
 	]
 	checkboxes = ["useUserGen"]
 
@@ -145,6 +145,8 @@ class Config {
 	bctNum = () => environment.bctNum
 
 	protCenter = () => environment.addProts("center")
+	protRandom = () => environment.addProts("random")
+	protLines = () => environment.addProts("lines")
 
 	useUserGen = false
 	userGen = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8]
@@ -379,7 +381,62 @@ class Environment {
 				y: Math.round(cfg.height/2),
 			}
 
-		return this.getPos("center")
+		if (pattern == "random")
+			return {
+				x: Math.round(RNG(0, cfg.width)),
+				y: Math.round(RNG(0, cfg.height)),
+			}
+
+		// pattern == "lines"
+
+		const line = Math.round(RNG(1, 4))
+		// const line = Math.round(RNG(1, 2))
+		// const line = 1
+
+		let x = 0
+		let y = 0
+
+		if (line == 1 || line == 2) {
+			// 1: Diagonal top left to bottom right
+			// 2: Diagonal bottom left to top right
+
+			x = Math.round(RNG(0, cfg.width))
+
+			if (line == 1)
+				y = x * cfg.height/cfg.width
+			else
+				y = cfg.height - x * cfg.height/cfg.width
+
+			const range = Math.max(cfg.height * 0.01, 1)
+			const offset = RNG(-range, range)
+
+			y = Math.round(y + offset + cfg.height) % cfg.height
+		}
+
+		// 3: Horizontal
+		else if (line == 3) {
+			x = Math.round(RNG(0, cfg.width))
+
+			const range = Math.max(cfg.height * 0.01, 1)
+			const offset = RNG(-range, range)
+
+			y = Math.round(cfg.height/2 + offset + cfg.height) % cfg.height
+		}
+
+		// 4: Vertical
+		else {
+			y = Math.round(RNG(0, cfg.height))
+
+			const range = Math.max(cfg.width * 0.01, 1)
+			const offset = RNG(-range, range)
+
+			x = Math.round(cfg.width/2 + offset + cfg.width) % cfg.width
+		}
+
+		return {
+			x: x,
+			y: y,
+		}
 	}
 
 	addProt(pattern: string) {
