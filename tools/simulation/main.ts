@@ -30,7 +30,7 @@ class Config {
 	// Useful if switching tabs or lagging for a while
 	// Otherwise you'll have an enormous update at once
 	get skipTime() {
-		return this.stepLength * 125
+		return this.stepLength * 50
 	}
 
 	// Energy change (lose) per step
@@ -256,7 +256,7 @@ class Config {
 
 			const input = document.createElement("input")
 			input.type = "number"
-			input.value = (1/8).toString()
+			input.value = this.userGen[i].toString()
 			input.onchange = () => {
 				let value = Number(input.value)
 
@@ -396,9 +396,11 @@ class Environment {
 			return
 
 		const pos = this.getPos(pattern)
+
+		const genome = cfg.useUserGen ? cfg.userGen : this.randomGenome()
 		const prot = {
 			x: pos.x, y: pos.y,
-			genome: this.randomGenome(),
+			genome: genome,
 			dir: Math.round(RNG(0, 7)),
 			energy: 1000,
 			colour: ""
@@ -448,13 +450,8 @@ class Environment {
 		let sum = 0
 		let i = 0
 
-		for (; sum < threshold && i < 8; i++) {
-			let gene = prot.genome[i]
-			if (cfg.useUserGen)
-				gene = cfg.userGen[i]
-
-			sum += gene
-		}
+		for (; sum < threshold && i < 8; i++)
+			sum += prot.genome[i]
 
 		return i-1
 	}
