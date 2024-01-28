@@ -27,3 +27,7 @@ main {
 canvas#canvas {
 	border: 0.2em solid blue;
 }
+
+section#stats {
+	padding-bottom: 1em;
+}

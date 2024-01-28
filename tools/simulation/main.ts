@@ -1,6 +1,11 @@
 // Decimal
 const RNG = (min: number, max: number) => Math.random() * (max - min) + min
 
+interface Position {
+	x: number
+	y: number
+}
+
 interface Directions {
 	[key: number]: {
 		dx: number
@@ -62,6 +67,7 @@ class Config {
 	bctSpawn = 20
 
 	bctStart = 6000
+	protStart = 300
 
 	// The max number that can exist
 	// It will progressively lag; try to stay below 10,000 or so
@@ -95,10 +101,12 @@ class Config {
 		"stepEnergy", "rotEnergyMul",
 		"protMax", "protMaxEnergy", "protRepEnergy",
 		"bctEnergy", "bctSpawn", "bctMax",
+		"protStart",
 	]
 	buttons = [
 		"stop", "step", "resume",
 		"killProt", "killBct",
+		"protCenter",
 	]
 	checkboxes = ["useUserGen"]
 
@@ -134,6 +142,8 @@ class Config {
 
 	protNum = () => environment.protozoa.size
 	bctNum = () => environment.bctNum
+
+	protCenter = () => environment.addProts("center")
 
 	useUserGen = false
 	userGen = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8]
@@ -371,12 +381,23 @@ class Environment {
 		prot.colour = `rgb(${r}, ${g}, ${b})`
 	}
 
-	addProt() {
+	getPos(pattern: string): Position {
+		if (pattern == "center")
+			return {
+				x: Math.round(cfg.width/2),
+				y: Math.round(cfg.height/2),
+			}
+
+		return this.getPos("center")
+	}
+
+	addProt(pattern: string) {
 		if (this.protozoa.size >= cfg.protMax)
 			return
 
+		const pos = this.getPos(pattern)
 		const prot = {
-			x: Math.round(cfg.width/2), y: Math.round(cfg.height/2),
+			x: pos.x, y: pos.y,
 			genome: this.randomGenome(),
 			dir: Math.round(RNG(0, 7)),
 			energy: 1000,
@@ -386,6 +407,11 @@ class Environment {
 		this.protozoa.add(prot)
 
 		cfg.addGenAvg(prot)
+	}
+
+	addProts(pattern: string) {
+		for (let i = 0; i < cfg.protStart; i++)
+			this.addProt(pattern)
 	}
 
 	addBct() {
@@ -546,8 +572,7 @@ class Environment {
 		for (let i = 0; i < cfg.bctStart; i++)
 			this.addBct()
 
-		for (let i = 0; i < 300; i++)
-			this.addProt()
+		this.addProts("center")
 
 		window.requestAnimationFrame(this.frameStep)
 	}
