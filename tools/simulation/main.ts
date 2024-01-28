@@ -55,6 +55,7 @@ class Config {
 		4: 8,
 	}
 
+	protStartEnergy = 500
 	protMaxEnergy = 1500
 
 	// Energy required to reproduce
@@ -101,7 +102,7 @@ class Config {
 		"stepEnergy", "rotEnergyMul",
 		"protMax", "protMaxEnergy", "protRepEnergy",
 		"bctEnergy", "bctSpawn", "bctMax",
-		"protStart",
+		"protStart", "protStartEnergy",
 	]
 	buttons = [
 		"stop", "step", "resume",
@@ -402,7 +403,7 @@ class Environment {
 			x: pos.x, y: pos.y,
 			genome: genome,
 			dir: Math.round(RNG(0, 7)),
-			energy: 1000,
+			energy: cfg.protStartEnergy,
 			colour: ""
 		}
 		this.setProtColour(prot)
