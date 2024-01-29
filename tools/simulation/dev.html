@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="main.css">
+
+		<title>Simulation</title>
+	</head>
+	<body>
+		<header>
+			<h1>Independent Innovator: Basic Evolutionary Simulation</h1>
+			<p>by Michael Skyba</p>
+		</header>
+
+		<canvas id="canvas" width="0" height="0"></canvas>
+
+		<main>
+			<section id="stats">
+				<input type="button" id="stop" value="Stop">
+				<input type="button" id="step" value="Step">
+				<input type="button" id="resume" value="Resume">
+
+				<ul>
+					<li>Living protozoa: <span id="protNum">0</span></li>
+					<li>Living bacteria: <span id="bctNum">0</span></li>
+				</ul>
+
+				<input type="button" id="killProt" value="Kill all protozoa">
+				<input type="button" id="killBct" value="Kill all bacteria">
+
+				<br>
+				<br>
+
+				<label>Average genome</label>
+				<ul id="avgGen"></ul>
+
+				<label>Hardcode user genome</label>
+				<br>
+				<input type="checkbox" id="useUserGen">
+				<label for="useUserGen">Active</label>
+
+				<ul id="userGen"></ul>
+
+				<ul>
+					<li>
+						<label for="protStartEnergy">Protozoa spawn energy</label>
+						<input id="protStartEnergy" type="number">
+					</li>
+					<li>
+						<label for="protStart">n =</label>
+						<input id="protStart" type="number">
+					</li>
+				</ul>
+
+				<input type="button" id="protCenter" value="Spawn n protozoa (center)">
+				<br>
+				<input type="button" id="protRandom" value="Spawn n protozoa (random)">
+				<br>
+				<input type="button" id="protLines" value="Spawn n protozoa (lines)">
+			</section>
+
+			<section id="config">
+				<ul>
+					<li>
+						<label for="pxScale">Pixel scale</label>
+						<input id="pxScale" type="number">
+					</li>
+					<li>
+						<label for="width">Width (cells)</label>
+						<input id="width" type="number">
+					</li>
+					<li>
+						<label for="height">Height (cells)</label>
+						<input id="height" type="number">
+					</li>
+					<li>
+						<label for="stepLength">Duration of one step (ms)</label>
+						<input id="stepLength" type="number">
+					</li>
+				</ul>
+
+				<ul>
+					<li>
+						<label for="stepEnergy">Protozoa base energy change per step</label>
+						<input id="stepEnergy" type="number">
+					</li>
+					<li>
+						<label for="rotEnergyMul">Protozoa rotation energy change multiplier</label>
+						<input id="rotEnergyMul" type="number">
+					</li>
+					<li>
+						<label for="protMax">Max number of alive protozoa</label>
+						<input id="protMax" type="number">
+					</li>
+					<li>
+						<label for="protMaxEnergy">Energy cap for protozoa</label>
+						<input id="protMaxEnergy" type="number">
+					</li>
+					<li>
+						<label for="protRepEnergy">Energy required for protozoa to reproduce</label>
+						<input id="protRepEnergy" type="number">
+					</li>
+					<li>
+						<label for="bctEnergy">Energy change from consuming a bacterium</label>
+						<input id="bctEnergy" type="number">
+					</li>
+					<li>
+						<label for="mutRate">Gene mutation rate</label>
+						<input id="mutRate" type="number">
+					</li>
+					<li>
+						<label for="mutVar">Gene mutation variance</label>
+						<input id="mutVar" type="number">
+					</li>
+				</ul>
+
+				<ul>
+					<li>
+						<label for="bctSpawn">Bacteria spawn per step</label>
+						<input id="bctSpawn" type="number">
+					</li>
+					<li>
+						<label for="bctMax">Max number of alive bacteria</label>
+						<input id="bctMax" type="number">
+					</li>
+					<li>
+						<label for="bctPattern">Bacteria spawn pattern</label>
+						<select id="bctPattern">
+							<option value="random">Random</option>
+							<option value="circle">Circle</option>
+							<option value="lines">Lines</option>
+						</select>
+					</li>
+				</ul>
+			</section>
+		</main>
+
+		<script src="main.js"></script>
+	</body>
+</html>
