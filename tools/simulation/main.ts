@@ -409,6 +409,25 @@ class Environment {
 				y: Math.round(RNG(0, cfg.height)),
 			}
 
+		if (pattern == "circle") {
+			const r = Math.min(cfg.width, cfg.height) / 4
+			const dx = RNG(-r, r)
+			const x = Math.round(cfg.width/2 + dx) % cfg.width
+
+			/*
+			x^2 + y^2 = r^2
+			y = +- sqrt(r^2 - x^2)
+			*/
+
+			const r2 = Math.sqrt(r * r - dx * dx)
+			const y = Math.round(cfg.height/2 + RNG(-r2, r2)) % cfg.height
+
+			return {
+				x: x,
+				y: y,
+			}
+		}
+
 		// pattern == "lines"
 
 		const line = Math.round(RNG(1, 4))
