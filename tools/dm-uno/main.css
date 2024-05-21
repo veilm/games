@@ -27,6 +27,16 @@ div.colour {
 
 	background-color: white;
 	margin: 1em auto 1em auto;
+
+	display: grid;
+	align-content: center;
+
+	border-radius: 1em;
+}
+
+div.colour p {
+	margin: 0;
+	font-weight: bold;
 }
 
 div#colour-0 {
