@@ -9,6 +9,8 @@ body {
 
 	color: white;
 	background-color: black;
+
+	overflow-y: hidden;
 }
 
 img {
@@ -87,4 +89,5 @@ div#colour-8 {
 button {
 	margin-top: 0.5em;
 	font-size: 2em;
+	padding: 0.2em;
 }
