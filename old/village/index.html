@@ -1,0 +1,157 @@
+
+
+
+
+
+<!DOCTYPE html>
+
+    <head>
+
+            <title> The Village </title>
+
+            <style>
+            
+                .center
+                {
+                    display: block;
+                    margin: auto;
+                }
+
+            </style>
+
+            <!-- Beginning of Extra Head Code-->
+
+
+
+            <!-- End of Extra Head Code-->
+
+    </head>
+
+    <body style="background-color: #ffffff">
+
+        <!-- Beginning of Body Code -->
+        <!-- F Canv Code <canvas style="display: block; margin:auto;" id="myCanvas" height="500px" width="665px"></canvas> -->
+        <!-- Make xy elements pos abs -->
+
+        <p style="font-size:34px; font-weight: bold; text-align: center; margin-top: 10px;"> The Village - Michael Skyba </p>
+        <p style="font-size:22px; position: absolute; left:40%; top: 30px;"> Scroll Down for Instructions </p>
+
+        <canvas style="display:block; margin: auto;" id="myCanvas" height="480px" width="600px"></canvas>
+        <img id="V1" style="display: none;" src="rsz_costume1.png">
+        <img id="V2" style="display: none;" src="rsz_costume2.png">
+        <img id="secretV" style="display: none;" src="rsz_secret.png">
+        <img id="V3" style="display: none;" src="rsz_costume3.png">
+        <img id="V4" style="display: none;" src="rsz_costume4.png">
+        <img id="V5" style="display: none;" src="rsz_costume5.png">
+        <img id="V6" style="display: none;" src="rsz_costume6.png">
+        <img id="V7" style="display: none;" src="rsz_costume7.png">
+        <center>
+
+            <br>
+
+            <input id="attract"type="button" value="Attract Villagers" onclick="attract()"  style="display: block; position: absolute; left:20%; background-color:green; width: 150px; height:45px;" />
+            
+            <input id="morePop"type="button" value="Population Upgrade" onclick="upgradePop()" style="display: block; left:35%; position: absolute; background-color:red; width: 170px; height:45px;" />
+
+            <input id="lessLight"type="button" value="Lightning Upgrade" onclick="upgradeLight()" style="display: block; left:50%; position: absolute; background-color:yellow; width: 170px; height:45px;" />
+
+            <input id="fasterDay"type="button" value="Time Machine" onclick="upgradeDay()" style="display: block; left:65%; position: absolute; background-color:blue; width: 170px; height:45px;" />
+
+            <input id="casual"type="button" value="Casual" onclick="casual()"  style="display: block; position: absolute; left:20%; width: 150px; height:45px;" />
+            
+            <input id="hard"type="button" value="Hard" onclick="hard()" style="display: block; left:35%; position: absolute; width: 170px; height:45px;" />
+
+            <input id="extreme"type="button" value="Extreme" onclick="extreme()" style="display: block; left:50%; position: absolute; width: 170px; height:45px;" />
+
+            <input id="hacked"type="button" value="Hacked" onclick="hacked()" style="display: block; left:65%; position: absolute; width: 170px; height:45px;" />
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <p style="font-size:38px; font-weight: bold;"> Instructions </p>
+            <p> The first thing you need to do is pick a difficulty.</p>
+            <p> If you are new, you should begin with Casual.</p>
+            <p> Once you've selected your difficulty, you will see a few things. </p>
+            <p> First, you will see at the top left your day number and your population number.</p>
+            <p> You will also see a couple of buttons below the game screen-</p>
+            <p> We will get into those later.</p>
+            <p> The goal of the game is to grow your village, and to get all the achievements. </p>
+            <p> If your population hits 0, you will lose, so make sure to not let that happen!</p>
+            <br>
+            <h1> So, how does your population go up and down?</h1>
+            <br>
+            <p> Every so often, more people will join your village. </p>
+            <p> You can also attract villagers by clicking the Attract button a few times.</p>
+            <p> Next to that, every so often lightning will strike your village</p>
+            <p> and you will lose population.</p>
+            <br>
+            <h1> Upgrades </h1>
+            <br>
+            <p> You can buy upgrades to help you out with your village. </p>
+            <p> To buy them, you have to pay with population. </p>
+            <p> To get more villagers faster, buy the "Population Upgrade".</p>
+            <p> You can buy it again later, so it will help you even MORE-</p>
+            <p> But then it will cost more population too </p>
+            <p> To make lightning not strike as much, buy the "Lightning Upgrade".</p>
+            <p> You can also buy it again later.</p> 
+            <p> The last upgrade is called the "Time Machine".</p>
+            <p> It will make days go faster. </p>
+            <p> This is solely useful for getting one of the achievements. </p>
+            <p> Days will also be used for High Score once I figure out how to make that work. </p>
+            <br>
+            <h1> Game Over & Achievements</h1>
+            <br>
+            <p> If your population hits 0, it will say that your village is dead.</p>
+            <p> When that happens you can either go play something else because you are mad and/or bored,</p> 
+            <p> Or you can reload the page and try playing again. </p>
+            <br>
+            <p> You know you got an achievemnt because a new villager will pop up on the screen.</p>
+            <p> At the start, there is a villager wearing red, which shows you got an achievement for starting the game.</p>
+            <p> Once a green villager pops up, for example, it means you got another achievement.</p>
+            <br>
+            <p> If you win on Extreme mode, show me a screenshot and your username can be in it! </p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <input type="button" value="secret" onclick="secret()"> 
+
+        </center>
+
+        <br>
+        <br>
+
+        <script src="script.js"></script>
+
+    </body>
+
+</html>
+
+
+
+
